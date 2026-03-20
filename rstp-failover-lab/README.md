@@ -5,7 +5,9 @@ Lab was built using VMware Workstation with Cisco Modeling Labs v2.8.1
 All switches and routers in this lab are running IOS XE
 
 
-
+<br>
+<br>
+<br>
 Overview
 
 This lab demonstrates the implementation and behavior of Rapid Spanning Tree Protocol (RSTP) in a switched Layer 2 network.
