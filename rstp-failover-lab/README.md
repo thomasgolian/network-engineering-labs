@@ -88,8 +88,59 @@ Link between core SW1 and SW2 is layer 2 link for the purpose of more RSTP optio
 
 
 Configurations:
-
+<br>
 Full configurations are available in the configs/ directory.
+<br>
+<br>
+Initial IOS XE boot configurations for all network nodes:
+<br>enable secret cisco
+<br>hostname {}
+<br>no ip domain lookup
+
+<br>line console 0
+<br>logging synchronous
+<br>exec-timeout 0 0
+<br>password cisco
+<br>login
+
+<br>line vty 0 4
+<br>logging synchronous
+<br>exec-timeout 15 0
+<br>password cisco
+<br>login
+<br>transport input ssh
+
+copy running-config startup-config 
+<br>
+<br>
+<br>
+Apline Linux Desktop to test end-to-end connectivity and configured with:
+
+desktop0:~$ sudo ifconfig eth0 10.1.10.19 netmask 255.255.255.0
+desktop0:~$ ifconfig
+
+<br>
+SW1 & SW2 SVI
+
+<br>interface vlan 10
+<br> ip address 10.1.10.2 255.255.255.0
+<br> no shutdown
+
+<br>interface vlan 10
+<br> ip address 10.1.10.3 255.255.255.0
+<br> no shutdow
+
+<br>
+<br>
+<br>
+<br>SW1 default route out of the network towards R1 (ISP) is:
+<br>ip route 0.0.0.0 0.0.0.0 10.1.1.1
+<br>SW2 default route out of the network towards R1 (ISP) is:
+<br>ip route 0.0.0.0 0.0.0.0 10.1.2.1
+
+<br>
+<br>
+<br>
 
 Key Configuration Elements:
 
@@ -111,23 +162,37 @@ RSTP enabled (spanning-tree mode rapid-pvst)
 <br>
 <br>
 <br>
+Verify: show spanning-tree vlan 10
+<br>
+SW1 - root primary
+<br>Et0/2               Desg FWD 100       128.3    P2p 
+<br>Et0/3               Desg FWD 100       128.4    P2p 
+<br>Et1/0               Desg FWD 100       128.5    P2p 
+<br>
+SW2 - root secondary
+<br>Et0/2               Altn BLK 100       128.3    P2p 
+<br>Et0/3               Root FWD 100       128.4    P2p 
+<br>Et1/0               Altn BLK 100       128.5    P2p
+<br>
+<br>
+<br>
 !Port-Fast (applied to edge ports) SW6, SW7, SW8
-interface range {interfaces}
-switchport mode access
-switchport access vlan 10
-spanning-tree portfast
-spanning-tree bpduguard enable
+<br>interface range {interfaces}
+<br>switchport mode access
+<br>switchport access vlan 10
+<br>spanning-tree portfast
+<br>spanning-tree bpduguard enable
 
 BPDU Guard (implemented)
 
 !Verified VLAN 10 SVIs were up, up, on SW1 and SW2
-show ip interface status
+<br>show ip interface status
 
 !commands on trunk links between switches:
-interface range {multiple interfaces}
-switchport trunk encapsulation dot1q
-switchport mode trunk
-switchport trunk allowed vlan add 10
+<br>interface range {multiple interfaces}
+<br>switchport trunk encapsulation dot1q
+<br>switchport mode trunk
+<br>switchport trunk allowed vlan add 10
 
 Pinged local SVI to ensure TCP/IP stack working
 
@@ -324,11 +389,11 @@ When I was testing connectivity from end hosts to ISP WAN R1, pings failed.
 Discovered SW7's interface connecting to users was not configured. Missed during initial config.
 
 Solution:
-interface E0/2
-switchport mode access
-switchport access vlan 10
-spanning-tree portfast
-spanning-tree bpduguard enable
+<br>interface E0/2
+<br>switchport mode access
+<br>switchport access vlan 10
+<br>spanning-tree portfast
+<br>spanning-tree bpduguard enable
 
 Resolved.
 
