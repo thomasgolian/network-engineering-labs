@@ -249,8 +249,10 @@ No switching loops were introduced
 Network connectivity was maintained
 
 Traffic took alternative path to SW5 in order to reach the root / core layer. 
-
-
+<br>
+<br>
+<br
+![New Path to SW1 root](images/RSTP-reconvergence.jpg)
 <br>
 <br>
 <br>
@@ -283,18 +285,27 @@ Verify Interface Roles
 Failover Demonstration
 
 BPDU Guard testing was performed by plugging a rogue switch into SW6 at the access layer. 
-
-
+<br>
+<br>
+<br>
+![New Path to SW1 root](images/SW6-rogueswitch.jpg)
 <br>
 <br>
 <br>
 
+
+<br>
+<br>
+<br
 
 Observed Behavior:
 
 SW6 with port-fast and BPDU Guard enabled on its access ports, SW6 detects network node sending overhead messages
 into the access interface. SW6 bpduguard immediately moves the interface into an err-disabled state.
-
+<br>
+<br>
+<br>
+![BPDU err-disable Verify](images/SW6-BPDUguard.jpg)
 <br>
 <br>
 <br>
