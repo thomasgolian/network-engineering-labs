@@ -114,10 +114,12 @@ copy running-config startup-config
 <br>
 <br>
 <br>
+
 Apline Linux Desktop to test end-to-end connectivity and configured with:
 
-desktop0:~$ sudo ifconfig eth0 10.1.10.19 netmask 255.255.255.0
-desktop0:~$ ifconfig
+sudo ifconfig eth0 10.1.10.19 netmask 255.255.255.0
+
+ifconfig
 
 <br>
 SW1 & SW2 SVI
