@@ -42,8 +42,16 @@ Ensure loop-free topology under failure conditions and layer 3 connectivity insi
 <br>
 <br>
 <br>
+Topology 
+<br>
+<br>
+<br>
 
+![Topology](images/topology.jpg)
 
+<br>
+<br>
+<br>
 Topology Description:
 
 Multiple Layer 2 switches interconnected with redundant links
@@ -125,8 +133,9 @@ Pinged opposite core switch to ensure core-to-core L2 link working
 
 R1 pinged SW1 and SW3 cores successfully, ISP/WAN links working
 <br>
-
-
+<br>
+<br>
+![Normal Traffic Flow](images/SW1-root.jpg)
 <br>
 <br>
 ***************************************************************************************
@@ -137,6 +146,11 @@ Scenario 1) RSTP root primary core SW1 fails, all interfaces shutdown. Down, Dow
 <br>
 <br>
 
+![Failover to secondary](images/failover-to-root-secondary.jpg)
+
+<br>
+<br>
+<br>
 
 Verification & Testing
 
@@ -222,7 +236,7 @@ Failover testing was performed by shutting down a primary link between switches 
 <br>
 <br>
 
-![SW3 Verify Down](images/SW3-link-verify.jpg)
+![SW3 Verify Down](images/SW3-link-failure-verify.jpg)
 
 Observed Behavior:
 
