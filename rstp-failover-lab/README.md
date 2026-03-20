@@ -61,7 +61,13 @@ Redundant paths available for failover scenarios
 VLAN & Interface Configuration
 
 LAN nodes are using VLAN 10. Trunks are configured to allow VLAN 10 to traverse over trunks.
-
+<br>
+<br>
+<br>
+![VLAN 10 Config](images/VLAN10-interfaces-verify.png)
+<br>
+<br>
+<br>
 Access switches SW6,7,8 have extra interfaces configured as access ports running port-fast and BPDU guard.
 
 Link between core SW1 and SW2 is layer 2 link for the purpose of more RSTP options. 
@@ -109,7 +115,7 @@ Pinged opposite core switch to ensure core-to-core L2 link working
 
 R1 pinged SW1 and SW3 cores successfully, ISP/WAN links working
 <br>
-![VLAN 10 Config](images/VLAN10-interfaces-verify.png)
+
 
 <br>
 <br>
