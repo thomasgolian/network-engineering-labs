@@ -13,7 +13,7 @@ STP security (BPDU Guard)
 Approach:
 
 Each lab is built to simulate real enterprise scenarios, including:
-Failure testing
+<br>Failure testing
 Convergence behavior
 Traffic path analysis
 Security features
