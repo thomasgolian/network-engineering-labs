@@ -2,20 +2,18 @@
 This repository contains hands-on networking labs focused on real-world design, troubleshooting, and protocol behavior.
 
 Topics Covered:
-
-Spanning Tree Protocol (RSTP)
-OSPF (coming soon)
-HSRP (coming soon)
-Layer 2 & Layer 3 redundancy
-Network failover scenarios
-STP security (BPDU Guard)
+<br>Spanning Tree Protocol (RSTP)
+<br>OSPF (coming soon)
+<br>HSRP (coming soon)
+<br>Layer 2 & Layer 3 redundancy
+<br>Network failover scenarios
+<br>STP security (BPDU Guard)
 
 Approach:
-
-Each lab is built to simulate real enterprise scenarios, including:
+<br>Each lab is built to simulate real enterprise scenarios, including:
 <br>Failure testing
-Convergence behavior
-Traffic path analysis
-Security features
+<br>Convergence behavior
+<br>Traffic path analysis
+<br>Security features
 
 This portfolio demonstrates practical networking skills using Cisco technologies in a lab environment.
