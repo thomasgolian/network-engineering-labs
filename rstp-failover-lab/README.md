@@ -90,7 +90,17 @@ RSTP enabled (spanning-tree mode rapid-pvst)
 !Root bridge priority tuning on SW1 & SW2
 spanning-tree vlan 10 root primary
 spanning-tree vlan 10 root secondary
-
+<br>
+<br>
+<br>
+![SW1-rootprimary](images/SW1-root-verify.png)
+<br>
+<br>
+<br>
+![SW2-rootsecondary](images/SW2-secondary-verify-verify.png)
+<br>
+<br>
+<br>
 !Port-Fast (applied to edge ports) SW6, SW7, SW8
 interface range {interfaces}
 switchport mode access
