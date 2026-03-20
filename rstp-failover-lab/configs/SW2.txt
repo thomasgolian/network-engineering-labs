@@ -1,1 +1,158 @@
 
+! Device: SW2
+! Role: RSTP root secondary - core multilayer switch
+
+
+Current configuration : 3673 bytes
+!
+! Last configuration change at 20:21:45 UTC Fri Mar 20 2026
+!
+version 17.15
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname SW2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+ip audit notify log
+ip audit po max-events 100
+no ip domain lookup
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-131184653
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-131184653
+ revocation-check none
+ rsakeypair TP-self-signed-131184653
+ hash sha512
+!
+!
+crypto pki certificate chain TP-self-signed-131184653
+ certificate self-signed 01
+  3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 0D050030 
+  30312E30 2C060355 04030C25 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 31333131 38343635 33301E17 0D323630 33323031 32353333 
+  305A170D 33363033 31393132 35333330 5A303031 2E302C06 03550403 0C25494F 
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3133 31313834 
+  36353330 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02 
+  82010100 AD5CE28F 72A25D7A 88F82C4A D7725154 C4537E91 E8782463 B7F8FD04 
+  DA39C04A EC66DA15 41A7D2AF 8AB92006 507FECF5 C47FA49B 4943B489 927E5E5F 
+  5D42AAC7 CF62CAE1 24201A79 34069D8C 4B03588E 39EC5ED4 F8C58DDF E9791D42 
+  62397F95 D22110F3 6A7BCCDE 85F34339 B03ACB94 0F83B615 4D780F7E 1338F70D 
+  1A68BE89 79D657C9 6931861F 03B0BDB5 FFF35DCC 16688E2C C741904C D8433A11 
+  A960F5F1 5AD08E5D 4B6BAB45 10CE84AD DC0BEF93 FA5ACD2A 60F39B16 306E160A 
+  F67A5723 A12C876D 3BF66616 69F51A47 319F6A3A CCCD7C44 F2DB1796 596C4998 
+  2FFBBC81 A8070561 F8C506A7 B18048B4 DA70BA9A E0635F77 0AA11FA6 9D6782A0 
+  10331FAD 02030100 01A35330 51301D06 03551D0E 04160414 894F8865 38690247 
+  BC1E9A1B F59E6C2B 108B50FE 301F0603 551D2304 18301680 14894F88 65386902 
+  47BC1E9A 1BF59E6C 2B108B50 FE300F06 03551D13 0101FF04 05300301 01FF300D 
+  06092A86 4886F70D 01010D05 00038201 01007356 EBD711B1 4FC8A4C4 D4E5D62F 
+  1C879A59 5A5CE246 782D026D EE6686CA 3697F22D D8A29D11 877F1D60 0CF13DDA 
+  05C6AF2A C102A136 DD5D19CF 2ADF3B2A 3E06B4CB 7547B2D9 272BCC3B 18780C20 
+  5530E9F3 2FBBCBA7 C8B198B2 99BB76E7 BDDEC46F 51C6CA75 525929C8 C2A6B34A 
+  5F7C3A13 E441F002 FAA020F7 B74E97E9 84BC9200 7BB13E0B 94FA0BCE C7F57495 
+  DFB82368 07D597FA 7C2216BB D7F9173B 0B310DF4 7DDF4828 E847116F A68AA038 
+  752E4777 5ABE2C0D C3C51622 09FA1C5A 674CAEB7 4E3F58BB F7107E4E 7B584281 
+  B0D45F98 40E74E6D B91E7267 CB597148 E76CA23B 66829A9B 73402678 87284D37 
+  3826F10E 84C4B2AF A022F2F2 2F130F47 2ACF
+        quit
+!
+!
+memory free low-watermark processor 79593
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 10 priority 28672
+enable secret 9 $9$V11drX6C8tySfE$EdF3581IxNYTcuAP2c1fjy3n0/FZbiEvkslVb8Gdkrw
+!
+!
+vlan internal allocation policy ascending
+!         
+!
+!
+!
+!
+interface Ethernet0/0
+ no switchport
+ ip address 10.1.2.2 255.255.255.252
+!
+interface Ethernet0/1
+!
+interface Ethernet0/2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet1/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet1/1
+!
+interface Ethernet1/2
+!
+interface Ethernet1/3
+!
+interface Vlan10
+ ip address 10.1.10.3 255.255.255.0
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+!
+no logging btrace
+!
+!
+!
+control-plane
+!
+!
+!         
+line con 0
+ exec-timeout 0 0
+ password cisco
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ exec-timeout 15 0
+ password cisco
+ logging synchronous
+ login
+ transport input ssh
+!
+!
+end
