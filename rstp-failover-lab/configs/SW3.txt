@@ -1,1 +1,144 @@
+! Device: SW3
+! Role: RSTP distribution switch 
 
+Current configuration : 3494 bytes
+!
+! Last configuration change at 20:21:49 UTC Fri Mar 20 2026
+!
+version 17.15
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname SW3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+ip audit notify log
+ip audit po max-events 100
+no ip domain lookup
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-131184654
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-131184654
+ revocation-check none
+ rsakeypair TP-self-signed-131184654
+ hash sha512
+!
+!
+crypto pki certificate chain TP-self-signed-131184654
+ certificate self-signed 01
+  3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 0D050030 
+  30312E30 2C060355 04030C25 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 31333131 38343635 34301E17 0D323630 33323031 32353430 
+  395A170D 33363033 31393132 35343039 5A303031 2E302C06 03550403 0C25494F 
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3133 31313834 
+  36353430 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02 
+  82010100 E34512A8 41992DD7 D545C321 A028123D C7284BCE 1B06B96E 539934C6 
+  8378EE05 CD4EE25A 8AF9D8B2 FEA07E0B A40DD4C8 3FB3B481 F4551E81 9C806E5D 
+  1E6B765C D2882CF0 B783AB64 3BDC8260 087E7A02 9A93A910 8B1F61BF 9454625C 
+  5C5D1987 024F7C83 A4361713 AA60594C F37CA44B 9FDF1A07 4E9319C8 7FF90BA3 
+  62F237D8 A086023C 33273422 C84498CD 1C11FDB7 98128D58 3572821A D1069D5D 
+  2439EB31 BFD41422 0CFB73D5 91901474 BC5C584D 126D8ABF 3E417EA9 2E9A4026 
+  B379641A 6AE6226B 5606C51F 3549668D 8C5FABC2 C30B1648 4B55347A BBED1042 
+  1F61C272 CAD3B74F 42E5F737 9CBCEC65 8DD34775 89B8171D B241EC23 09618F57 
+  F22A5FDF 02030100 01A35330 51301D06 03551D0E 04160414 E17D5533 9CAD6C40 
+  6F0E9949 916CBFFA 82B918EF 301F0603 551D2304 18301680 14E17D55 339CAD6C 
+  406F0E99 49916CBF FA82B918 EF300F06 03551D13 0101FF04 05300301 01FF300D 
+  06092A86 4886F70D 01010D05 00038201 01000B16 D58ED1C1 932A8928 0BF6037B 
+  C7FA3276 CA1729A5 A25ECF87 27B86683 A95A14A2 75B05245 7A6FB55C DEDEA8FD 
+  D361C2FB 5FBE3EBE 4D08B057 0921E04E E9ED2517 F29449F1 4C602D30 FE85218A 
+  FF3B8E18 7F158718 8B1AE378 FA78A8F3 A1EFBBCB 7AF31BCE 01F88337 0D65BC00 
+  67243FF0 262797DD 1928CA43 2FD6410C 5EC1709D 72AE8A0D BE3B074C 1BB15047 
+  9F71CD35 7A5E6764 2880A80F 67214147 B527313A 5031F4CC A8C2CF53 AA294994 
+  256CEA37 CDCB44D7 C56781C1 162DF896 A64DCC67 1289AEEC DEACA1EB 66D52C5B 
+  9D85E5E7 1201C48D 6ED7D682 1F440C62 1735CEF1 81CFF38E 55843E3C 60DB7A6B 
+  388B5360 CF92607B 2D5F386C EE1587F9 C134
+        quit
+!
+!
+memory free low-watermark processor 79593
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+enable secret 9 $9$ZzHMxzuCf1GuU.$gwj9NfbNVIKgISOrQDwOuheV5ZVqHWJUqwDC3pwqF6g
+!
+!
+vlan internal allocation policy ascending
+!
+!         
+!
+!
+!
+interface Ethernet0/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+!
+no logging btrace
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ password cisco
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ exec-timeout 15 0
+ password cisco
+ logging synchronous
+ login
+ transport input ssh
+!
+!
+end
