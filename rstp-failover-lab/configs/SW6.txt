@@ -1,1 +1,206 @@
+! Device: SW6
+! Role: RSTP access switch with trunks, and access ports configured with port-fast and BPDU guard
+
+
+Current configuration : 4612 bytes
+!
+! Last configuration change at 20:22:06 UTC Fri Mar 20 2026
+!
+version 17.15
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname SW6
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+ip audit notify log
+ip audit po max-events 100
+no ip domain lookup
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-131184649
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-131184649
+ revocation-check none
+ rsakeypair TP-self-signed-131184649
+ hash sha512
+!
+!
+crypto pki certificate chain TP-self-signed-131184649
+ certificate self-signed 01
+  3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 0D050030 
+  30312E30 2C060355 04030C25 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 31333131 38343634 39301E17 0D323630 33323032 30323232 
+  365A170D 33363033 31393230 32323236 5A303031 2E302C06 03550403 0C25494F 
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3133 31313834 
+  36343930 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02 
+  82010100 9F90E1C4 CF6D314B 3C8486AB 261FD855 99D76244 C711BD4D FF05E49E 
+  DDE4B30A B21914B7 1E9FD9D5 46190169 3F5CA4F4 AE271684 E4AEE105 1D634283 
+  45515C57 1E7677A9 24A48AC9 802CF588 51B0E1C9 6417BEF6 D79C4EB1 77AA1640 
+  A5E2E818 9950E7B6 64489EEE 1FB2B313 363C7CA4 3129CAB5 AD1FB761 A1E58DBA 
+  75309E25 1EAD067E 1E27F32D B9AF2878 A679FF01 230F610E A59823C4 7D30D3E0 
+  52261B40 6B26E558 27F933E4 69CE0A16 72321C6D C9303793 6E8FDED3 CEAC151D 
+  5C6A0243 93A2E580 C2553816 EAB31BF5 0EEA2540 AD541075 5103BA89 AFC63830 
+  A4578BEA BF741CEA 796EA14A 5B34E41C 4C49BB30 9F277317 C41DB158 1CB9EC2A 
+  71A82F61 02030100 01A35330 51301D06 03551D0E 04160414 9D3CB1D3 A2EA73EA 
+  B9D9A981 5CFE9249 21616984 301F0603 551D2304 18301680 149D3CB1 D3A2EA73 
+  EAB9D9A9 815CFE92 49216169 84300F06 03551D13 0101FF04 05300301 01FF300D 
+  06092A86 4886F70D 01010D05 00038201 01008F38 74348B30 5172A848 A1C5967D 
+  F4E08538 84A00038 10CBCE3D 4A26D98B CB2692BE F6A71AD6 9E18AB39 B618F4A5 
+  3EEBC32B 3131F0EA 8C47A048 BD3FF713 E20957E8 68175C49 B49EEA62 C460D7F8 
+  D91CBECC D3ED3628 43567FD8 21221465 FAF962F3 180C81C0 D85F92C2 C1192FA1 
+  BBFE0756 439191EC A87E593B D2CE89EB E52F07EC 7186EABA DA0C7C76 AB02C860 
+  5D855233 9C9398B4 582F08C2 CCEEAC75 8298CD76 B7844F8D 38855E19 A3CC2B7D 
+  77DE62BC 283BC6E9 EC1DF660 5900F9B1 415ABED6 A0D696DB 646B90E1 90D4FF13 
+  6915D6AD 2B6D875D 95168390 8ABC171B 63EAEA07 B5F12C99 567B69AD B19F9D2F 
+  4547D420 8093860C 7B704591 C2403E39 8A4C
+        quit
+!
+!
+memory free low-watermark processor 79593
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+enable secret 9 $9$7DTiGkEWoeSS4U$0K.nFAnsrPPtNOZUelZe28zJITwTF8hcu1FLaSxZbas
+!
+!
+vlan internal allocation policy ascending
+!
+!         
+!
+!
+!
+interface Ethernet0/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/2
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface Ethernet0/3
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!         
+interface Ethernet1/0
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface Ethernet1/1
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface Ethernet1/2
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface Ethernet1/3
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface Ethernet2/0
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface Ethernet2/1
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface Ethernet2/2
+!
+interface Ethernet2/3
+!
+interface Ethernet3/0
+!
+interface Ethernet3/1
+!
+interface Ethernet3/2
+!         
+interface Ethernet3/3
+!
+interface Ethernet4/0
+!
+interface Ethernet4/1
+!
+interface Ethernet4/2
+!
+interface Ethernet4/3
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+!
+no logging btrace
+!
+!
+!
+control-plane
+!         
+!
+!
+line con 0
+ exec-timeout 0 0
+ password cisco
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ exec-timeout 15 0
+ password cisco
+ logging synchronous
+ login
+ transport input ssh
+!
+!
+end
 
