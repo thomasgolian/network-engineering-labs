@@ -93,6 +93,8 @@ Full configurations are available in the configs/ directory.
 
 Key Configuration Elements:
 
+SW1 was manually configured as the root bridge by lowering bridge priority.
+
 RSTP enabled (spanning-tree mode rapid-pvst)
 
 !Root bridge priority tuning on SW1 & SW2
@@ -366,6 +368,8 @@ Key Takeaways
 A link failure at the distribution layer doesn't break the network. RSTP recovers
 
 RSTP significantly improves convergence time over legacy STP
+
+Demonstrated the ability to design, test, and validate Layer 2 failover scenarios using RSTP
 
 Alternate ports enable near-instant failover
 
