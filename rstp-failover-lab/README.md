@@ -97,7 +97,7 @@ spanning-tree vlan 10 root secondary
 <br>
 <br>
 <br>
-![SW2-rootsecondary](images/SW2-secondary-verify-verify.png)
+![SW2-rootsecondary](images/SW2-secondary-verify.png)
 <br>
 <br>
 <br>
