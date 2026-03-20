@@ -75,8 +75,6 @@ Link between core SW1 and SW2 is layer 2 link for the purpose of more RSTP optio
 
 Configurations:
 
-I configured the following switch interfaces as manual trunk interfaces with dot1q encapsulation, no auto-negotiation
-
 Full configurations are available in the configs/ directory.
 
 Key Configuration Elements:
