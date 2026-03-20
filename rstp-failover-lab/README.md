@@ -15,7 +15,9 @@ This lab demonstrates the implementation and behavior of Rapid Spanning Tree Pro
 The objective is to analyze validate loop prevention, and observe rapid failover during core switch and distribution switch link failures. RSTP provides significantly faster convergence compared to traditional STP by utilizing alternate ports and rapid state transitions.
 
 
-
+<br>
+<br>
+<br>
 
 
 Objectives
@@ -37,7 +39,9 @@ Simulate rogue switch plugging into access layer interface running port-fast & B
 Ensure loop-free topology under failure conditions and layer 3 connectivity inside and out of the LAN by R1 playing role of ISP WAN.
 
 
-
+<br>
+<br>
+<br>
 
 
 Topology Description:
@@ -48,7 +52,9 @@ One switch elected as the Root Bridge with another core switch acting as seconda
 
 Redundant paths available for failover scenarios
 
-
+<br>
+<br>
+<br>
 
 
 
@@ -62,7 +68,9 @@ Link between core SW1 and SW2 is layer 2 link for the purpose of more RSTP optio
 
 
 
-
+<br>
+<br>
+<br>
 
 
 Configurations:
@@ -103,10 +111,13 @@ Pinged opposite core switch to ensure core-to-core L2 link working
 
 R1 pinged SW1 and SW3 cores successfully, ISP/WAN links working
 
+***************************************************************************************
 
 Scenario 1) RSTP root primary core SW1 fails, all interfaces shutdown. Down, Down.
  
-
+<br>
+<br>
+<br>
 
 
 Verification & Testing
@@ -126,7 +137,9 @@ show spanning-tree root
 show spanning-tree interface
 
 
-
+<br>
+<br>
+<br>
 
 
 Failover Demonstration
@@ -134,7 +147,9 @@ Failover Demonstration
 Failover testing was performed by shutting down all interfaces on SW1 root primary to simulate switch catastrophic failure. 
 
 
-
+<br>
+<br>
+<br>
 
 
 Observed Behavior:
@@ -149,9 +164,12 @@ Network connectivity was maintained
 
 
 
+<br>
+<br>
+<br>
 
 
-
+***************************************************************************************
 
 Scenario 2) Distribution switch SW3 has a physical link failure downstream towards access switch SW7, trunk is in down, down state. 
 
@@ -171,13 +189,17 @@ show spanning-tree root
 show spanning-tree interface
 
 
-
+<br>
+<br>
+<br>
 
 Failover Demonstration
 
 Failover testing was performed by shutting down a primary link between switches SW3 and SW7
 
-
+<br>
+<br>
+<br>
 
 
 Observed Behavior:
@@ -193,7 +215,10 @@ Network connectivity was maintained
 Traffic took alternative path to SW5 in order to reach the root / core layer. 
 
 
-
+<br>
+<br>
+<br>
+***************************************************************************************
 
 Scenario 3) RSTP topology behaving normally - but a accidental/rogue switch has been plugged into an access port on switch SW6.
 I configured port-fast and BPDU guard on SW6's access ports to test BPDU guard functionality. 
@@ -213,7 +238,9 @@ Verify Interface Roles
 !show spanning-tree interface
 
 
-
+<br>
+<br>
+<br>
 
 
 Failover Demonstration
@@ -221,7 +248,9 @@ Failover Demonstration
 BPDU Guard testing was performed by plugging a rogue switch into SW6 at the access layer. 
 
 
-
+<br>
+<br>
+<br>
 
 
 Observed Behavior:
@@ -229,10 +258,14 @@ Observed Behavior:
 SW6 with port-fast and BPDU Guard enabled on its access ports, SW6 detects network node sending overhead messages
 into the access interface. SW6 bpduguard immediately moves the interface into an err-disabled state.
 
-
+<br>
+<br>
+<br>
 
 ***************************************************************************************
-
+<br>
+<br>
+<br>
 
 
 Surprise problem: During initial configurations, I missed a configuration on SW7 access port. 
@@ -249,11 +282,15 @@ spanning-tree bpduguard enable
 
 Resolved.
 
-
+<br>
+<br>
+<br>
 
 ***************************************************************************************
 
-
+<br>
+<br>
+<br>
 
 
 
@@ -271,7 +308,9 @@ Distribution layer link failure - RSTP recovers.
 
 Rogue switch plugged into access layer switch - BPDU Guard successfully detects - places into err-disabled state.
 
-
+<br>
+<br>
+<br>
 
 
 Key Takeaways
