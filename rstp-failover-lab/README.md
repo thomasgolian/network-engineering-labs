@@ -98,8 +98,8 @@ SW1 was manually configured as the root bridge by lowering bridge priority.
 RSTP enabled (spanning-tree mode rapid-pvst)
 
 !Root bridge priority tuning on SW1 & SW2
-spanning-tree vlan 10 root primary
-spanning-tree vlan 10 root secondary
+<br>spanning-tree vlan 10 root primary
+<br>spanning-tree vlan 10 root secondary
 <br>
 <br>
 <br>
