@@ -214,11 +214,15 @@ show spanning-tree interface
 Failover Demonstration
 
 Failover testing was performed by shutting down a primary link between switches SW3 and SW7
-
+<br>
+<br>
+<br>
+![SW3 Link Failure](images/SW3-link-failure.jpg)
 <br>
 <br>
 <br>
 
+![SW3 Verify Down](images/SW3-link-verify.jpg)
 
 Observed Behavior:
 
