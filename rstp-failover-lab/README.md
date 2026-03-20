@@ -110,9 +110,9 @@ Pinged local SVI to ensure TCP/IP stack working
 Pinged opposite core switch to ensure core-to-core L2 link working
 
 R1 pinged SW1 and SW3 cores successfully, ISP/WAN links working
-
+<br>
 ***************************************************************************************
-
+<br>
 Scenario 1) RSTP root primary core SW1 fails, all interfaces shutdown. Down, Down.
  
 <br>
@@ -170,7 +170,7 @@ Network connectivity was maintained
 
 
 ***************************************************************************************
-
+<br>
 Scenario 2) Distribution switch SW3 has a physical link failure downstream towards access switch SW7, trunk is in down, down state. 
 
 
@@ -218,6 +218,7 @@ Traffic took alternative path to SW5 in order to reach the root / core layer.
 <br>
 <br>
 <br>
+
 ***************************************************************************************
 
 Scenario 3) RSTP topology behaving normally - but a accidental/rogue switch has been plugged into an access port on switch SW6.
