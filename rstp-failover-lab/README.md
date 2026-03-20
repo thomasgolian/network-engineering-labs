@@ -109,6 +109,10 @@ Pinged opposite core switch to ensure core-to-core L2 link working
 
 R1 pinged SW1 and SW3 cores successfully, ISP/WAN links working
 <br>
+![VLAN 10 Config](images/vlan10-interfaces-verify)
+
+<br>
+<br>
 ***************************************************************************************
 <br>
 Scenario 1) RSTP root primary core SW1 fails, all interfaces shutdown. Down, Down.
