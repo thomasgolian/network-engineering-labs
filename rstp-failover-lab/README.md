@@ -53,7 +53,8 @@ Topology
 <br>
 <br>
 <br>
-Topology Description:
+
+# Topology Description:
 
 Multiple Layer 2 switches interconnected with redundant links
 
@@ -67,7 +68,7 @@ Redundant paths available for failover scenarios
 
 
 
-VLAN & Interface Configuration
+# VLAN & Interface Configuration
 
 LAN nodes are using VLAN 10. Trunks are configured to allow VLAN 10 to traverse over trunks.
 <br>
@@ -88,7 +89,8 @@ Link between core SW1 and SW2 is layer 2 link for the purpose of more RSTP optio
 <br>
 
 
-Configurations:
+# Configurations:
+
 <br>
 Full configurations are available in the configs/ directory.
 <br>
@@ -145,13 +147,13 @@ SW1 & SW2 SVI
 <br>
 <br>
 
-Key Configuration Elements:
+# Key Configuration Elements:
 
 SW1 was manually configured as the root bridge by lowering bridge priority.
 
 RSTP enabled (spanning-tree mode rapid-pvst)
 
-!Root bridge priority tuning on SW1 & SW2
+Root bridge priority tuning on SW1 & SW2
 <br>spanning-tree vlan 10 root primary
 <br>spanning-tree vlan 10 root secondary
 <br>
@@ -179,7 +181,7 @@ SW2 - root secondary
 <br>
 <br>
 <br>
-!Port-Fast (applied to edge ports) SW6, SW7, SW8
+Port-Fast (applied to edge ports) SW6, SW7, SW8
 <br>interface range {interfaces}
 <br>switchport mode access
 <br>switchport access vlan 10
@@ -188,10 +190,10 @@ SW2 - root secondary
 
 BPDU Guard (implemented)
 
-!Verified VLAN 10 SVIs were up, up, on SW1 and SW2
+Verified VLAN 10 SVIs were up, up, on SW1 and SW2
 <br>show ip interface status
 
-!commands on trunk links between switches:
+Commands on trunk links between switches:
 <br>interface range {multiple interfaces}
 <br>switchport trunk encapsulation dot1q
 <br>switchport mode trunk
@@ -210,7 +212,10 @@ R1 pinged SW1 and SW3 cores successfully, ISP/WAN links working
 <br>
 ***************************************************************************************
 <br>
-Scenario 1) RSTP root primary core SW1 fails, all interfaces shutdown. Down, Down.
+
+# Scenario 1) 
+
+RSTP root primary core SW1 fails, all interfaces shutdown. Down, Down.
  
 <br>
 <br>
@@ -222,21 +227,15 @@ Scenario 1) RSTP root primary core SW1 fails, all interfaces shutdown. Down, Dow
 <br>
 <br>
 
-Verification & Testing
+Verification & Testing:
 
 
 
-!Verify Spanning Tree Status
+Verify Spanning Tree Status: show spanning-tree
 
-show spanning-tree
+Verify Root Bridge: show spanning-tree root
 
-!Verify Root Bridge
-
-show spanning-tree root
-
-!Verify Interface Roles
-
-show spanning-tree interface
+Verify Interface Roles: show spanning-tree interface
 
 
 <br>
@@ -273,22 +272,20 @@ Network connectivity was maintained
 
 ***************************************************************************************
 <br>
-Scenario 2) Distribution switch SW3 has a physical link failure downstream towards access switch SW7, trunk is in down, down state. 
+
+# Scenario 2) 
+
+Distribution switch SW3 has a physical link failure downstream towards access switch SW7, trunk is in down, down state. 
 
 
-Verification & Testing
+Verification & Testing:
 
-!Verify Spanning Tree Status
 
-show spanning-tree vlan 10
+Verify Spanning Tree Status: show spanning-tree vlan 10
 
-!Verify Root Bridge
+Verify Root Bridge: show spanning-tree root
 
-show spanning-tree root
-
-!Verify Interface Roles
-
-show spanning-tree interface
+Verify Interface Roles: show spanning-tree interface
 
 
 <br>
@@ -329,22 +326,20 @@ Traffic took alternative path to SW5 in order to reach the root / core layer.
 
 ***************************************************************************************
 
-Scenario 3) RSTP topology behaving normally - but a accidental/rogue switch has been plugged into an access port on switch SW6.
+# Scenario 3)
+
+RSTP topology behaving normally - but a accidental/rogue switch has been plugged into an access port on switch SW6.
 I configured port-fast and BPDU guard on SW6's access ports to test BPDU guard functionality. 
 
-Verification & Testing
+Verification & Testing:
 
-Verify Spanning Tree Status
 
-!show spanning-tree vlan 10
 
-Verify Root Bridge
+Verify Spanning Tree Status: show spanning-tree vlan 10
 
-!show spanning-tree root
+Verify Root Bridge: show spanning-tree root
 
-Verify Interface Roles
-
-!show spanning-tree interface
+Verify Interface Roles: show spanning-tree interface
 
 
 <br>
@@ -412,7 +407,7 @@ Resolved.
 
 
 
-Final Results
+# Final Results
 
 Successful RSTP deployment
 
@@ -431,7 +426,7 @@ Rogue switch plugged into access layer switch - BPDU Guard successfully detects 
 <br>
 
 
-Key Takeaways
+# Key Takeaways
 
 A link failure at the distribution layer doesn't break the network. RSTP recovers
 
