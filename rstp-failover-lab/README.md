@@ -156,6 +156,7 @@ SW1 was manually configured as the root bridge by lowering bridge priority.
 RSTP enabled (spanning-tree mode rapid-pvst)
 
 Root bridge priority tuning on SW1 & SW2
+
 <br>spanning-tree vlan 10 root primary
 <br>spanning-tree vlan 10 root secondary
 <br>
@@ -184,6 +185,7 @@ SW2 - root secondary
 <br>
 <br>
 Port-Fast (applied to edge ports) SW6, SW7, SW8
+
 <br>interface range {interfaces}
 <br>switchport mode access
 <br>switchport access vlan 10
@@ -193,9 +195,11 @@ Port-Fast (applied to edge ports) SW6, SW7, SW8
 BPDU Guard (implemented)
 
 Verified VLAN 10 SVIs were up, up, on SW1 and SW2
+
 <br>show ip interface status
 
 Commands on trunk links between switches:
+
 <br>interface range {multiple interfaces}
 <br>switchport trunk encapsulation dot1q
 <br>switchport mode trunk
@@ -331,6 +335,7 @@ Traffic took alternative path to SW5 in order to reach the root / core layer.
 # Scenario 3)
 
 RSTP topology behaving normally - but a accidental/rogue switch has been plugged into an access port on switch SW6.
+
 I configured port-fast and BPDU guard on SW6's access ports to test BPDU guard functionality. 
 
 Verification & Testing:
@@ -384,6 +389,7 @@ into the access interface. SW6 bpduguard immediately moves the interface into an
 
 
 Surprise problem: During initial configurations, I missed a configuration on SW7 access port. 
+
 When I was testing connectivity from end hosts to ISP WAN R1, pings failed.
 
 Discovered SW7's interface connecting to users was not configured. Missed during initial config.
