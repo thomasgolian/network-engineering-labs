@@ -96,7 +96,7 @@ Link between core SW1 and SW2 is layer 2 link for the purpose of more RSTP optio
 Full configurations are available in the configs/ directory.
 <br>
 <br>
-Initial IOS XE boot configurations for all network nodes:
+Initial IOS XE configurations I entered for all network nodes:
 <br>enable secret cisco
 <br>hostname {}
 <br>no ip domain lookup
