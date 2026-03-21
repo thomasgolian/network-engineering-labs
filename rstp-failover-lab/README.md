@@ -3,7 +3,10 @@
 Lab was built from scratch using VMware Workstation with Cisco Modeling Labs v2.8.1 
 
 All switches and routers in this lab are running IOS XE
+<br>
+<br>
 
+![CML](images/CML.jpg)
 
 <br>
 <br>
