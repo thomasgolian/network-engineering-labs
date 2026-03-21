@@ -97,6 +97,7 @@ Full configurations are available in the configs/ directory.
 <br>
 <br>
 Initial IOS XE configurations I entered for all network nodes:
+
 <br>enable secret cisco
 <br>hostname {}
 <br>no ip domain lookup
