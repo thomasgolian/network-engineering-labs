@@ -8,7 +8,7 @@ All switches and routers in this lab are running IOS XE
 <br>
 <br>
 <br>
-Overview
+### Overview
 
 This lab demonstrates the implementation and behavior of Rapid Spanning Tree Protocol (RSTP) in a switched Layer 2 network.
 
