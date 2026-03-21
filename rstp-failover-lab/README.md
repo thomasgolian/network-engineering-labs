@@ -21,7 +21,7 @@ The objective is to analyze validate loop prevention, and observe rapid failover
 <br>
 
 
-Objectives
+# Objectives
 
 Configure RSTP across multiple switches
 
