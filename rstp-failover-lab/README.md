@@ -141,8 +141,10 @@ SW1 & SW2 SVI
 <br>
 <br>
 <br>SW1 default route out of the network towards R1 (ISP) is:
+
 <br>ip route 0.0.0.0 0.0.0.0 10.1.1.1
 <br>SW2 default route out of the network towards R1 (ISP) is:
+
 <br>ip route 0.0.0.0 0.0.0.0 10.1.2.1
 
 <br>
@@ -171,19 +173,25 @@ Root bridge priority tuning on SW1 & SW2
 <br>
 <br>
 Verify: show spanning-tree vlan 10
+
 <br>
+
 SW1 - root primary
+
 <br>Et0/2               Desg FWD 100       128.3    P2p 
 <br>Et0/3               Desg FWD 100       128.4    P2p 
 <br>Et1/0               Desg FWD 100       128.5    P2p 
 <br>
+
 SW2 - root secondary
+
 <br>Et0/2               Altn BLK 100       128.3    P2p 
 <br>Et0/3               Root FWD 100       128.4    P2p 
 <br>Et1/0               Altn BLK 100       128.5    P2p
 <br>
 <br>
 <br>
+
 Port-Fast (applied to edge ports) SW6, SW7, SW8
 
 <br>interface range {interfaces}
