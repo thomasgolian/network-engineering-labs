@@ -143,6 +143,7 @@ SW1 & SW2 SVI
 <br>SW1 default route out of the network towards R1 (ISP) is:
 
 <br>ip route 0.0.0.0 0.0.0.0 10.1.1.1
+
 <br>SW2 default route out of the network towards R1 (ISP) is:
 
 <br>ip route 0.0.0.0 0.0.0.0 10.1.2.1
@@ -218,6 +219,7 @@ Pinged local SVI to ensure TCP/IP stack working
 Pinged opposite core switch to ensure core-to-core L2 link working
 
 R1 pinged SW1 and SW3 cores successfully, ISP/WAN links working
+
 <br>
 <br>
 <br>
