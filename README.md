@@ -3,7 +3,7 @@ This repository contains hands-on networking labs focused on real-world design, 
 
 Topics Covered:
 <br>Spanning Tree Protocol (RSTP)
-<br>OSPF (coming soon)
+<br>OSPF
 <br>HSRP (coming soon)
 <br>Layer 2 & Layer 3 redundancy
 <br>Network failover scenarios
