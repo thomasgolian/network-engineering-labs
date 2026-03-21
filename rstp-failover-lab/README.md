@@ -336,7 +336,8 @@ Network connectivity was maintained
 Traffic took alternative path to SW5 in order to reach the root / core layer. 
 <br>
 <br>
-<br
+<br>
+
 ![New Path to SW1 root](images/RSTP-reconvergence.jpg)
 <br>
 <br>
