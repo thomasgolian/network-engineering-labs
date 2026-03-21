@@ -223,7 +223,9 @@ R1 pinged SW1 and SW3 cores successfully, ISP/WAN links working
 <br>
 <br>
 <br>
+
 ![Normal Traffic Flow](images/SW1-root.jpg)
+
 <br>
 <br>
 ***************************************************************************************
