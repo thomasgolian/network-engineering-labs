@@ -1,0 +1,165 @@
+Current configuration : 3547 bytes
+!
+version 17.15
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname R7
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+!
+no ip domain lookup
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-131184661
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-131184661
+ revocation-check none
+ rsakeypair TP-self-signed-131184661
+ hash sha512
+!
+!
+crypto pki certificate chain TP-self-signed-131184661
+ certificate self-signed 01
+  3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 0D050030 
+  30312E30 2C060355 04030C25 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 31333131 38343636 31301E17 0D323630 33323132 31353833 
+  335A170D 33363033 32303231 35383333 5A303031 2E302C06 03550403 0C25494F 
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3133 31313834 
+  36363130 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02 
+  82010100 9F52CBA2 3F05690B D0C10CFC 20D0EB79 CA4F98D7 54A0759D 2928C328 
+  ED264102 6ACEAB70 53413C58 BC52BF8A 20B8F7EF FDAA5ACF DE5FF0AF 0D15828E 
+  8D870653 F8546448 D6CE8D22 D73A5384 0D846D38 26A48CD9 D449DD96 820E7FC6 
+  7B38D036 0A8EA90B C9992062 946AFAE4 BFAA0D67 97E1DD20 66E66255 DB86D3A2 
+  BBCBD887 4EE82E0E C0D92D31 A5C86272 73DDC67B 287DABEE 10F1DCA3 FF2A4979 
+  30164682 4B3D8C34 6FFEB897 FA624D88 90DCB46F 8E83B4A7 FBF37420 30C45539 
+  04287A06 294AE7F3 1E6194F5 AF68646B E1FD6D7E 31CCF703 DF6FD11A 05B3E5C8 
+  8BED48DE EDA59F7B 016E6E20 0BFB572C BCD8AB87 2D06D723 62E5CEC4 133934A4 
+  21A08D29 02030100 01A35330 51301D06 03551D0E 04160414 B6070E21 1E52A8FA 
+  69977154 E2F7BCB4 276BDCBE 301F0603 551D2304 18301680 14B6070E 211E52A8 
+  FA699771 54E2F7BC B4276BDC BE300F06 03551D13 0101FF04 05300301 01FF300D 
+  06092A86 4886F70D 01010D05 00038201 01003B3B 3290142F 4F2FFE92 88F146EE 
+  8875CD7A 4EF1A62A 4D9AD40B 9B852F26 FC04D374 A2370988 9BA9EFD7 3A1135DB 
+  DB20FAC3 45E287F9 A5383DCD 6F19C854 F78895D6 92546D7E 1B15ED4C CE5F6C7A 
+  FB58293D C7735304 A4DCBFAF 3DCEB916 E637024C 49133081 8EA89C9E A0FB07DB 
+  951B1F43 11FD770F E2816027 03CF0482 FAF100C9 62FE1C8B 438C85E8 DB3CFAD9 
+  EE03C122 D7751304 5F9DA02A 110531EB B9AB146D 1CEE2458 1D4E72E8 5AC56008 
+  4746469B 31E6715A C465C391 80226176 BF37F4C1 DB885067 55FD842C 624481DE 
+  CB940A1A AD219012 D3E1FB12 9635AE33 24CEA67E 197A6C56 3B26B12B AD6F1566 
+  67FAFE4B 4DD7679A 874F7C1B 88C79760 142E
+        quit
+!
+!
+memory free low-watermark processor 80093
+!
+!
+spanning-tree mode rapid-pvst
+!
+enable secret 9 $9$7vNzNy877yOMVE$/31RB04wot0M4jL20.ft/6YUq64eDF2LGWo6zHEjCSY
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 7.7.7.7 255.255.255.255
+!
+interface Ethernet0/0
+ description Link to R5 10.0.57.0/30
+ bandwidth 1000
+ ip address 10.0.57.2 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 2
+!
+interface Ethernet0/1
+ no ip address
+ ip ospf network point-to-point
+!
+interface Ethernet0/2
+ no ip address
+ ip ospf network point-to-point
+!
+interface Ethernet0/3
+ no ip address
+ ip ospf network point-to-point
+!
+router ospf 1
+ router-id 7.7.7.7
+ passive-interface Loopback0
+ network 10.0.0.0 0.0.255.255 area 2
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+no logging btrace
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ password cisco
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ exec-timeout 15 0
+ password cisco
+ logging synchronous
+ login
+ transport input ssh
+!         
+!
+!
+!
+end

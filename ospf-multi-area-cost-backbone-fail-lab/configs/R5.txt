@@ -1,0 +1,142 @@
+Using 1765 out of 131072 bytes
+!
+! Last configuration change at 06:11:49 UTC Sun Mar 22 2026
+!
+version 17.15
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname R5
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+!
+!
+no ip domain lookup
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-131184658
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-131184658
+ revocation-check none
+ rsakeypair TP-self-signed-131184658
+ hash sha512
+!
+!
+crypto pki certificate chain TP-self-signed-131184658
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+!
+!
+memory free low-watermark processor 80093
+!
+!
+spanning-tree mode rapid-pvst
+!
+enable secret 9 $9$MJh8vbF8blevHk$ckhLQLTVvbuxM5btKjua/RoV4nBeGVlZCrhmNmn2SZY
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 5.5.5.5 255.255.255.255
+!
+interface Ethernet0/0
+ description Link to R3 10.0.35.0/30
+ bandwidth 1000
+ ip address 10.0.35.2 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+!
+interface Ethernet0/1
+ description Link to R7 10.0.57.0/30
+ bandwidth 1000
+ ip address 10.0.57.1 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 2
+!
+interface Ethernet0/2
+ no ip address
+ ip ospf network point-to-point
+!
+interface Ethernet0/3
+ no ip address
+ ip ospf network point-to-point
+!
+router ospf 1
+ router-id 5.5.5.5
+ passive-interface Loopback0
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+no logging btrace
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ password cisco
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ exec-timeout 15 0
+ password cisco
+ logging synchronous
+ login
+ transport input ssh
+!
+!         
+!
+!
+end

@@ -1,0 +1,141 @@
+
+version 17.15
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+no ip domain lookup
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-131184650
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-131184650
+ revocation-check none
+ rsakeypair TP-self-signed-131184650
+ hash sha512
+!         
+!
+crypto pki certificate chain TP-self-signed-131184650
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+!
+!
+memory free low-watermark processor 80093
+!
+!
+spanning-tree mode rapid-pvst
+!
+enable secret 9 $9$1QXPRh7sVhXchU$efNMB2jXuBWPiceXDqVUfUPnB8ff71.b6v0kTvZWgJU
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+!
+interface Ethernet0/0
+ bandwidth 1000
+ ip address 10.0.12.1 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+!
+interface Ethernet0/1
+ description Link to R2 10.0.12.0/30
+ bandwidth 1000
+ ip address 10.0.13.1 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf 1 area 0
+!
+interface Ethernet0/2
+ no ip address
+!
+interface Ethernet0/3
+ description Link to R3 10.0.23.0/30
+ no ip address
+!
+router ospf 1
+ router-id 1.1.1.1
+ passive-interface Loopback0
+ network 1.1.1.1 0.0.0.0 area 0
+ network 10.0.0.0 0.0.255.255 area 0
+ default-information originate
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip route 0.0.0.0 0.0.0.0 Null0
+ip ssh bulk-mode 131072
+no logging btrace
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ password cisco
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ exec-timeout 15 0
+ password cisco
+ logging synchronous
+ login
+ transport input ssh
+!
+!         
+!
+!
+end
