@@ -837,7 +837,7 @@ OSPF LSAs. Conceptually, it helped me go deeper into building multi area OSPF fr
 
 While configuring OSPF Areas on ABRs, I realized entering the <network 10.0.0.0 0.0.255.255 area {}> command would
 cause a conflict if entered twice with two areas. Yes, I could create more specific wildcard masks for the ABRs,
-but for this Lab I've decided to configure ABR OSPF areas directly on interface to avoid that issue for now.
+but for the focus of this Lab I've decided to configure ABR OSPF areas directly on the interface.
 
 Learned more about LSDB and why some OSPF router information is stored while some is not. Purposefully. 
 
