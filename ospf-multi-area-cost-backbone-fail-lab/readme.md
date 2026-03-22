@@ -655,7 +655,7 @@ R3's routing table now only has a single route to reach network 10.0.12.0/30 thr
 
 # Key Takeaways:
 
-Verified OSPF convergence and failover behavior during link failure scenarios
+Verified OSPF convergence and failover behavior during link failure scenarios.
 
 OSPF stub Areas must be configured on both ends of the link on each router. 
 
@@ -670,9 +670,9 @@ but for the focus of this Lab I've decided to configure ABR OSPF areas directly 
 
 Learned more about LSDB and why some OSPF router information is stored, whilst some is not. As by design. 
 
-OSPF path selection is based on the SPF algorithm, not just visible topology
+OSPF path selection is based on the SPF algorithm, not just visible topology.
 
-Troubleshooting requires validating both the control plane (LSDB) and data plane (routing table)
+Troubleshooting requires validating both the control plane (LSDB) and data plane (routing table).
 
 We can turn on debug commands to see real-time logs. We can use this key information to help discover root cause or monitor protocol behavior.
 
