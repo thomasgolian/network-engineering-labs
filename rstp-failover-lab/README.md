@@ -278,9 +278,7 @@ Traffic took alternative path to SW5 in order to reach the root / core layer.
 
 # Scenario 3)
 
-RSTP topology behaving normally - but a accidental/rogue switch has been plugged into an access port on switch SW6.
-
-I configured port-fast and BPDU guard on SW6's access ports to test BPDU guard functionality. 
+RSTP topology behaving normally. I configured port-fast and BPDU guard on SW6's access ports to test BPDU guard functionality. 
 
 <br>
 
@@ -372,6 +370,5 @@ Understanding STP more from building it from the ground up with real Cisco IOS X
 
 <br>
 
-![Final](images/final.jpg)
 
 
