@@ -123,7 +123,7 @@ Example:
 
 <br>
 
-![Interface Descriptions](images/descriptions.jpg)
+![Interface Descriptions](images/descriptions0.jpg)
 
 <br>
 
