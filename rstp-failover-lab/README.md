@@ -1,6 +1,6 @@
 # Rapid Spanning Tree Convergence & Failover (RSTP Lab)
 
-Lab was built from scratch using VMware Workstation with Cisco Modeling Labs v2.8.1 
+Lab was designed from scratch using VMware Workstation with Cisco Modeling Labs v2.8.1 
 
 All switches and routers in this lab are running IOS XE
 <br>
