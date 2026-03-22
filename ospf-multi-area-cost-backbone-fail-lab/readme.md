@@ -80,7 +80,7 @@ We use the third octet for differentiating networks and the numbers correlate to
 Example: R1 connects to R2 - so the network is 10.0.12.0/30. See below:
 
 
-<br>R1 to R2    10.0.12.0/30
+<br>R1 > R2    10.0.12.0/30
 <br>R1   E0/0    10.0.12.1
 <br>R2   E0/0    10.0.12.2
 
