@@ -89,7 +89,7 @@ The topology consists of seven routers (R1–R7) organized hierarchically to dem
 <br>
 <br>
 
-We're using a clever IP scheme that I read about. Leave the fourth IPv4 octet simple by continuing to use the 
+We're using a clever IP scheme that I read about (for labbing). Leave the fourth IPv4 octet simple by continuing to use the 
 .1 and .2 addresses in the 'zero subnet' of each network. 
 
 We use the third octet for differentiating networks and the numbers correlate to router pairs.
