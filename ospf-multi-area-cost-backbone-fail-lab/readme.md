@@ -423,8 +423,8 @@ Using show ip ospf interface brief on R4 to verify OSPF areas as an example.
 
 <br>
 
-Interesting thing I just learned - You can't see router-IDs for 6.6.6.6 and 7.7.7.7. They are missing in R3's LSDB.
-Router's don't store OSPF routers from other areas inside their own LSDB. Why? Scalability. LSDB would be too massive in large networks. 
+I can't see router-IDs for 6.6.6.6 and 7.7.7.7. They are missing in R3's LSDB.
+Router's only store full LSAs (Type 1 & Type 2) for intra-area routers. Why? Scalability. LSDB would be too massive in large networks. 
 
 Verifying Link State Database on R3:
 
