@@ -662,15 +662,13 @@ OSPF stub Areas must be configured on both ends of the link on each router.
 Connected routes may/will override OSPF interface cost manipulation. 
 
 I learned more about multi-area OSPF design and what information edge Areas need in order to exchange 
-OSPF LSAs. Conceptually, it helped us me deeper into building multi area OSPF from scratch.
+OSPF LSAs. 
 
 While configuring OSPF Areas on ABRs, I realized entering the <network 10.0.0.0 0.0.255.255 area {}> command would
 cause a conflict if entered twice with two areas. Yes, I could create more specific wildcard masks for the ABRs,
-but for the focus of this Lab I've decided to configure ABR OSPF areas directly on the interface.
+but for the focus of this Lab I decided to configure ABR OSPF areas directly on the interface.
 
 Learned more about LSDB and why some OSPF router information is stored, whilst some is not. As by design. 
-
-OSPF path selection is based on the SPF algorithm, not just visible topology.
 
 Troubleshooting requires validating both the control plane (LSDB) and data plane (routing table).
 
