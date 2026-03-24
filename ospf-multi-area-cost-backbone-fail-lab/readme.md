@@ -14,7 +14,7 @@ All switches and/or routers in this lab are running IOS XE images
 
 <br>
 
-Designed and validated an OSPF topology. Introduced scenarios such as path selection, cost manipulation, stub areas, backbone failure, and troubleshooting scenarios.
+Designed and validated an OSPF (Open Shortest Path First) topology. Introduced scenarios such as path selection, cost manipulation, stub areas, backbone failure, and troubleshooting scenarios.
 
 <br>
 
