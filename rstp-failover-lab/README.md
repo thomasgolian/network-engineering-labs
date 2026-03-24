@@ -24,7 +24,7 @@ Configure RSTP across multiple switches
 
 Analyze root bridge election process
 
-Simulate core switch failure and measure failover response
+Simulate core switch failure and measure RSTP response
 
 Observe port roles (Root, Designated, Alternate)
 
@@ -134,7 +134,7 @@ SW1 was manually configured as the root bridge by lowering bridge priority (prim
 
 RSTP enabled (spanning-tree mode rapid-pvst)
 
-Root bridge priority tuning on SW1 & SW2
+Root bridge priority on SW1 & SW2
 <br>spanning-tree vlan 10 root primary
 <br>spanning-tree vlan 10 root secondary
 
@@ -201,13 +201,15 @@ R1 pinged SW1 and SW3 cores successfully, - ISP/WAN links working
 
 # Scenario 1) 
 
-RSTP root primary core SW1 fails, all interfaces shutdown. Simulating a layer 1 line protocol down.
+RSTP root primary core SW1 fails, all interfaces shutdown. Simulating a failure.
  
 <br>
 
 ![Failover to secondary](images/failover-to-root-secondary.jpg)
 
 <br>
+
+## We can use these commands to verify:
 
 Verify Spanning Tree Status: 
 <br>show spanning-tree
@@ -240,11 +242,11 @@ Network connectivity was maintained
 
 # Scenario 2) 
 
-Distribution switch SW3 has a physical link failure downstream towards access switch SW7, trunk is in down.
+Distribution switch SW3 has a failure downstream towards access switch SW7, trunk is in down - no connectivity.
 
 <br>
 
-Failover testing was performed by shutting down a primary link between switches SW3 and SW7
+Failover testing was performed by manually shutting down a primary link between switches SW3 and SW7.
 
 <br>
 
@@ -270,7 +272,7 @@ Traffic took alternative path to SW5 in order to reach the root / core layer.
 
 <br>
 
-![New Path to SW1 root](images/RSTP-reconvergence.jpg)
+![New Path to SW1 root](images/RSTP-reconvergence2.jpg)
 
 <br>
 
@@ -295,7 +297,7 @@ BPDU Guard testing was performed by plugging a rogue switch into SW6 at the acce
 Observed Behavior:
 
 SW6 with port-fast and BPDU Guard enabled on its access ports, SW6 detects network node sending overhead messages
-into the access interface. SW6 bpduguard immediately moves the interface into an err-disabled state.
+into the access interface. SW6 BPDU Guard immediately moves the interface into an err-disabled state.
 
 <br>
 
@@ -348,19 +350,15 @@ Rogue switch plugged into access layer switch - BPDU Guard successfully detects 
 
 A link failure at the distribution layer doesn't break the network. RSTP recovers
 
-RSTP significantly improves convergence time over legacy STP
-
 Demonstrated the ability to design, test, and validate Layer 2 failover scenarios using RSTP
 
 Alternate ports enable near-instant failover
-
-Root bridge placement directly impacts traffic flow
 
 Redundancy at the core and distribution level is crucial to maintain network availability 
 
 Proper Layer 2 design is critical for network stability and performance
 
-Watched BPDU Guard block a rogue switch in real time
+Watched BPDU Guard block a rogue switch in real time (virtual machine)
 
 Understanding STP more from building it from the ground up with real Cisco IOS XE nodes. 
 
