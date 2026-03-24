@@ -597,7 +597,7 @@ After: R6 > R4 > R2 > R1 > R3 > R5 > R7
 
 <br>
 
-We will shutdown link from R1 (ASBR) to R3 (backbone router) to simulate a physical failure at layer 1.
+We will shutdown link from R1 (ASBR) to R3 (backbone router) to simulate a failure.
 
 <br>
 
