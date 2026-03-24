@@ -627,7 +627,7 @@ We can see R3 has two routes available to reach 10.0.12.0/30 network.
 
 Action on R1:
 <br>interface e0/1
-	shutdown
+<br>shutdown
 
 Once the link between R1 and R3 failed, we can see R3 stopped receiving hello messages from 1.1.1.1 on it's E0/0 interface.
 
