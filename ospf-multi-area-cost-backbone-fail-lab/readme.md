@@ -62,7 +62,7 @@ Implement loopback interfaces to simulate reachable network destinations
 
 This lab implements a multi-area OSPF design with a redundant backbone (Area 0), two edge areas (Area 1 and Area 2), and an ASBR providing external connectivity via a default route.
 
-The topology consists of seven routers (R1–R7) organized hierarchically to demonstrate inter-area routing, ABR behavior, and OSPF scalability principles. IOS XE. 
+The topology consists of seven routers (R1–R7) organized hierarchically to demonstrate inter-area routing, neighbor adjacencies, and ABR behavior. Routers are running IOS XE. 
 
 <br>
 
