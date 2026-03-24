@@ -539,7 +539,7 @@ All links being equal, the packet will take natural path of R6 > R4 > R2 > R1
 
 ## Cost Manipulation: 
 
-Well, another unexpected troubleshooting issue but that's the process is about. I tried everything to adjust OSPF costs on R2 and R1 but could not get the path to change. 
+Well, another unexpected troubleshooting issue but that's what the process is about. I tried everything to adjust OSPF costs on R2 and R1 but could not get the path to change. 
 
 I finally realized R2 E0/0 > R1 is a direct connected (C) route. No OSPF cost adjustment was going to change OSPF's
 decision to use E0/0.
