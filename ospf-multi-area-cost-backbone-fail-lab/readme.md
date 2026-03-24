@@ -26,7 +26,7 @@ Design and implement a multi-router OSPF topology
 
 Configure OSPF adjacencies across multiple network segments
 
-Analyze OSPF neighbor relationships and LSDB behavior
+Analyze OSPF neighbor relationships
 
 Manipulate OSPF path selection using interface cost
 
