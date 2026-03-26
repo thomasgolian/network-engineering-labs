@@ -214,11 +214,36 @@ RSTP root primary core SW1 fails, all interfaces shutdown. Simulating a failure.
 Verify Spanning Tree Status: 
 <br>show spanning-tree
 
+Originally, SW1 was root but now you can see SW3 (distr) detects root primary down, and changes RSTP root vlan 10 to SW2. SW2 backup root has now taken over the role of root primary with the lowest bridge-id priority:
+
+<br>
+
+For fun we can use this command to see all the BPDUs in real time on SW3 before the failure:
+debug spanning-tree bpdu
+
+<br>
+
+![BPDUs](debug-bpdu-sw3.jpg)
+
+<br>
+
+We can see the conversation and reconvergence of the switches on the CLI when we enable debugging: 
+debug spanning-tree events
+
+![Root Check](debug-rstp-events.jpg)
+
+<br>
+
 Verify Root Bridge: 
 <br>show spanning-tree root
 
-Verify Interface Roles: 
-<br>show spanning-tree interface
+We can now see root bridge has a higher priority value that belongs to SW2. SW2 with the priorty value of 28682 is now root for VLAN 10 - because SW1 is down / not responding / not sending BPDUs. 
+
+SW1 will regain root primary status in VLAN 10 topology when it regains connectivity and is up,up. 
+
+<br>
+
+![SW2 Root](sw2-root-converge.jpg)
 
 <br>
 
@@ -233,6 +258,8 @@ Convergence occurred rapidly (sub-second to a few seconds)
 No switching loops were introduced
 
 Network connectivity was maintained
+
+We could see SW3 detect something was wrong after not receiving BPDUs from root SW1 - and logs enable us to see the process.
 
 <br>
 
@@ -258,6 +285,23 @@ Failover testing was performed by manually shutting down a primary link between 
 
 <br>
 
+We can verify by checking the outgoing interface before and after the topology change:
+
+Before = SW7 took E0/0 outgoing interface as path to root
+<br>After = SW7 takes E0/1 outgoing interface as path to root
+
+Originally topology path will return once SW3 regains connectivity on it's downstream trunk to SW7. 
+
+<br>
+
+![SW7 Path Change](sw7-path.jpg)
+
+<br>
+
+![New Path to SW1 root](images/RSTP-reconvergence2.jpg)
+
+<br>
+
 ## Observed Behavior:
 
 Alternate port transitioned to forwarding state
@@ -270,9 +314,7 @@ Network connectivity was maintained
 
 Traffic took alternative path to SW5 in order to reach the root / core layer. 
 
-<br>
-
-![New Path to SW1 root](images/RSTP-reconvergence2.jpg)
+We can verify by using show spanning-tree commands and using debug logs to see the overhead conversation between switches. 
 
 <br>
 
@@ -303,7 +345,28 @@ into the access interface. SW6 BPDU Guard immediately moves the interface into a
 
 ![BPDU err-disable Verify](images/SW6-BPDUguard.jpg)
 
-<br>
+<br> 
+
+Let's watch it again but we will first enable debugging on SW6 so we can view the logs as the rogue switch gets plugged in:
+<br>show spanning-tree events
+<br>show spanning-tree bpdu
+
+Here we see a level 2 Critical log from Spanning-Tree - BPDU Guard is blocking int E1/0, placing interface into err-disabled:
+
+<br> 
+
+![BPDU Blocking](bpdu-guard-block.jpg)
+
+<br> 
+
+After the incident is over and the interface is ready to come back online -
+We have to issue a 'shutdown' command on the err-disabled interface FIRST, and THEN issue the no shut.
+This is required to bring an err-disabled port back up. 
+
+When a BPDU was received on a PortFast-enabled interface with BPDU Guard configured, 
+the switch immediately placed the port into an err-disabled state to prevent a potential loop.
+
+<br> 
 
 ***************************************************************************************
 
@@ -359,6 +422,8 @@ Redundancy at the core and distribution level is crucial to maintain network ava
 Proper Layer 2 design is critical for network stability and performance
 
 Watched BPDU Guard block a rogue switch in real time (virtual machine)
+
+Using debugging logs help us verify and understand each step of RSTP convergence
 
 Understanding STP more from building it from the ground up with real Cisco IOS XE nodes. 
 
