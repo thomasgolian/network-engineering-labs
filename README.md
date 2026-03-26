@@ -21,7 +21,7 @@ This repository contains hands-on networking labs focused on real-world design, 
 
 This portfolio demonstrates practical networking skills using Cisco technologies in a lab environment.
 
-My current lab environment: Cisco Modeling Labs v2.8.3 - 20 max nodes
+My current lab environment: Cisco Modeling Labs v2.8.1 - 20 max nodes
 
 WMware Workstation running on physical machine:
 <br>i71400k cpu
