@@ -205,7 +205,7 @@ RSTP root primary core SW1 fails, all interfaces shutdown. Simulating a failure.
  
 <br>
 
-![Failover to secondary](images/failover-to-root-secondary.jpg)
+![Failover to secondary](images/failover-to-root-secondary2.jpg)
 
 <br>
 
