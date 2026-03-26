@@ -219,7 +219,7 @@ Originally, SW1 was root but now you can see SW3 (distr) detects root down, and 
 <br>
 
 For fun we can use this command to see all the BPDUs in real time on SW3 before the failure:
-debug spanning-tree bpdu
+<br>debug spanning-tree bpdu
 
 <br>
 
