@@ -214,7 +214,7 @@ RSTP root primary core SW1 fails, all interfaces shutdown. Simulating a failure.
 Verify Spanning Tree Status: 
 <br>show spanning-tree
 
-Originally, SW1 was root but now you can see SW3 (distr) detects root primary down, and changes RSTP root vlan 10 to SW2. SW2 backup root has now taken over the role of root primary with the lowest bridge-id priority:
+Originally, SW1 was root but now you can see SW3 (distr) detects root down, and changes RSTP root vlan 10 to SW2. SW2 backup root has now taken over the role of root bridge with the lowest bridge-id priority.
 
 <br>
 
@@ -239,7 +239,8 @@ Verify Root Bridge:
 
 We can now see root bridge has a higher priority value that belongs to SW2. SW2 with the priorty value of 28682 is now root for VLAN 10 - because SW1 is down / not responding / not sending BPDUs. 
 
-SW1 will regain root primary status in VLAN 10 topology when it regains connectivity and is up,up. 
+SW1 will regain root status in VLAN 10 topology when it regains connectivity and is up,up. Remember, SW1 still has 'root primary' configuration so it
+will take it back once it's up again. 
 
 <br>
 
@@ -247,11 +248,11 @@ SW1 will regain root primary status in VLAN 10 topology when it regains connecti
 
 <br>
 
-Failover testing was performed by shutting down all interfaces on SW1 root primary to simulate switch catastrophic failure. 
+Failover testing was performed by shutting down all interfaces on SW1 root to simulate switch catastrophic failure. 
 
 Observed Behavior:
 
-SW2 secondary root now takes over as the VLAN 10 RSTP root primary core switch, changing all interfaces to designated / forwarding. 
+SW2 secondary root now takes over as the VLAN 10 RSTP root core switch, changing all interfaces to designated / forwarding. 
 
 Convergence occurred rapidly (sub-second to a few seconds)
 
