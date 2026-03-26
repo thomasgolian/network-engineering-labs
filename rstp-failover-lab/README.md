@@ -223,14 +223,14 @@ debug spanning-tree bpdu
 
 <br>
 
-![BPDUs](debug-bpdu-sw3.jpg)
+![BPDUs](images/debug-bpdu-sw3.jpg)
 
 <br>
 
 We can see the conversation and reconvergence of the switches on the CLI when we enable debugging: 
 debug spanning-tree events
 
-![Root Check](debug-rstp-events.jpg)
+![Root Check](images/debug-rstp-events.jpg)
 
 <br>
 
@@ -243,7 +243,7 @@ SW1 will regain root primary status in VLAN 10 topology when it regains connecti
 
 <br>
 
-![SW2 Root](sw2-root-converge.jpg)
+![SW2 Root](images/sw2-root-converge.jpg)
 
 <br>
 
@@ -294,7 +294,7 @@ Originally topology path will return once SW3 regains connectivity on it's downs
 
 <br>
 
-![SW7 Path Change](sw7-path.jpg)
+![SW7 Path Change](images/sw7-path.jpg)
 
 <br>
 
@@ -355,7 +355,7 @@ Here we see a level 2 Critical log from Spanning-Tree - BPDU Guard is blocking i
 
 <br> 
 
-![BPDU Blocking](bpdu-guard-block.jpg)
+![BPDU Blocking](images/bpdu-guard-block.jpg)
 
 <br> 
 
