@@ -228,7 +228,7 @@ For fun we can use this command to see all the BPDUs in real time on SW3 before 
 <br>
 
 We can see the conversation and reconvergence of the switches on the CLI when we enable debugging: 
-debug spanning-tree events
+<br>debug spanning-tree events
 
 ![Root Check](images/debug-rstp-events.jpg)
 
