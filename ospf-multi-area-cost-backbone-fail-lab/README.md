@@ -640,7 +640,7 @@ Once the link between R1 and R3 failed, we can see R3 stopped receiving hello me
 
 R3 Routing Table After:
 
-R3's routing table now only has a single route to reach network 10.0.12.0/30 through R2. Another reason for backbone redundancy.
+R3's routing table now only has a single route to reach network 10.0.12.0/30 through R2. One route failed, but the backbone still had another route to reach the ASBR.
 
 <br>
 
