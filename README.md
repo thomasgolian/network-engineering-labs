@@ -23,7 +23,7 @@ This portfolio demonstrates practical networking skills using Cisco technologies
 
 My current lab environment: Cisco Modeling Labs v2.8.1 - 20 max nodes
 
-WMware Workstation running on physical machine:
+VMware Workstation running on physical machine:
 <br>i71400k cpu
 <br>64 GB RAM
 <br>2 TB SSD M.2
