@@ -62,11 +62,13 @@ Access nodes (Users) are using VLAN 10. All trunks are configured to allow VLAN 
 
 <br>
 
-![VLAN 10 Config](images/VLAN10-interfaces-verify.png)
+Access switches SW6,7,8 have extra interfaces installed and configured as access ports running port-fast and BPDU guard.
 
 <br>
 
-Access switches SW6,7,8 have extra interfaces installed and configured as access ports running port-fast and BPDU guard.
+![VLAN 10 Config](images/VLAN10-interfaces-verify.png)
+
+<br>
 
 Link between core SW1 and SW2 is layer 2 link for the purpose of more RSTP options. 
 
@@ -105,7 +107,6 @@ copy running-config startup-config
 
 Apline Linux Desktop to test end-to-end connectivity and configured with:
 <br>sudo ifconfig eth0 10.1.10.19 netmask 255.255.255.0
-<br>ifconfig
 
 <br>
 
@@ -116,7 +117,7 @@ SW1 & SW2 SVI
 <br>
 <br>interface vlan 10
 <br> ip address 10.1.10.3 255.255.255.0
-<br> no shutdow
+<br> no shutdown
 
 <br>
 
