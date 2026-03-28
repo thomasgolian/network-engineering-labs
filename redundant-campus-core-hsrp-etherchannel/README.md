@@ -9,10 +9,12 @@ All switches and/or routers in this lab are running IOS XE images virtualized or
 ![CML](images/CML.jpg)
 
 <br>
+
 # Topology:
 
 ![Topology](images/topology2.jpg)
 <br>
+
 # Overview:
 
 This lab explores high availability and resiliency mechanisms within a switched and routed enterprise network by simulating multiple failure scenarios involving HSRP, EtherChannel, and Spanning Tree Protocol. 
