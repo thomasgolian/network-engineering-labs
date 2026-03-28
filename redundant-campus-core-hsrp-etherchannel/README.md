@@ -148,8 +148,9 @@ Below:
 
 *Scalability: While you can have multiple groups per VLAN, it is best practice to map one group to one VLAN to prevent management complexity.*
 <br>
-![SVI Core](images/svi-core.jpg)
 
+![SVI Core](images/svi-core.jpg)
+<br>
 
 ## SW1:
 
