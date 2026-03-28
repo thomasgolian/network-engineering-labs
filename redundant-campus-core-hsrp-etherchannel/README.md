@@ -58,7 +58,7 @@ inter-VLAN routing*
 
 # Topology:
 
-![Topology](images/topology.jpg)
+![Topology](images/topology2.jpg)
 
 <br>
 
@@ -946,4 +946,4 @@ It cannot see:
 
 <br>
 
-![Topology](images/topology.jpg)
+![Topology](images/topology2.jpg)
