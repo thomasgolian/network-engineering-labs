@@ -334,12 +334,12 @@ Apline Linux Desktop in VLAN 10,20,30 to test end-to-end connectivity and config
 Desktop Servers & Desktop Voice will be configured the same:
 
 Servers:
-<br>sudo ifconfig eth0 10.1.10.100 netmask 255.255.255.0 up
-<br>sudo route add default gw 10.1.10.1 eth0
+<br>sudo ifconfig eth0 10.1.20.100 netmask 255.255.255.0 up
+<br>sudo route add default gw 10.1.20.1 eth0
 
 Voice:
-<br>sudo ifconfig eth0 10.1.10.101 netmask 255.255.255.0 up
-<br>sudo route add default gw 10.1.10.1 eth0
+<br>sudo ifconfig eth0 10.1.30.101 netmask 255.255.255.0 up
+<br>sudo route add default gw 10.1.30.1 eth0
 
 In Cisco Modeling Labs, Linux desktop nodes don't persist config changes unless you manually edit config in UI using the provided shell script. 
 But you can make eth0 interface changes here, so you don't have to do it every time you boot up your CML lab:
