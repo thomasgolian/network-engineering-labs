@@ -19,9 +19,9 @@ All switches and/or routers in this lab are running IOS XE images virtualized or
 
 This lab explores high availability and resiliency mechanisms within a switched and routed enterprise network by simulating multiple failure scenarios involving HSRP, EtherChannel, and Spanning Tree Protocol. 
 
-The project focuses on validating gateway redundancy through HSRP by observing failover behavior during active L3 routing failure, while also testing link aggregation resilience by introducing both individual EtherChannel member link failures and a complete port-channel outage to evaluate network stability and traffic convergence.
+The project focuses on validating gateway redundancy through HSRP by observing failover behavior during active L3 routing failure, while also testing link aggregation resilience by introducing both individual EtherChannel member link failures and a complete port-channel outage.
 
-Additionally, the lab examines the impact of HSRP and STP misalignment, highlighting potential suboptimal traffic paths and the importance of proper Layer 2 and Layer 3 design coordination. Overall, this lab demonstrates how redundancy protocols interact under failure conditions and reinforces best practices for designing fault-tolerant network infrastructures.
+Additionally, the lab examines the impact of HSRP and STP misalignment, highlighting potential suboptimal traffic paths and the importance of proper Layer 2 and Layer 3 design coordination. 
 
 <br>
 
