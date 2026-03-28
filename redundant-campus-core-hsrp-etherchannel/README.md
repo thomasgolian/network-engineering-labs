@@ -352,8 +352,6 @@ But you can make eth0 interface changes here, so you don't have to do it every t
 
 <br>
 
-![Verify L3 Connection](images/trunk-vlans-verify.jpg)
-
 <br>
 We will also configure Access Switch SW1's E0/2 interface as an access port with port-fast and BPDU guard.
 
