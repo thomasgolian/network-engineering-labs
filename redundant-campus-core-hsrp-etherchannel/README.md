@@ -351,6 +351,7 @@ But you can make eth0 interface changes here, so you don't have to do it every t
 ## Verifying end-to-end network connectivity through layer 2 to the core, and out layer 3 to the ISP:
 
 <br>
+
 ![Verify L3 Connection](images/trunk-vlans-verify.jpg)
 
 <br>
