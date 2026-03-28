@@ -232,7 +232,7 @@ And we verify to make sure SVIs are working at layer 3:
 
 EtherChannel LACP configuration between SW1 & SW2 (two physical links logically acting as a single link)
 
-*We are using LACP encapsulation dot1Q and we are using 'Active' auto negotiation for Port Channel 1 on both ends* 
+*We are using LACP encapsulation dot1Q and we are using 'Active' negotiation for Port Channel 1 on both ends* 
 
 SW1
 <br>interface range e0/1-2
