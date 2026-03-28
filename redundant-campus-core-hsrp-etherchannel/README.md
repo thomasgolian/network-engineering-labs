@@ -352,17 +352,6 @@ But you can make eth0 interface changes here, so you don't have to do it every t
 
 <br>
 
-<br>
-We will also configure Access Switch SW1's E0/2 interface as an access port with port-fast and BPDU guard.
-
-SW3
-<br>int e0/3
-<br>switchport mode access vlan 10
-<br>spanning-tree portfast
-<br>spanning-tree bpduguard enable
-
-<br>
-
 ************************************************************************************************************
 
 ## *Ran into unexpected ping connectivity issues. Troubleshooting will commence! :)*
