@@ -226,10 +226,6 @@ We're using 0.0.255.255 wildcard to apply OSPF process 1 to all interfaces that 
 
 <br>
 
-![Extra Config](images/all-routers-ospf-int.jpg)
-
-<br>
-
 ABR R4:
 <br>E0/0 area 0
 <br>E0/1 area 1
