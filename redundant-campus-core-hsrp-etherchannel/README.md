@@ -34,7 +34,7 @@ HSRP = Hot Standby Routing Protocol
 <br>Hosts use virtual IP (VIP) as their default gateway
 <br>SVIs provide Layer 3 routing for VLANs 
 
-## What’s happening under the hood (cool part)
+## What’s happening under the hood
 
 <br>EtherChannel → gives you bandwidth + stability
 <br>RSTP → decides the forwarding topology
