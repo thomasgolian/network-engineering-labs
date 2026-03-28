@@ -105,7 +105,7 @@ copy running-config startup-config
 
 <br>
 
-Apline Linux Desktop to test end-to-end connectivity and configured with:
+Alpine Linux Desktop to test end-to-end connectivity and configured with:
 <br>sudo ifconfig eth0 10.1.10.19 netmask 255.255.255.0
 
 <br>
