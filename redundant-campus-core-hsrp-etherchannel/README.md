@@ -357,7 +357,7 @@ But you can make eth0 interface changes here, so you don't have to do it every t
 ## *Ran into unexpected ping connectivity issues. Troubleshooting will commence! :)*
 
 This is what labbing is about. I made a mistake on R1. Though R1 is not the focus of the lab,
-we still want to ensure connectivity so the network design is valid and find the fix! In the design I made mistake that is related to the often termed "Asymmetric routing with HSRP." But this is project is not relevant to R1's routing choices.
+we still want to ensure connectivity so the network design is valid and find the fix! In the design I made mistake that is related to the often termed "Asymmetric routing with HSRP." This is not directly related to objectives but we push on to solve the problem anyway because we must. :)
 
 <br>
 
