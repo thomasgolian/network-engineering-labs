@@ -60,9 +60,6 @@ inter-VLAN routing*
 
 ![Topology](images/topology2.jpg)
 
-<br>
-
-
 ## Topology Description:
 
 This is a collapsed-core design with two multi-layer switches acting as the distribution layer and core layer 3 routing out
@@ -78,7 +75,7 @@ RSTP will treat the port channel as a single layer 2 logical link. The port chan
 
 Inter-VLAN routing is through SW1 & SW2 SVIs. There is no Router-on-a-stick (ROAS) in this topology 
 
-<br>SW1 as Active
+SW1 as Active
 <br>SW2 as Standby
 
 <br>
@@ -87,24 +84,23 @@ Inter-VLAN routing is through SW1 & SW2 SVIs. There is no Router-on-a-stick (ROA
 
 R1 acting as WAN /ISP so we will give SW1 & SW2 a default route out of the LAN:
 
-<br>SW1
+SW1
 <br>ip route 0.0.0.0 0.0.0.0 192.168.1.1 
 
-<br>SW2
+SW2
 <br>ip route 0.0.0.0 0.0.0.0 192.168.1.2 
 
 On all switches (core + access) we configure the following VLANs:
 
-<br>vlan 10
+vlan 10
 <br>name USERS
 
-<br>vlan 20
+vlan 20
 <br>name SERVERS
 
-<br>vlan 30
+vlan 30
 <br><br>name VOICE
 
-<br>
 <br>
 
 ## Physical routed interfaces using IP addresses:
@@ -140,7 +136,7 @@ HSRP:
 <br>*{preempt} option = takes back control if it comes back online.*
 <br>*Keep in mind HSRP, {priority} number = higher number is better / superior. If tied, highest IP address on that interface wins*
 
-<br>VLAN 10 = 10.1.10.1
+VLAN 10 = 10.1.10.1
 <br>VLAN 20 = 10.1.20.1
 <br>VLAN 30 = 10.1.30.1
 
@@ -203,8 +199,6 @@ VLAN 30
 <br>standby 30 preempt
 <br>no shutdown
 
-<br>
-
 !SVIs Up Up](images/svi-up-up.jpg)
 
 <br>
@@ -259,12 +253,11 @@ We can use this command to confirm LACP:
 ![LACP Neighbor](images/show-lacp-neighbor.jpg)
 
 ![LACP Neighbor](images/port-channel1.jpg)
-
 <br>
 
 Trunk Configuration for all layer 2 ethernet links between Access layer switches and Core layer switches:
 
-<br>interface range {interfaces}
+interface range {interfaces}
 <br>switchport trunk encapsulation dot1q
 <br>switchport mode trunk
 <br>switchport trunk allowed vlan add 10,20,30
@@ -272,7 +265,6 @@ Trunk Configuration for all layer 2 ethernet links between Access layer switches
 <br>
 
 ![Verify Trunks](images/verify-trunks.jpg)
-
 <br>
 
 ![Verify Trunks](images/trunk-vlans-verify.jpg)
@@ -281,7 +273,6 @@ Trunk Configuration for all layer 2 ethernet links between Access layer switches
 
 We'll verify EtherChannel on SW1 & SW2:
 <br>show interfaces po1 etherchannel 
-
 <br>
 
 ![Po1 Verify](images/switch1-po1-verify.jpg)
@@ -298,17 +289,17 @@ Full baseline configurations are available in the configs/ directory
 
 Initial IOS XE configurations I entered for all network nodes:
 
-<br>enable secret cisco
+enable secret cisco
 <br>hostname {}
 <br>no ip domain lookup
 
-<br>line console 0
+line console 0
 <br>logging synchronous
 <br>exec-timeout 0 0
 <br>password cisco
 <br>login
 
-<br>line vty 0 4
+line vty 0 4
 <br>logging synchronous
 <br>exec-timeout 15 0
 <br>password cisco
@@ -345,8 +336,6 @@ Voice:
 <br>sudo ifconfig eth0 10.1.10.101 netmask 255.255.255.0 up
 <br>sudo route add default gw 10.1.10.1 eth0
 
-<br>
-
 In Cisco Modeling Labs, Linux desktop nodes don't persist config changes unless you manually edit config in UI using the provided shell script. 
 But you can make eth0 interface changes here, so you don't have to do it every time you boot up your CML lab:
 
@@ -357,14 +346,12 @@ But you can make eth0 interface changes here, so you don't have to do it every t
 ## Verifying end-to-end network connectivity through layer 2 to the core, and out layer 3 to the ISP:
 
 <br>
-
 ![Verify L3 Connection](images/trunk-vlans-verify.jpg)
 
 <br>
-
 We will also configure Access Switch SW1's E0/2 interface as an access port with port-fast and BPDU guard.
 
-<br>SW3
+SW3
 <br>int e0/3
 <br>switchport mode access vlan 10
 <br>spanning-tree portfast
@@ -381,7 +368,7 @@ we still want to ensure connectivity so the network design is valid and find the
 
 <br>
 
-<br>HSRP on SW1/SW2
+HSRP on SW1/SW2
 <br>Dual links from R1 to SW1 and SW2
 <br>Equal-cost routes on R1
 
@@ -393,7 +380,7 @@ Some traffic goes to SW2 (STANDBY) ❌
 
 ## Here’s the problem:
 
-<br>SW2 is STANDBY so it does NOT own the virtual IP
+SW2 is STANDBY so it does NOT own the virtual IP
 <br>So it may drop or mishandle the traffic
 
 R1 has two choices to get to network 10.1.x.x/24
@@ -408,7 +395,6 @@ Routers don’t “prefer” one path unless you tell them to.
 # This is one way to resolve this topology design issue with R1 acting as a dual-homed ISP:
 
 <br>
-
 For lab purposes, we simply tell R1 not to use 192.168.2.2 for any destination network 
 
 <br>no ip route 10.1.0.0 255.255.0.0 192.168.2.2
@@ -422,24 +408,21 @@ But now it makes much more sense*
 
 The router:
 
-<br>Removed that line from running-config
+Removed that line from running-config
 <br>Recalculated routing table
 <br>Removed that path from RIB + CEF
 
 <br>
-
 ## R1 before:
 
 <br>
 
 ![Two Paths](images/r1-cef1.jpg)
-
 <br>
 
 ## R1 after: 
 
 <br>
-
 ![Single Path](images/r1-cef2.jpg)
 
 <br>
@@ -449,7 +432,6 @@ Here we can see successful pings from R1 to all three SVIs inside the LAN's core
 ![R1 Confirm](images/r1-confirm-verify.jpg)
 
 <br>
-
 ## Resolved. 
 
 <br>
@@ -457,7 +439,6 @@ Here we can see successful pings from R1 to all three SVIs inside the LAN's core
 *Okay now the t-shooting of the tangential issue is complete, we can continue with break scenarios*
 
 <br>
-
 ***************************************************************************************
 
 <br>
@@ -485,7 +466,7 @@ SW1 & SW2 respectively:
 
 OR
 
-<br>spanning-tree vlan 10,20,30 priority primary
+spanning-tree vlan 10,20,30 priority primary
 <br>spanning-tree vlan 10,20,30 priority secondary
 
 ## Resolved:
@@ -495,7 +476,6 @@ You can see the bridge System-ID extension as 4106 (4096 + 10 for vlan number = 
 SW1 is now RSTP root for VLANs 10,20,30. Now we shut it down and see if SW2 correctly becomes root. 
 
 <br>
-
 ![SW1 Root](images/sw1-rstp-root-verify.jpg)
 
 <br>
@@ -503,11 +483,9 @@ SW1 is now RSTP root for VLANs 10,20,30. Now we shut it down and see if SW2 corr
 We did a shutdown on SW1 interfaces - now SW2 has become layer 2 RSTP root and layer 3 HSRP primary:
 
 <br>
-
 ![SW2 Root](images/sw2-rstp-root-verify.jpg)
  
 <br>
-
 ## Conclusion
 
 We not only concluded RSTP will recover using SW2 as root during SW1 root failure to ensure layer 2 connectivity.
@@ -517,7 +495,6 @@ We also ensured HSRP is working when the Active gateway (SW1) fails, and the Sta
 SW1 is down - no longer functioning as default gateway for LAN hosts:
 
 <br>
-
 ![SW1 Down](images/hsrp-sw1-down.jpg)
 
 <br>
@@ -525,7 +502,6 @@ SW1 is down - no longer functioning as default gateway for LAN hosts:
 SW2 immediately takes over as default gateway - becoming 'Active' state:
 
 <br>
-
 ![SW2 Root](images/hsrp-sw2-up.jpg)
 
 After we did a 'no shut' on both SW1's physical interfaces and a 'no shut' on the SVIs for HSRP, SW1 regained Active role. SW2 moved back to Standby role. 
@@ -535,7 +511,6 @@ We can also see the keyword 'State = Speak' in the spanning-tree log events as S
 ![SW1 Root](images/sw1-preempt-active.jpg)
 
 <br>
-
 *Unexpected mistake* - I accidently assigned the same SVI interface IP address on SW2 as I did SW1 during SVI design and breaking things. 
 Only the virtual gateway IP address in HSRP should be the same, not the individual SVIs for the VLANs. 
 
@@ -543,11 +518,9 @@ So I was getting a duplicate IP address error:
 <br>Mar 28 15:01:14.849: %IP-4-DUPADDR: Duplicate address 10.1.10.2 on Vlan10, sourced by aabb.cc80.2b00
 
 Changed SW2 last octet to .3 for all three SVI interfaces. Resolved. HSRP and RSTP functioning normal. We can see the state change:
-
 <br>
 
 ![SW2 State](images/sw2-state-change.jpg)
-
 
 SW1 is now Active in all three VLANs again.
 
@@ -571,7 +544,6 @@ We will take down SW1's E0/2 to see what happens:
 ![Link Down](images/link-down-po1.jpg)
 
 <br>
-
 ## SW1 stays up as Active HSRP gateway - we can see Po1 is up, but the second link is Et0/2(D) = down. 
 
 The Ports column shows the physical interfaces in Po1:
@@ -583,11 +555,9 @@ The Ports column shows the physical interfaces in Po1:
 ![SW2 State](images/link-down-verify.jpg)
 
 <br>
-
 ![SW2 State](images/sw1-hsrp-remains-up.jpg)
 
 <br>
-
 SW1 remains the root for RSTP topology, even though one link in the ether-channel failed. 
 
 SW1 remains HSRP Active gateway as it should. 
@@ -596,13 +566,11 @@ Now we use following command on SW1 or SW2 to verify the bandwidth loss when los
 <br>show interface port-channel 1
 
 ## BEFORE the link breaks, we can see Po1 (2x 1000 kbps links) totaling 2000 kbps bandwidth from the two links bundled together logically.
-
 <br>
 
 ![2000BW](images/po1-2000-bw.jpg)
 
 <br>
-
 ## AFTER E0/2 link fails on SW1 - we can see clearly the ether-channel is now only using one link, totaling only 1000 kbps bandwidth.
 Yes, we lose bandwidth, but the redundancy is success and the ether-channel stays up and operational which is what we want. 
 
@@ -611,7 +579,6 @@ Yes, we lose bandwidth, but the redundancy is success and the ether-channel stay
 ![1000BW](images/po1-1000-bw.jpg)
 
 <br>
-
 ## Observed Behavior:
 
 The Ether-Channel stayed up successfully.
@@ -619,11 +586,9 @@ The Ether-Channel stayed up successfully.
 Bandwidth is reduced on the EtherChannel but should be no outage. Success.
 
 HSRP did not fail over, operated as intended with no issues. 
-
 <br>
 
 ***************************************************************************************
-
 <br>
 
 # Scenario 3) Full EtherChannel Failure (Core Split Test)
@@ -654,7 +619,7 @@ Default gateway = SW1 (HSRP Active)
 <br>Partial outage (this is the scary kind in real life). Some users work, some don’t. Network Operations might get confusing tickets.
 
 **************************************************************************************************
-
+<br>
 ## *This testing connectivity led me down a rabbit hole of SVIs and HSRP behavior, so let's dive in...* 
 
 Let's test connectivity and pathing from end devices from Users VLAN 20, Servers VLAN 20, and Voice VLAN 30:
@@ -684,7 +649,7 @@ When the switch actually routes the packet, it uses its real SVI IP (10.1.10.2)
 <br>
 
 *****************************************************************************************************
-
+<br>
 ## Before Po1 goes down:
 
 Users, Servers, and Voice Desktops all have connectivity throughout LAN as well as to ISP/WAN outside.
@@ -692,13 +657,11 @@ Users, Servers, and Voice Desktops all have connectivity throughout LAN as well 
 <br>
 
 ![Full Connectivity](images/full-connectivity.jpg)
-
 <br>
 
 SW2 is HSRP standby state:
 
 <br>
-
 ![Standby State](images/sw2-before-ether-down.jpg)
 
 <br>
@@ -708,7 +671,6 @@ SW2 is HSRP standby state:
 SW2 immediately detects changes in the RSTP topology. 
 
 <br>
-
 ![Logs](images/sw2-logs.jpg)
 
 <br>
@@ -723,7 +685,6 @@ So to continue, I'll force the 'split-brain' scenario by shutting down both ends
 <br>
 
 ![Split Brain](images/split-brain.jpg)
-
 <br>
 
 Well, the RSTP topology changed but we still have redundancy through the LAN trunks,
@@ -737,7 +698,6 @@ through SW5, SW4, or SW3.
 *Just learned this - "A Cisco base MAC address is the primary, unique hardware address (often burned into the EEPROM) used to identify the switch itself, rather than a specific port. It acts as the anchor for the device, commonly utilized as the bridge ID in Spanning Tree Protocol (STP) and for generating MAC addresses for VLANs (SVIs)"*
 
 <br>
-
 SW2 burned in address: aabb.cc80.2b00 - however we can't trace layer 2 that way because we are using Cisco Modeling Labs 
 and virtualized nodes of the same type use the same base MAC address...
 
@@ -745,7 +705,6 @@ We move on to use 'show cdp neighbors' and 'show spanning-tree vlan 10' to trace
 can carry HSRP Hello messages. 
 
 <br>
-
 ![Trace to SW5](images/sw2-to-sw5-path.jpg)
 
 <br>
@@ -753,7 +712,6 @@ can carry HSRP Hello messages.
 Next we see SW5 has two interfaces that can possible forward the frame containing the hello messages from SW2:
 
 <br>
-
 ![Trace to Root](images/sw5-hello-root.jpg)
 
 <br>
@@ -768,28 +726,25 @@ But we learned new lessons about HSRP hello messages and how they can traverse t
 
 My network showed:
 
-<br>Redundant L2 paths via access layer 
+Redundant L2 paths via access layer 
 <br>STP reconverging and keeping connectivity 
 <br>HSRP hellos still flowing 
 <br>No split-brain condition
 
 <br>
-
 ***********************************************************************************************************
-
+<br>
 ## Observed Behavior:
 
-<br>The cores cannot see each other anymore
+The cores cannot see each other anymore
 <br>HSRP hellos stop crossing the inter-core link
 <br>Both switches think the other is dead
 <br>Both become HSRP Active
 
 
 <br>
-
 ***************************************************************************************
-
-
+<br>
 # Scenario 4) HSRP + STP Misalignment
  
 ## First we confirm and verify starting baseline:
@@ -810,21 +765,17 @@ SW2: We increase HSRP priority # to take over as Active role on each 3 VLANs.
 	<br>standby 10 priority 120
 	<br>standby 20 priority 120
 	<br>standby 30 priority 120
-
 <br>
 
 ![Trace to Root](images/hsrp-active-sw2.jpg)
 
 <br>
-
 We can see the misalignment on this single screenshot of SW1:
 
 <br>
-
 ![Trace to Root](images/core-misalign.jpg)
 
 <br>
-
 ## Observed Behavior:
 
 Traffic goes: Access → wrong core → back across port-channel
@@ -832,7 +783,6 @@ Traffic goes: Access → wrong core → back across port-channel
 The inefficient traffic flow cannot be seen using traceroute because the poor traffic design
 is happening at layer 2 STP before layer 3 even begins. The traffic from access layer is still
 getting to it's destination due to redundancy, but we wouldn't want this happening in a production network. 
-
 
 Simply put, all access layer frame traffic flow is traversing the LAN getting sent to SW1 
 because it is the STP root switch. Thus there is unnecessary layer 2 hops for the frames to be taking,
@@ -851,9 +801,8 @@ If the road leads to the wrong house first:
 Avoid making mistakes of misalignment - learned 
 
 <br>
-
 ***************************************************************************************
-
+<br>
 # Final Results:
 
 ## HSRP Active Failure (Gateway Failover)
@@ -862,7 +811,7 @@ Active HSRP switch failed
 <br>Standby took over virtual IP/MAC
 
 Brief traffic interruption during failover
-MAC address moved to standby switch
+<br>MAC address moved to standby switch
 <br>Network reconverged automatically
 
 Successful gateway redundancy
@@ -880,14 +829,13 @@ No traffic loss (or minimal)
 <br>Fast convergence
 
 ## Full EtherChannel Complete Failure (Core Split Test)
-
+<br>
 Entire Port-Channel between core switches failed
 
 STP reconverged
 <br>Alternate paths activated
 <br>Potential temporary loss depending on topology
 <br>HSRP continued to work fine, by finding alternative paths for their Hello messages
-
 
 Convergence event triggered (STP)
 <br>Possible transient packet loss
@@ -901,7 +849,7 @@ Traffic sent to STP root first (wrong switch)
 <br>Then forwarded to HSRP active switch
 <br>Increased inter-switch traffic
 
-<br>No outage
+No outage
 <br>Suboptimal traffic flow
 <br>Increased latency + unnecessary hops
 
