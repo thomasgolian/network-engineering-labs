@@ -204,7 +204,7 @@ VLAN 30
 <br>standby 30 preempt
 <br>no shutdown
 
-!SVIs Up Up](images/svi-up-up.jpg)
+![SVIs Up Up](images/svi-up-up.jpg)
 
 <br>
 
@@ -380,7 +380,7 @@ So R1 is doing load balancing
 
 Some traffic goes to SW2 (STANDBY) ❌
 
-![ECMP Mistake](ecmp-mistake.jpg)
+![ECMP Mistake](images/ecmp-mistake.jpg)
 
 ## Here’s the problem:
 
@@ -427,6 +427,7 @@ Removed that line from running-config
 ## R1 after: 
 
 <br>
+
 ![Single Path](images/r1-cef2.jpg)
 
 <br>
@@ -480,6 +481,7 @@ You can see the bridge System-ID extension as 4106 (4096 + 10 for vlan number = 
 SW1 is now RSTP root for VLANs 10,20,30. Now we shut it down and see if SW2 correctly becomes root. 
 
 <br>
+
 ![SW1 Root](images/sw1-rstp-root-verify.jpg)
 
 <br>
@@ -487,6 +489,7 @@ SW1 is now RSTP root for VLANs 10,20,30. Now we shut it down and see if SW2 corr
 We did a shutdown on SW1 interfaces - now SW2 has become layer 2 RSTP root and layer 3 HSRP primary:
 
 <br>
+
 ![SW2 Root](images/sw2-rstp-root-verify.jpg)
  
 <br>
@@ -499,6 +502,7 @@ We also ensured HSRP is working when the Active gateway (SW1) fails, and the Sta
 SW1 is down - no longer functioning as default gateway for LAN hosts:
 
 <br>
+
 ![SW1 Down](images/hsrp-sw1-down.jpg)
 
 <br>
@@ -506,6 +510,7 @@ SW1 is down - no longer functioning as default gateway for LAN hosts:
 SW2 immediately takes over as default gateway - becoming 'Active' state:
 
 <br>
+
 ![SW2 Root](images/hsrp-sw2-up.jpg)
 
 After we did a 'no shut' on both SW1's physical interfaces and a 'no shut' on the SVIs for HSRP, SW1 regained Active role. SW2 moved back to Standby role. 
@@ -559,6 +564,7 @@ The Ports column shows the physical interfaces in Po1:
 ![SW2 State](images/link-down-verify.jpg)
 
 <br>
+
 ![SW2 State](images/sw1-hsrp-remains-up.jpg)
 
 <br>
@@ -666,6 +672,7 @@ Users, Servers, and Voice Desktops all have connectivity throughout LAN as well 
 SW2 is HSRP standby state:
 
 <br>
+
 ![Standby State](images/sw2-before-ether-down.jpg)
 
 <br>
@@ -675,6 +682,7 @@ SW2 is HSRP standby state:
 SW2 immediately detects changes in the RSTP topology. 
 
 <br>
+
 ![Logs](images/sw2-logs.jpg)
 
 <br>
@@ -709,6 +717,7 @@ We move on to use 'show cdp neighbors' and 'show spanning-tree vlan 10' to trace
 can carry HSRP Hello messages. 
 
 <br>
+
 ![Trace to SW5](images/sw2-to-sw5-path.jpg)
 
 <br>
@@ -716,6 +725,7 @@ can carry HSRP Hello messages.
 Next we see SW5 has two interfaces that can possible forward the frame containing the hello messages from SW2:
 
 <br>
+
 ![Trace to Root](images/sw5-hello-root.jpg)
 
 <br>
@@ -777,6 +787,7 @@ SW2: We increase HSRP priority # to take over as Active role on each 3 VLANs.
 We can see the misalignment on this single screenshot of SW1:
 
 <br>
+
 ![Trace to Root](images/core-misalign.jpg)
 
 <br>
