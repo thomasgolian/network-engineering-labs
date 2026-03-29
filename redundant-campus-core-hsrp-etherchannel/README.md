@@ -583,7 +583,7 @@ Expected Behavior:
 <br>SW1 stays HSRP Active
 <br>SW2 stays Standby
 
-*this scenario does not go according to plan*
+*this scenario does not go according to plan...*
 
 ## From hosts connected to SW2:
 
@@ -591,7 +591,7 @@ Default gateway = SW1 (HSRP Active)
 <br>BUT no path to SW1 anymore ❌
 <br>= BLACKHOLE
 
-*Blackhole = "A networking black hole is a location in a network where incoming or outgoing data packets are silently discarded (dropped) without notifying the source, making the data vanish. It acts as a "cyber void," causing connectivity failures, often caused by misconfigured routes, faulty hardware, or intentional "null routing" to mitigate DDoS attacks."*
+Blackhole = "A networking black hole is a location in a network where incoming or outgoing data packets are silently discarded (dropped) without notifying the source, making the data vanish. It acts as a "cyber void," causing connectivity failures, often caused by misconfigured routes, faulty hardware, or intentional "null routing" to mitigate DDoS attacks."
 
 *we don't accomplsh a blackhole...*
 
