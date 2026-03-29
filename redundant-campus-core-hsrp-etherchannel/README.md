@@ -503,23 +503,7 @@ SW2 immediately takes over as default gateway - becoming 'Active' state:
 
 After we did a 'no shut' on both SW1's physical interfaces and a 'no shut' on the SVIs for HSRP, SW1 regained Active role. SW2 moved back to Standby role. 
 
-We can also see the keyword 'State = Speak' in the spanning-tree log events as SW1 comes back online exchanging HSRP information to preempt Active:
-
 ![SW1 Root](images/sw1-preempt-active.jpg)
-
-<br>
-*Unexpected mistake* - I accidently assigned the same SVI interface IP address on SW2 as I did SW1 during SVI design and breaking things. 
-Only the virtual gateway IP address in HSRP should be the same, not the individual SVIs for the VLANs. 
-
-So I was getting a duplicate IP address error:
-<br>Mar 28 15:01:14.849: %IP-4-DUPADDR: Duplicate address 10.1.10.2 on Vlan10, sourced by aabb.cc80.2b00
-
-Changed SW2 last octet to .3 for all three SVI interfaces. Resolved. HSRP and RSTP functioning normal. We can see the state change:
-<br>
-
-![SW2 State](images/sw2-state-change.jpg)
-
-SW1 is now Active in all three VLANs again.
 
 <br>
 
