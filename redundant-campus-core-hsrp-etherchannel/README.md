@@ -583,7 +583,7 @@ Expected Behavior:
 <br>SW1 stays HSRP Active
 <br>SW2 stays Standby
 
-However... Now traffic paths look different to the access layer end devices:
+*this scenario does not go according to plan*
 
 ## From hosts connected to SW2:
 
@@ -593,18 +593,20 @@ Default gateway = SW1 (HSRP Active)
 
 *Blackhole = "A networking black hole is a location in a network where incoming or outgoing data packets are silently discarded (dropped) without notifying the source, making the data vanish. It acts as a "cyber void," causing connectivity failures, often caused by misconfigured routes, faulty hardware, or intentional "null routing" to mitigate DDoS attacks."*
 
+*we don't accomplsh a blackhole...*
+
 ## Action on SW2: 
 <br>interface port-channel1
 <br>shutdown
 
-## Result:
-<br>Partial outage (this is the scary kind in real life). Some users work, some don’t. Network Operations might get confusing tickets.
+<br>
 
 **************************************************************************************************
 <br>
-## *This testing connectivity led me down a rabbit hole of SVIs and HSRP behavior, so let's dive in...* 
 
-Let's test connectivity and pathing from end devices from Users VLAN 20, Servers VLAN 20, and Voice VLAN 30:
+## Testing connectivity led me down a rabbit hole of SVIs and HSRP behavior, so let's dive in... 
+
+Testing traffic pathing from end devices from Users VLAN 20, Servers VLAN 20, and Voice VLAN 30:
 
 I was confused why I saw 10.1.10.2 from User Desktop traceroute to R1 because the HSRP gateway is 10.1.10.1:
 
@@ -615,8 +617,8 @@ I was confused why I saw 10.1.10.2 from User Desktop traceroute to R1 because th
 <br>
 
 I expected:
-<br>Default gateway = 10.1.10.1 (HSRP VIP) ✅
-<br>Traceroute hop 1 = 10.1.10.1 ❌ (this is the assumption)
+<br>Default gateway = 10.1.10.1 (HSRP VIP) 
+<br>Traceroute hop 1 = 10.1.10.1 (this is the assumption)
 
 Why does traceroute use 10.1.10.2? 
 <br>HSRP VIP is NOT a real interface
@@ -632,6 +634,7 @@ When the switch actually routes the packet, it uses its real SVI IP (10.1.10.2)
 
 *****************************************************************************************************
 <br>
+
 ## Before Po1 goes down:
 
 Users, Servers, and Voice Desktops all have connectivity throughout LAN as well as to ISP/WAN outside.
@@ -639,6 +642,7 @@ Users, Servers, and Voice Desktops all have connectivity throughout LAN as well 
 <br>
 
 ![Full Connectivity](images/full-connectivity.jpg)
+
 <br>
 
 SW2 is HSRP standby state:
@@ -682,6 +686,7 @@ through SW5, SW4, or SW3.
 *Just learned this - "A Cisco base MAC address is the primary, unique hardware address (often burned into the EEPROM) used to identify the switch itself, rather than a specific port. It acts as the anchor for the device, commonly utilized as the bridge ID in Spanning Tree Protocol (STP) and for generating MAC addresses for VLANs (SVIs)"*
 
 <br>
+
 SW2 burned in address: aabb.cc80.2b00 - however we can't trace layer 2 that way because we are using Cisco Modeling Labs 
 and virtualized nodes of the same type use the same base MAC address...
 
