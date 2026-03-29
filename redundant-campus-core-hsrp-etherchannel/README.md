@@ -732,7 +732,7 @@ Next we see SW5 has two interfaces that can possibly forward the frame containin
 All traffic toward the rest of the network (including HSRP hellos) goes out the ROOT PORT.
 
 Conclusion: Redundancy in the LAN trunks maintained HSRP relationship between SW1 and SW2 core layer.
-We can assume all VLANs behave this way.  
+We can assume all three VLANs behave this way.  
 
 While Scenario 3 didn't turn out as expected to achieve the full HSRP 'split' that I was aiming for, we learned new lessons about HSRP hello messages and how they can traverse the topology. 
 
