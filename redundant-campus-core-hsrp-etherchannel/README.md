@@ -553,8 +553,8 @@ Now we use following command on SW1 or SW2 to verify the bandwidth loss when los
 ![2000BW](images/po1-2000-bw.jpg)
 
 <br>
-## AFTER E0/2 link fails on SW1 - we can see clearly the ether-channel is now only using one link, totaling only 1000 kbps bandwidth.
-Yes, we lose bandwidth, but the redundancy is success and the ether-channel stays up and operational which is what we want. 
+
+AFTER E0/2 link fails on SW1 - we can see clearly the ether-channel is now only using one link, totaling only 1000 kbps bandwidth. Yes, we lose bandwidth, but the redundancy is success and the ether-channel stays up and operational which is what we want. 
 
 <br>
 
