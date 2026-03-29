@@ -48,7 +48,7 @@ will be configured to allow native VLAN 1, as well as VLAN 10, 20, 30.
 
 <br>
 
-# After baseline operation, we initiate the following break/change scenarios:
+## After baseline operation, we initiate the following break/change scenarios:
 
 ## Scenario 1) HSRP Active Failure (Gateway Failover)
 
@@ -149,6 +149,7 @@ Below:
 <br>
 
 ![SVI Core](images/svi-core.jpg)
+
 <br>
 
 ## SW1:
@@ -320,7 +321,7 @@ Apline Linux Desktop in VLAN 10,20,30 to test end-to-end connectivity and config
 
 *we needed to also add default gateway - see ping fail below*
 
-<br>sudo route add default gateway 10.1.10.1 eth0
+sudo route add default gateway 10.1.10.1 eth0
 
 <br>
 
@@ -352,6 +353,8 @@ But you can make eth0 interface changes here, so you don't have to do it every t
 <br>
 
 ************************************************************************************************************
+
+<br>
 
 ## *Ran into unexpected ping connectivity issues. Troubleshooting will commence! :)*
 
@@ -425,6 +428,7 @@ Here we can see successful pings from R1 to all three SVIs inside the LAN's core
 ![R1 Confirm](images/r1-confirm-verify.jpg)
 
 <br>
+
 ## Resolved. 
 
 <br>
@@ -482,6 +486,7 @@ We did a shutdown on SW1 interfaces - now SW2 has become layer 2 RSTP root and l
 ![SW2 Root](images/sw2-rstp-root-verify.jpg)
  
 <br>
+
 ## Conclusion
 
 We not only concluded RSTP will recover using SW2 as root during SW1 root failure to ensure layer 2 connectivity.
@@ -562,6 +567,7 @@ AFTER E0/2 link fails on SW1 - we can see clearly the ether-channel is now only 
 ![1000BW](images/po1-1000-bw.jpg)
 
 <br>
+
 ## Observed Behavior:
 
 The Ether-Channel stayed up successfully.
@@ -598,6 +604,7 @@ Blackhole = "A networking black hole is a location in a network where incoming o
 *we don't accomplsh a blackhole...*
 
 ## Action on SW2: 
+
 <br>interface port-channel1
 <br>shutdown
 
@@ -677,6 +684,7 @@ So to continue, I'll force the 'split-brain' scenario by shutting down both ends
 <br>
 
 ![Split Brain](images/split-brain.jpg)
+
 <br>
 
 Well, the RSTP topology changed but we still have redundancy through the LAN trunks,
@@ -770,6 +778,7 @@ SW2: We increase HSRP priority # to take over as Active role on each 3 VLANs.
 ![Trace to Root](images/hsrp-active-sw2.jpg)
 
 <br>
+
 We can see the misalignment on this single screenshot of SW1:
 
 <br>
@@ -834,6 +843,7 @@ No traffic loss (or minimal)
 <br>Fast convergence
 
 ## Full EtherChannel Complete Failure (Core Split Test)
+
 <br>
 Entire Port-Channel between core switches failed
 
