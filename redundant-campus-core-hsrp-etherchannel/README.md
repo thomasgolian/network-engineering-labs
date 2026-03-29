@@ -696,6 +696,15 @@ The hello messages essentially have a 'backdoor' through the LAN trunks to find 
 I have to figure out what path it's taking because I'm curious at this point. The HSRP messages are making their way either
 through SW5, SW4, or SW3.
 
+
+Thinking about which port the switch may have sent the frame:
+
+Root Port
+<br>This is how I reach the rest of the network (upstream)
+
+Designated Ports
+<br>Connections to other segments devices (downstream)
+
 *Just learned this - "A Cisco base MAC address is the primary, unique hardware address (often burned into the EEPROM) used to identify the switch itself, rather than a specific port. It acts as the anchor for the device, commonly utilized as the bridge ID in Spanning Tree Protocol (STP) and for generating MAC addresses for VLANs (SVIs)"*
 
 <br>
