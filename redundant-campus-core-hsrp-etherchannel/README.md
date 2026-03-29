@@ -432,6 +432,7 @@ Here we can see successful pings from R1 to all three SVIs inside the LAN's core
 *Okay now the t-shooting of the tangential issue is complete, we can continue with break scenarios*
 
 <br>
+
 ***************************************************************************************
 
 <br>
@@ -571,6 +572,7 @@ HSRP did not fail over, operated as intended with no issues.
 <br>
 
 ***************************************************************************************
+
 <br>
 
 # Scenario 3) Full EtherChannel Failure (Core Split Test)
@@ -602,6 +604,7 @@ Blackhole = "A networking black hole is a location in a network where incoming o
 <br>
 
 **************************************************************************************************
+
 <br>
 
 ## Testing connectivity led me down a rabbit hole of SVIs and HSRP behavior, so let's dive in... 
@@ -633,6 +636,7 @@ When the switch actually routes the packet, it uses its real SVI IP (10.1.10.2)
 <br>
 
 *****************************************************************************************************
+
 <br>
 
 ## Before Po1 goes down:
@@ -722,7 +726,9 @@ Redundant L2 paths via access layer
 <br>No split-brain condition
 
 <br>
+
 ***********************************************************************************************************
+
 <br>
 
 ## Observed Behavior:
@@ -797,7 +803,9 @@ If the road leads to the wrong house first:
 Avoid making mistakes of misalignment - learned 
 
 <br>
+
 ***************************************************************************************
+
 <br>
 
 # Final Results:
