@@ -36,14 +36,13 @@ HSRP = Hot Standby Routing Protocol
 
 ## What’s happening under the hood
 
-<br>EtherChannel → gives you bandwidth + stability
-<br>RSTP → decides the forwarding topology
-<br>You → influence RSTP (root bridge per VLAN)
-<br>HSRP → follows your design to avoid suboptimal routing
+<br>EtherChannel - gives you bandwidth + stability
+<br>RSTP - decides the forwarding topology
+<br>We - influence RSTP (root bridge per VLAN)
+<br>HSRP - follows your design to avoid suboptimal routing
 
-*We are not isolating / pruning VLANs on the trunks in this lab. All trunk links in topology
-will be configured to allow native VLAN 1, as well as VLAN 10, 20, 30. This will also test our core layer SVI
-inter-VLAN routing* 
+*We are not pruning any VLANs on the trunks in this lab. All trunk links in topology
+will be configured to allow native VLAN 1, as well as VLAN 10, 20, 30.  
 
 ## Objectives:
 
