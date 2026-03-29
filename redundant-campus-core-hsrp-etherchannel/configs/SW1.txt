@@ -1,0 +1,192 @@
+SW1#show run
+Building configuration...
+
+Current configuration : 4460 bytes
+!
+! Last configuration change at 22:31:11 UTC Sat Mar 28 2026
+!
+version 17.15
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname SW1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+ip audit notify log
+ip audit po max-events 100
+no ip domain lookup
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-131184684
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-131184684
+ revocation-check none
+ rsakeypair TP-self-signed-131184684
+ hash sha512
+!
+!
+crypto pki certificate chain TP-self-signed-131184684
+ certificate self-signed 01
+  3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 0D050030 
+  30312E30 2C060355 04030C25 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 31333131 38343638 34301E17 0D323630 33323632 33323233 
+  315A170D 33363033 32353233 32323331 5A303031 2E302C06 03550403 0C25494F 
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3133 31313834 
+  36383430 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02 
+  82010100 CD965AE5 04A1D377 03C7492F E20496A3 44162483 2BBDC820 F75CC0A6 
+  63323850 B531E368 1496E0C9 A324AD5E 106F4C29 E1BDC32F F88B1782 84151CE4 
+  D9CA3952 CA01BB0A 6BCCCEC6 2FF43D98 3C4B29AC 161FF8DD 5B8F543A B63FC07D 
+  307457EE 4EE78EC4 477E5991 9D32BFEB 89885265 BD631057 8AB018FC 1AE79B69 
+  457F3830 CF0BAD45 8C4E835A 234975D1 C2E4C47D 8DFBF8B7 2AB97D33 41ADA689 
+  486BCF72 46A3983D B613235F 7924E4B0 F6D1DE45 3EBEBF94 FD15CF21 F0CAFFF8 
+  E8F0E3F9 22C05CE6 8BB8AB36 657E81F3 3E3F398E D42E5EE8 30D26236 81A81DA7 
+  60C6B321 FE756C8A A1E25B98 4A6583BC 07BAF75A 600D6C6B D5A9200C 4F832F5E 
+  8CEC524B 02030100 01A35330 51301D06 03551D0E 04160414 028272EE 9E2B4D93 
+  95A11388 02F80843 20C87FA2 301F0603 551D2304 18301680 14028272 EE9E2B4D 
+  9395A113 8802F808 4320C87F A2300F06 03551D13 0101FF04 05300301 01FF300D 
+  06092A86 4886F70D 01010D05 00038201 0100A346 BA57D0B6 2AFA9E13 F5754610 
+  F8F5FE76 5B26A066 7632A8B4 5A500B75 1560DC2A 4DBD0E6B 2D1353E1 B64D0188 
+  68BB774B 48EB65F7 A5583283 477C9480 D42B8AD7 F97907B6 D37002A4 8463008E 
+  425633C4 34500584 2F82CFF1 CBF5F9B3 5B1B1020 3800C93F 609F8712 05076D4E 
+  0D30D974 A66074C6 380646BD 79D7F585 4133DF18 7B574843 D0889CC0 DB253F8D 
+  927BC55B 2DAB0777 C3327215 1B9138B3 B9DCACA1 9587E35E 6049CE78 7C24B924 
+  BE1CAC13 33560FDB E93C5130 C23F36B3 5BC10E47 BCCE6B98 9DCA457C 1BC04200 
+  6E79CC6D EDE82A21 2828827A ED53812B 0C1A57B9 E9DB5935 D652C782 1D21C074 
+  1BF71BA2 28974A30 30DA5A52 8F7EDF54 D30E
+        quit
+!
+!
+memory free low-watermark processor 79593
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 10,20,30 priority 4096
+enable secret 9 $9$aAt8vBPq7oLF.U$dITTFly7eP3cOEBHCZrGxPburOdCXwwypecrKKwP7vA
+!
+!
+vlan internal allocation policy ascending
+!         
+!
+!
+!
+!
+interface Port-channel1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/0
+ no switchport
+ ip address 192.168.1.2 255.255.255.252
+!
+interface Ethernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface Ethernet0/2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface Ethernet0/3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet1/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet1/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet1/2
+!
+interface Ethernet1/3
+!
+interface Ethernet2/0
+!
+interface Ethernet2/1
+!
+interface Ethernet2/2
+!
+interface Ethernet2/3
+!         
+interface Vlan10
+ ip address 10.1.10.2 255.255.255.0
+ standby 10 ip 10.1.10.1
+ standby 10 priority 110
+ standby 10 preempt
+!
+interface Vlan20
+ ip address 10.1.20.2 255.255.255.0
+ standby 20 ip 10.1.20.1
+ standby 20 priority 110
+ standby 20 preempt
+!
+interface Vlan30
+ ip address 10.1.30.2 255.255.255.0
+ standby 0 priority 110
+ standby 0 preempt
+ standby 30 ip 10.1.30.1
+ standby 30 priority 110
+ standby 30 preempt
+!
+ip forward-protocol nd
+!
+!         
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+ip route 0.0.0.0 0.0.0.0 192.168.1.1
+ip route 0.0.0.0 0.0.0.0 Ethernet0/0
+!
+no logging btrace
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ password cisco
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ exec-timeout 15 0
+ password cisco
+ login
+ transport input ssh
+!
+!
+end

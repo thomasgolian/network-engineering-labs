@@ -1,0 +1,145 @@
+Building configuration...
+
+Current configuration : 3530 bytes
+!
+! Last configuration change at 22:31:14 UTC Sat Mar 28 2026
+!
+version 17.15
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname SW3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+ip audit notify log
+ip audit po max-events 100
+no ip domain lookup
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-131184680
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-131184680
+ revocation-check none
+ rsakeypair TP-self-signed-131184680
+ hash sha512
+!
+!
+crypto pki certificate chain TP-self-signed-131184680
+ certificate self-signed 01
+  3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 0D050030 
+  30312E30 2C060355 04030C25 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 31333131 38343638 30301E17 0D323630 33323632 33323434 
+  335A170D 33363033 32353233 32343433 5A303031 2E302C06 03550403 0C25494F 
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3133 31313834 
+  36383030 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02 
+  82010100 C023AE11 9058164A 7158D6D5 FF4FD0B3 AE6D6DC2 6FD4B609 6A3DF57F 
+  DA7071C1 D5163571 918BCC87 69B1F33B 32E44BC2 AF307893 C89C0692 B5EFE386 
+  43F7F2DB F42B5FA7 866A3901 630E0781 DEA093F9 5589AB60 6CF03D6D 61AD87FB 
+  4DA275DB 88EBFE07 D0A8DABD BA5E2E5A 3A4810E4 8112FEE1 8D2E61E9 9A46839F 
+  FE0BE614 5E84CE70 A9A7C286 B75B8551 06A71E9D E2360AC4 BD296CF5 B893B6D6 
+  1F9A765B 33E980F9 DB1D1F66 125E9DBE CA3F0916 D1CC5673 F11C6DF9 CFA64E34 
+  A838EBF3 8FF1D0E4 22D74AC1 67CDD5D0 93DA7214 BE9B03C3 3ACAE15B AFF079E5 
+  34F1B311 07D59295 1FB9F5AA E85D6AC4 0E87C011 883EE46C 7532A8A1 3121D979 
+  30DB3E03 02030100 01A35330 51301D06 03551D0E 04160414 4B0AFEC4 873A7F0E 
+  734187D8 6F3D29FE 1CBF752A 301F0603 551D2304 18301680 144B0AFE C4873A7F 
+  0E734187 D86F3D29 FE1CBF75 2A300F06 03551D13 0101FF04 05300301 01FF300D 
+  06092A86 4886F70D 01010D05 00038201 010030D0 9022337F 5DFB37E2 8249E373 
+  C137F13A CB27DFB9 DD67D76A CFACAF0E 7A0C2815 5E4C3F28 111F2FEF 6C6BD3F1 
+  B24DDC95 9C1B74EC FD439371 EF1D6A30 4B159A7E 4500969F 791F9839 23AA820A 
+  BE47109C 3DA084D0 93BEA3A8 CB280E1F 8B52E6C9 65BB3603 FA44F2A7 AEEE5BFD 
+  CA9EE52C 30FE82CC 1A6A7F0E 4319ABE9 282ADA90 F7BB8F4F C90CFDD5 3DE301E6 
+  B5DA3063 708C44EE 8FE5CDC4 8EE67781 48EFA847 C26DA20A C2FD63DD 02C31AAA 
+  4D3D40AB DC93EF6B 76264A69 5A4D37B6 1274C061 7CC028A6 DDFEC362 D3328902 
+  C1234CC8 D6431ECC E753860F 3F27FE23 4A731B68 C3D703AF 0AF66DB4 F3A8D5BA 
+  4AA886EF 6581A2F6 C07211ED F30260C2 2595
+        quit
+!
+!
+memory free low-watermark processor 79593
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+enable secret 9 $9$o.KbnChXT4FYi.$xwrAqfbm07ZkDmW32aTiaRSBFDq4YLSmnKcbQbrXUac
+!
+!
+vlan internal allocation policy ascending
+!
+!         
+!
+!
+!
+interface Ethernet0/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/2
+ switchport access vlan 10
+ switchport mode access
+!
+interface Ethernet0/3
+ switchport access vlan 10
+ switchport mode access
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+ip forward-protocol nd
+!         
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+!
+no logging btrace
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ password cisco
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ exec-timeout 15 0
+ password cisco
+ logging synchronous
+ login
+ transport input ssh
+!
+!
+end
