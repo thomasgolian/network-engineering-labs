@@ -721,7 +721,7 @@ can carry HSRP Hello messages.
 
 <br>
 
-Next we see SW5 has two interfaces that can possible forward the frame containing the hello messages from SW2:
+Next we see SW5 has two interfaces that can possibly forward the frame containing the hello messages from SW2:
 
 <br>
 
