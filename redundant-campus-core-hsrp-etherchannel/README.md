@@ -381,7 +381,7 @@ R1 has two choices to get to network 10.1.x.x/24
 
 Routers don’t “prefer” one path unless you tell them to.
 
-## Golden Rule
+## Rule
 <br>HSRP + multiple upstream paths = must control routing symmetry
 
 # This is one way to resolve this topology design issue with R1 acting as a dual-homed ISP:
