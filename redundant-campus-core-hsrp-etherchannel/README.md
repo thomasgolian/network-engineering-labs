@@ -745,20 +745,6 @@ Redundant L2 paths via access layer
 
 <br>
 
-***********************************************************************************************************
-
-<br>
-
-## Observed Behavior:
-
-The cores cannot see each other anymore
-<br>HSRP hellos stop crossing the inter-core link
-<br>Both switches think the other is dead
-<br>Both become HSRP Active
-
-
-<br>
-
 ***************************************************************************************
 
 <br>
