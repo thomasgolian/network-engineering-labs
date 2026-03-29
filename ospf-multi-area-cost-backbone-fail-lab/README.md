@@ -2,7 +2,7 @@
 
 Lab was built using VMware Workstation with Cisco Modeling Labs v2.8.1 
 
-All switches and/or routers in this lab are running IOS XE images virtualized or containered.
+All switches routers in this lab are running IOS XE images virtualized or containered
 
 <br>
 
