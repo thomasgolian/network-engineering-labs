@@ -208,15 +208,15 @@ VLAN 30
 
 <br>
 
-Remember, we have to issue 'no shut' on VLAN interfaces first. Don't forget. (SW1 & SW2)
-
-<br>
-
-![No Shutdown on Interface VLAN](images/int-vlan-noshut.jpg)
+Remember, we have to issue a no shutdown on VLAN interfaces first as they are down by default. (SW1 & SW2)
 
 <br>
 
 ![No Shut VLAN interfaces](images/vlan-int-noshut.jpg)
+
+<br>
+
+![No Shutdown on Interface VLAN](images/int-vlan-noshut.jpg)
 
 <br>
 
