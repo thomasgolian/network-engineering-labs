@@ -255,8 +255,6 @@ Observed Behavior:
 
 SW2 secondary root now takes over as the VLAN 10 RSTP root core switch, changing all interfaces to designated / forwarding. 
 
-Convergence occurred rapidly (sub-second to a few seconds)
-
 No switching loops were introduced
 
 Network connectivity was maintained
