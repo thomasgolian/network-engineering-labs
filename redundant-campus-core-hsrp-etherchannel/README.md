@@ -724,6 +724,7 @@ Redundant L2 paths via access layer
 <br>
 ***********************************************************************************************************
 <br>
+
 ## Observed Behavior:
 
 The cores cannot see each other anymore
@@ -733,8 +734,11 @@ The cores cannot see each other anymore
 
 
 <br>
+
 ***************************************************************************************
+
 <br>
+
 # Scenario 4) HSRP + STP Misalignment
  
 ## First we confirm and verify starting baseline:
@@ -767,6 +771,7 @@ We can see the misalignment on this single screenshot of SW1:
 ![Trace to Root](images/core-misalign.jpg)
 
 <br>
+
 ## Observed Behavior:
 
 Traffic goes: Access → wrong core → back across port-channel
@@ -794,6 +799,7 @@ Avoid making mistakes of misalignment - learned
 <br>
 ***************************************************************************************
 <br>
+
 # Final Results:
 
 ## HSRP Active Failure (Gateway Failover)
