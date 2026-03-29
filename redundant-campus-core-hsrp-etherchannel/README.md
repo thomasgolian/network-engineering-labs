@@ -42,7 +42,7 @@ HSRP = Hot Standby Routing Protocol
 <br>HSRP - follows your design to avoid suboptimal routing
 
 *We are not pruning any VLANs on the trunks in this lab. All trunk links in topology
-will be configured to allow native VLAN 1, as well as VLAN 10, 20, 30.  
+will be configured to allow VLAN 10, 20, 30.  
 
 ## Objectives:
 
