@@ -474,16 +474,6 @@ We did a shutdown on SW1 interfaces - now SW2 has become layer 2 RSTP root and l
 <br>
 
 ![SW2 Root](images/sw2-rstp-root-verify.jpg)
- 
-<br>
-
-## Conclusion
-
-We not only concluded RSTP will recover using SW2 as root during SW1 root failure to ensure layer 2 connectivity.
-
-We also ensured HSRP is working when the Active gateway (SW1) fails, and the Standby gateway (SW2) takes over. 
-
-SW1 is down - no longer functioning as default gateway for LAN hosts:
 
 <br>
 
@@ -500,6 +490,16 @@ SW2 immediately takes over as default gateway - becoming 'Active' state:
 After we did a 'no shut' on both SW1's physical interfaces and a 'no shut' on the SVIs for HSRP, SW1 regained Active role. SW2 moved back to Standby role. 
 
 ![SW1 Root](images/sw1-preempt-active.jpg)
+
+<br>
+
+## Conclusion
+
+We not only concluded RSTP will recover using SW2 as root during SW1 root failure to ensure layer 2 connectivity.
+
+We also ensured HSRP is working when the Active gateway (SW1) fails, and the Standby gateway (SW2) takes over. 
+
+SW1 is down - no longer functioning as default gateway for LAN hosts:
 
 <br>
 
