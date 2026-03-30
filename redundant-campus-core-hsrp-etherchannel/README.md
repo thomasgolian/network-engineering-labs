@@ -499,7 +499,7 @@ We not only concluded RSTP will recover using SW2 as root during SW1 root failur
 
 We also ensured HSRP is working when the Active gateway (SW1) fails, and the Standby gateway (SW2) takes over. 
 
-SW1 is down - no longer functioning as default gateway for LAN hosts:
+SW1 was down and no longer functioning as default gateway for LAN hosts. But SW2 backup ensured up-time for LAN hosts. When SW1 was up again, it regained STP root and HSRP Active.
 
 <br>
 
