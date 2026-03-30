@@ -544,7 +544,7 @@ SW1 remains HSRP Active gateway as it should.
 Now we use following command on SW1 or SW2 to verify the bandwidth loss when losing a link in the ether-channel:
 <br>show interface port-channel 1
 
-## BEFORE the link breaks, we can see Po1 (2x 1000 kbps links) totaling 2000 kbps bandwidth from the two links bundled together logically.
+BEFORE the link breaks, we can see Po1 (2x 1000 kbps links) totaling 2000 kbps bandwidth from the two links bundled together logically.
 <br>
 
 ![2000BW](images/po1-2000-bw.jpg)
