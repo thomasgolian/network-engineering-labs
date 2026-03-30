@@ -354,7 +354,7 @@ But you can make eth0 interface changes here, so you don't have to do it every t
 *Ran into unexpected ping connectivity issues. Troubleshooting will commence!*
 
 This is what labbing is about. I made a mistake on R1. Though R1 is not the focus of the lab,
-we still want to ensure connectivity so the network design is valid and find the fix! In the design I made mistake that is related to the often termed "Asymmetric routing with HSRP." This is not directly related to objectives but we push on to solve the problem anyway because we must. :)
+we still want to ensure connectivity so the network design is valid and find the fix! In the design I made mistake that is related to the often termed "Asymmetric routing with HSRP." This is a little off-track from objectives but we push on to solve the problem anyway because we must. :)
 
 <br>
 
@@ -362,7 +362,7 @@ HSRP on SW1/SW2
 <br>Dual links from R1 to SW1 and SW2
 <br>Equal-cost routes on R1
 
-So R1 is doing load balancing, in a sense. Messing with my HSRP plans. 
+So R1 is doing load balancing, in a sense. Messing with my HSRP plans when pinging 192.168.1.1 from the desktop nodes. 
 
 Some traffic goes to SW2 (STANDBY) ❌
 
@@ -392,9 +392,6 @@ For lab purposes, we simply tell R1 not to use 192.168.2.2 for any destination n
 ## What does this command do?
 
 Remove the static route that exactly matches this destination + mask + next-hop from the running configuration.
-
-*I fixed it with that command but I didn't realize I unintentionally built ECMP (Equal-Cost Multi-Path) attached to two HSRP routers. 
-But now it makes much more sense* 
 
 The router:
 
