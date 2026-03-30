@@ -521,6 +521,7 @@ We will take down SW1's E0/2 to see what happens:
 ![Link Down](images/link-down-po1.jpg)
 
 <br>
+
 ## SW1 stays up as Active HSRP gateway - we can see Po1 is up, but the second link is Et0/2(D) = down. 
 
 The Ports column shows the physical interfaces in Po1:
