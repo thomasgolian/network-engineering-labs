@@ -440,7 +440,7 @@ Simulate failure of the active HSRP switch (SW1) and verify that the standby swi
 
 We will shutdown all interface VLANs 10, 20, 30 on SW1 to simulate SVI gateway IP failure. 
 
-*Unexpected problem - when shutting down SVI gateways on SW1 root, SW2 did not become root as I planned.
+*Unexpected problem - when shutting down SVI gateways on SW1 root, SW2 did not become root as I planned. SW5 became the root. I have to remind myself that layer 2 RSTP and layer 3 HSRP are not directly correlated, yet can still affect one another's behavior and traffic flow. 
 
 But for this lab design, I do want SW1 and SW2 to also be the STP roots, as well as HRSP gateways. Things not going according to plan is how we learn.
 
