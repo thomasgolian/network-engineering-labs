@@ -348,15 +348,10 @@ But you can make eth0 interface changes here, so you don't have to do it every t
 
 ![Linux Desktop](images/cml-desktop-config.jpg)
 
+
 ## Verifying end-to-end network connectivity through layer 2 to the core, and out layer 3 to the ISP:
 
-<br>
-
-************************************************************************************************************
-
-<br>
-
-## *Ran into unexpected ping connectivity issues. Troubleshooting will commence! :)*
+*Ran into unexpected ping connectivity issues. Troubleshooting will commence!*
 
 This is what labbing is about. I made a mistake on R1. Though R1 is not the focus of the lab,
 we still want to ensure connectivity so the network design is valid and find the fix! In the design I made mistake that is related to the often termed "Asymmetric routing with HSRP." This is not directly related to objectives but we push on to solve the problem anyway because we must. :)
@@ -367,7 +362,7 @@ HSRP on SW1/SW2
 <br>Dual links from R1 to SW1 and SW2
 <br>Equal-cost routes on R1
 
-So R1 is doing load balancing
+So R1 is doing load balancing, in a sense. Messing with my HSRP plans. 
 
 Some traffic goes to SW2 (STANDBY) ❌
 
