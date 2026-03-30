@@ -126,9 +126,7 @@ vlan 30
 
 <br>
 
-Configuring HSRP Switched Virtual Interfaces (SVIs) on SW1 and SW2. These addresses will be default gateway for VLAN hosts - respectively. 
-
-Key points:
+Configuring HSRP Switched Virtual Interfaces (SVIs) on SW1 and SW2. These addresses will be default gateway for VLAN hosts.
 
 HSRP:
 <br>Higher priority = becomes ACTIVE
