@@ -372,27 +372,6 @@ the switch immediately placed the port into an err-disabled state to prevent a p
 
 <br>
 
-*Surprise problem: During initial configurations, I missed a configuration on SW7 access port* 
-
-When I was testing connectivity from end hosts to ISP WAN R1, pings failed.
-
-Discovered SW7's interface connecting to users was not configured. Missed during initial config.
-
-Solution:
-<br>interface E0/2
-<br>switchport mode access
-<br>switchport access vlan 10
-<br>spanning-tree portfast
-<br>spanning-tree bpduguard enable
-
-Resolved.
-
-<br>
-
-***************************************************************************************
-
-<br>
-
 # Final Results
 
 Successful RSTP deployment
