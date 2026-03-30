@@ -288,7 +288,7 @@ We'll verify EtherChannel on SW1 & SW2:
 
 <br>
 
-## Universal configurations:
+# Universal configurations:
 
 Full baseline configurations are available in the configs/ directory
 
