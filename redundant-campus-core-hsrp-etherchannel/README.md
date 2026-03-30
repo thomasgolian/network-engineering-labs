@@ -580,7 +580,7 @@ We are going to fully shutdown Po1 bundle on SW2. We are essentially splitting t
 
 Expected Behavior:
 <br>SW1 stays HSRP Active
-<br>SW2 stays Standby
+<br>SW2 loses communication with SW1, so it decides to become HSRP Active as well, because it assumes SW1 is down.
 
 *this scenario does not go according to plan...*
 
