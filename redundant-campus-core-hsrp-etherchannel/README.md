@@ -741,7 +741,7 @@ Redundant L2 paths via access layer
 
 # Scenario 4) HSRP + STP Misalignment
  
-## First we confirm and verify starting baseline:
+First we confirm and verify starting baseline:
 
 HSRP
 <br>SW1 is active
