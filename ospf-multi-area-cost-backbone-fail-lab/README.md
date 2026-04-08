@@ -117,9 +117,10 @@ Example: R1 connects to R2 - so the network is 10.0.12.0/30. See below:
 I've added descriptions on all configured router interfaces in the topology.
 
 Example: 
-
-<br>interface e0/0
-<br>description Link to R2 (10.0.12.0/30)
+```
+interface e0/0
+description Link to R2 (10.0.12.0/30)
+```
 
 <br>
 
@@ -128,15 +129,12 @@ Example:
 <br>
 
 # R1
-
+```
 configure terminal
-
 ip route 0.0.0.0 0.0.0.0 <fake-ISP-next-hop>
-
 router ospf 1
-
 default-information originate  (simulates "Internet exists outside the OSPF domain")
-
+```
 <br>
 
 ![Default Originate](images/default-information.jpg)
@@ -150,26 +148,26 @@ default-information originate  (simulates "Internet exists outside the OSPF doma
 # Baseline Configurations:
 
 Initial commands entered into all routers in topology:
-
+```
 <br>enable secret cisco
 <br>hostname {}
 <br>no ip domain lookup
 
-<br>line console 0
-<br>logging synchronous
-<br>exec-timeout 0 0
-<br>password cisco
-<br>login
+line console 0
+logging synchronous
+exec-timeout 0 0
+password cisco
+login
 
-<br>line vty 0 4
-<br>logging synchronous
-<br>exec-timeout 15 0
-<br>password cisco
-<br>login
-<br>transport input ssh
+line vty 0 4
+logging synchronous
+exec-timeout 15 0
+password cisco
+login
+transport input ssh
 
-<br>copy running-config startup-config 
-
+copy running-config startup-config 
+```
 <br>
 
 ## The manual loopback configuration overrides any automatic choosing of router ID value.
@@ -180,13 +178,13 @@ locally significant and can be different.
 Configured two methods for good measure:
 
 R1 1.1.1.1
+```
+interface loopback0
+ip address 1.1.1.1 255.255.255.255
 
-<br>interface loopback0
-<br>ip address 1.1.1.1 255.255.255.255
-
-<br>router ospf 1
-<br>router-id 1.1.1.1
-
+router ospf 1
+router-id 1.1.1.1
+```
 *Repeat above for R2-7*
 
 If needed, we can use this command to reset OSPF process on a router:
@@ -253,9 +251,10 @@ R4(config-if)#ip ospf 1 area 0
 I've also read it is good practice to make loopback interfaces passive so we're inputing this command in all 7 routers:
 
 R1-7
-<br>router ospf 1
-<br>passive-interface loopback0
-
+```
+router ospf 1
+passive-interface loopback0
+```
 <br>
 
 ![Passive Loopback0](images/loopback0-passive.jpg)
@@ -263,11 +262,12 @@ R1-7
 <br>
 
 We're also tuning the interfaces for 1000 Bandwidth for realism and OSPF calculations. Example:
-<br>R2(config)#int range e0/0-3
-<br>R2(config-if-range)#bandwidth 1000
-<br>R2(config-if-range)#exit
-<br>R2(config)#
-
+```
+R2(config)#int range e0/0-3
+R2(config-if-range)#bandwidth 1000
+R2(config-if-range)#exit
+R2(config)#
+```
 <br>
 
 ******************************************************************************************
@@ -308,8 +308,10 @@ instead of broadcast type. Right now we can see the routers are electing DRs and
 <br>
 
 Solution:
-<br>interface range e0/0-3
-<br>ip ospf network point-to-point
+```
+interface range e0/0-3
+ip ospf network point-to-point
+```
 
 <br>
 
@@ -322,7 +324,9 @@ We can see a level 4 warning: *Mar 22 00:04:02.084: %OSPF-4-NET_TYPE_MISMATCH: R
 <br>
 
 Because the election process and adjacent neighbor relationships have been formed, to reset OSPF process use:
-<br>clear ip ospf process
+```
+clear ip ospf process
+```
 
 <br>
 
@@ -341,6 +345,7 @@ Goal: The network is fully converged, correctly designed, and routing properly. 
 <br>
 
 We will use:
+
 <br>show ip ospf neighbor
 <br>show ip route
 <br>show ip ospf interface brief
@@ -560,9 +565,12 @@ R6#traceroute 10.0.57.2
 
 <br>
 
-R2(config)#int e0/1  
-<br>R2(config-if)#ip ospf cost 500
-<br>R2(config-if)#exit
+R2(config)#
+```
+int e0/1  
+ip ospf cost 500
+exit
+```
 
 <br>
 
@@ -622,8 +630,10 @@ We can see R3 has two routes available to reach 10.0.12.0/30 network.
 <br>
 
 Action on R1:
-<br>interface e0/1
-<br>shutdown
+```
+interface e0/1
+shutdown
+```
 
 Once the link between R1 and R3 failed, we can see R3 stopped receiving hello messages from 1.1.1.1 on it's E0/0 interface.
 
