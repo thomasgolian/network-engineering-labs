@@ -474,9 +474,10 @@ Convert Area 2 into a stub area and observe how:
 <br>Default routing behavior appears
 
 Action:
-<br>router ospf 1
-<br>  area 2 stub
-
+```
+router ospf 1
+area 2 stub
+```
 Result:
 
 We only configured stub on R7 - which led to adjacency down.
