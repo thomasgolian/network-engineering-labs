@@ -114,14 +114,14 @@ Alpine Linux Desktop to test end-to-end connectivity and configured with:
 
 
 SW1 & SW2 SVI
-```bash
-<br>interface vlan 10
-<br> ip address 10.1.10.2 255.255.255.0
-<br> no shutdown
-<br>
-<br>interface vlan 10
-<br> ip address 10.1.10.3 255.255.255.0
-<br> no shutdown
+```
+interface vlan 10
+ip address 10.1.10.2 255.255.255.0
+no shutdown
+
+interface vlan 10
+ip address 10.1.10.3 255.255.255.0
+no shutdown
 ```
 <br>
 
