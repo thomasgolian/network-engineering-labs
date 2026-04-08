@@ -84,7 +84,7 @@ Full configurations are available in the configs/ directory
 
 Initial IOS XE configurations I entered for all network nodes:
 
-```bash
+```
 enable secret cisco
 hostname {}
 no ip domain lookup
