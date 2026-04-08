@@ -85,22 +85,22 @@ Full configurations are available in the configs/ directory
 Initial IOS XE configurations I entered for all network nodes:
 
 ```bash
-<br>enable secret cisco
-<br>hostname {}
-<br>no ip domain lookup
+enable secret cisco
+hostname {}
+no ip domain lookup
 
-<br>line console 0
-<br>logging synchronous
-<br>exec-timeout 0 0
-<br>password cisco
-<br>login
+line console 0
+logging synchronous
+exec-timeout 0 0
+password cisco
+login
 
-<br>line vty 0 4
-<br>logging synchronous
-<br>exec-timeout 15 0
-<br>password cisco
-<br>login
-<br>transport input ssh
+line vty 0 4
+logging synchronous
+exec-timeout 15 0
+password cisco
+login
+transport input ssh
 
 copy running-config startup-config 
 ```
