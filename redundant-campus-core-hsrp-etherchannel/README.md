@@ -162,31 +162,31 @@ Below:
 
 VLAN 10
 ```
-<br>interface vlan 10
-<br>ip address 10.1.10.2 255.255.255.0
-<br>standby 10 ip 10.1.10.1
-<br>standby 10 priority 110
-<br>standby 10 preempt
-<br>no shutdown
+interface vlan 10
+ip address 10.1.10.2 255.255.255.0
+standby 10 ip 10.1.10.1
+standby 10 priority 110
+standby 10 preempt
+no shutdown
 ```
 VLAN 20
 ```
-<br>interface vlan 20
-<br>ip address 10.1.20.2 255.255.255.0
-<br>standby 20 ip 10.1.20.1
-<br>standby 20 priority 110
-<br>standby 20 preempt
-<br>no shutdown
+interface vlan 20
+ip address 10.1.20.2 255.255.255.0
+standby 20 ip 10.1.20.1
+standby 20 priority 110
+standby 20 preempt
+no shutdown
 ```
 
 VLAN 30
 ```
-<br>interface vlan 30
-<br>ip address 10.1.30.2 255.255.255.0
-<br>standby 30 ip 10.1.30.1
-<br>standby 30 priority 110
-<br>standby 30 preempt
-<br>no shutdown
+interface vlan 30
+ip address 10.1.30.2 255.255.255.0
+standby 30 ip 10.1.30.1
+standby 30 priority 110
+standby 30 preempt
+no shutdown
 ```
 
 ## SW2:
