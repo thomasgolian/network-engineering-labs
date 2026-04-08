@@ -149,9 +149,9 @@ default-information originate  (simulates "Internet exists outside the OSPF doma
 
 Initial commands entered into all routers in topology:
 ```
-<br>enable secret cisco
-<br>hostname {}
-<br>no ip domain lookup
+enable secret cisco
+hostname {}
+no ip domain lookup
 
 line console 0
 logging synchronous
@@ -262,11 +262,12 @@ passive-interface loopback0
 <br>
 
 We're also tuning the interfaces for 1000 Bandwidth for realism and OSPF calculations. Example:
-```
-R2(config)#int range e0/0-3
-R2(config-if-range)#bandwidth 1000
-R2(config-if-range)#exit
+
 R2(config)#
+```
+int range e0/0-3
+bandwidth 1000
+exit
 ```
 <br>
 
