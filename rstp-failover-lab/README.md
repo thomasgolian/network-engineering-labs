@@ -126,10 +126,14 @@ no shutdown
 <br>
 
 SW1 default route out of the network towards R1 (ISP) is:
-<br>ip route 0.0.0.0 0.0.0.0 10.1.1.1
+```
+ip route 0.0.0.0 0.0.0.0 10.1.1.1
+```
 
 SW2 default route out of the network towards R1 (ISP) is:
-<br>ip route 0.0.0.0 0.0.0.0 10.1.2.1
+```
+ip route 0.0.0.0 0.0.0.0 10.1.2.1
+```
 
 <br>
 
@@ -140,9 +144,10 @@ SW1 was manually configured as the root bridge by lowering bridge priority (prim
 RSTP enabled (spanning-tree mode rapid-pvst)
 
 Root bridge priority on SW1 & SW2
-<br>spanning-tree vlan 10 root primary
-<br>spanning-tree vlan 10 root secondary
-
+```
+spanning-tree vlan 10 root primary
+spanning-tree vlan 10 root secondary
+```
 <br>
 
 ![SW1-rootprimary](images/SW1-root-verify.png)
@@ -170,11 +175,13 @@ SW2 - root secondary
 <br>
 
 ## Port-Fast (applied to edge ports) SW6, SW7, SW8
-<br>interface range {interfaces}
-<br>switchport mode access
-<br>switchport access vlan 10
-<br>spanning-tree portfast
-<br>spanning-tree bpduguard enable
+```
+interface range {interfaces}
+switchport mode access
+switchport access vlan 10
+spanning-tree portfast
+spanning-tree bpduguard enable
+```
 
 <br>
 
@@ -184,11 +191,12 @@ Verified VLAN 10 SVIs were up, up, on SW1 and SW2
 <br>show ip interface status
 
 ## Commands on trunk links between switches:
-<br>interface range {multiple interfaces}
-<br>switchport trunk encapsulation dot1q
-<br>switchport mode trunk
-<br>switchport trunk allowed vlan add 10
-
+```
+interface range {multiple interfaces}
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan add 10
+```
 Pinged local SVI to ensure TCP/IP stack working
 
 Pinged opposite core switch to ensure core-to-core link working
@@ -217,15 +225,17 @@ RSTP root primary core SW1 fails, all interfaces shutdown. Simulating a failure.
 ## We can use these commands to verify:
 
 Verify Spanning Tree Status: 
-<br>show spanning-tree
-
+```
+show spanning-tree
+```
 Originally, SW1 was root but now you can see SW3 (distr) detects root down, and changes RSTP root vlan 10 to SW2. SW2 backup root has now taken over the role of root bridge with the lowest bridge-id priority.
 
 <br>
 
 For fun we can use this command to see all the BPDUs in real time on SW3 before the failure:
-<br>debug spanning-tree bpdu
-
+```
+debug spanning-tree bpdu
+```
 <br>
 
 ![BPDUs](images/debug-bpdu-sw3.jpg)
@@ -352,9 +362,10 @@ into the access interface. SW6 BPDU Guard immediately moves the interface into a
 <br> 
 
 Let's watch it again but we will first enable debugging on SW6 so we can view the logs as the rogue switch gets plugged in:
-<br>show spanning-tree events
-<br>show spanning-tree bpdu
-
+```
+show spanning-tree events
+show spanning-tree bpdu
+```
 Here we see a level 2 Critical log from Spanning-Tree - BPDU Guard is blocking int E1/0, placing interface into err-disabled:
 
 <br> 
