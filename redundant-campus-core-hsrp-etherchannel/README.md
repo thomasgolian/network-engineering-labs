@@ -85,10 +85,13 @@ SW1 as Active
 R1 acting as WAN /ISP so we will give SW1 & SW2 a default route out of the LAN:
 
 SW1
-<br>ip route 0.0.0.0 0.0.0.0 192.168.1.1 
-
+```
+ip route 0.0.0.0 0.0.0.0 192.168.1.1 
+```
 SW2
-<br>ip route 0.0.0.0 0.0.0.0 192.168.1.2 
+```
+ip route 0.0.0.0 0.0.0.0 192.168.1.2
+```
 
 On all switches (core + access) we configure the following VLANs:
 
@@ -105,25 +108,30 @@ vlan 30
 
 ## Physical routed interfaces using IP addresses:
 
-<br>SW1 E0/0
-<br>interface e0/0
-<br>ip address 192.168.1.2 255.255.255.252
-<br>description WAN Link to ISP R1
+SW1 E0/0
+```
+interface e0/0
+ip address 192.168.1.2 255.255.255.252
+description WAN Link to ISP R1
+```
 
-<br>SW2 E0/0
-<br>interface e0/0
-<br>ip address 192.168.2.2 255.255.255.252
-<br>description WAN Link to ISP R1
-
+SW2 E0/0
+```
+interface e0/0
+ip address 192.168.2.2 255.255.255.252
+description WAN Link to ISP R1
+```
 
 <br>R1 E0/0
-<br>interface e0/0
-<br>ip address 192.168.1.1 255.255.255.252
-
-<br>R1 E0/1
-<br>interface e0/1
-<br>ip address 192.168.2.1 255.255.255.252
-
+```
+interface e0/0
+ip address 192.168.1.1 255.255.255.252
+```
+R1 E0/1
+```
+interface e0/1
+ip address 192.168.2.1 255.255.255.252
+```
 <br>
 
 Configuring HSRP Switched Virtual Interfaces (SVIs) on SW1 and SW2. These addresses will be default gateway for VLAN hosts.
@@ -153,54 +161,65 @@ Below:
 ## SW1:
 
 VLAN 10
+```
 <br>interface vlan 10
 <br>ip address 10.1.10.2 255.255.255.0
 <br>standby 10 ip 10.1.10.1
 <br>standby 10 priority 110
 <br>standby 10 preempt
 <br>no shutdown
-
+```
 VLAN 20
+```
 <br>interface vlan 20
 <br>ip address 10.1.20.2 255.255.255.0
 <br>standby 20 ip 10.1.20.1
 <br>standby 20 priority 110
 <br>standby 20 preempt
 <br>no shutdown
+```
 
 VLAN 30
+```
 <br>interface vlan 30
 <br>ip address 10.1.30.2 255.255.255.0
 <br>standby 30 ip 10.1.30.1
 <br>standby 30 priority 110
 <br>standby 30 preempt
 <br>no shutdown
+```
 
 ## SW2:
 
 VLAN 10
-<br>interface vlan 10
-<br>ip address 10.1.10.2 255.255.255.0
-<br>standby 10 ip 10.1.10.1
-<br>standby 10 priority 100
-<br>standby 10 preempt
-<br>no shutdown
+```
+interface vlan 10
+ip address 10.1.10.2 255.255.255.0
+standby 10 ip 10.1.10.1
+standby 10 priority 100
+standby 10 preempt
+no shutdown
+```
 
 VLAN 20
-<br>interface vlan 20
-<br>ip address 10.1.20.2 255.255.255.0
-<br>standby 20 ip 10.1.20.1
-<br>standby 20 priority 100
-<br>standby 20 preempt
-<br>no shutdown
+```
+interface vlan 20
+ip address 10.1.20.2 255.255.255.0
+standby 20 ip 10.1.20.1
+standby 20 priority 100
+standby 20 preempt
+no shutdown
+```
 
 VLAN 30
-<br>interface vlan 30
-<br>ip address 10.1.30.2 255.255.255.0
-<br>standby 30 ip 10.1.30.1
-<br>standby 30 priority 100
-<br>standby 30 preempt
-<br>no shutdown
+```
+interface vlan 30
+ip address 10.1.30.2 255.255.255.0
+standby 30 ip 10.1.30.1
+standby 30 priority 100
+standby 30 preempt
+no shutdown
+```
 
 ![SVIs Up Up](images/svi-up-up.jpg)
 
@@ -233,23 +252,28 @@ EtherChannel LACP configuration between SW1 & SW2 (two physical links logically 
 *We are using LACP encapsulation dot1Q and we are using 'Active' negotiation for Port Channel 1 on both ends* 
 
 SW1
-<br>interface range e0/1-2
-<br>switchport trunk encapsulation dot1q
-<br>switchport mode trunk
-<br>channel-group 1 mode active
-<br>interface po1
-<br>switchport trunk allowed vlan add 10,20,30
-
+```
+interface range e0/1-2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+channel-group 1 mode active
+interface po1
+switchport trunk allowed vlan add 10,20,30
+```
 SW2
-<br>interface range e0/1-2
-<br>switchport trunk encapsulation dot1q
-<br>switchport mode trunk
-<br>channel-group 1 mode active
-<br>interface po1
-<br>switchport trunk allowed vlan add 10,20,30
+```
+interface range e0/1-2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+channel-group 1 mode active
+interface po1
+switchport trunk allowed vlan add 10,20,30
+```
 
 We can use this command to confirm LACP: 
-<br>show lacp neighbor
+```
+show lacp neighbor
+```
 
 <br>
 
@@ -259,11 +283,12 @@ We can use this command to confirm LACP:
 <br>
 
 Trunk Configuration for all layer 2 ethernet links between Access layer switches and Core layer switches:
-
+```
 interface range {interfaces}
-<br>switchport trunk encapsulation dot1q
-<br>switchport mode trunk
-<br>switchport trunk allowed vlan add 10,20,30
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan add 10,20,30
+```
 
 <br>
 
@@ -291,31 +316,33 @@ We'll verify EtherChannel on SW1 & SW2:
 Full baseline configurations are available in the configs/ directory
 
 Initial IOS XE configurations I entered for all network nodes:
-
+```
 enable secret cisco
-<br>hostname {}
-<br>no ip domain lookup
+hostname {}
+no ip domain lookup
 
 line console 0
-<br>logging synchronous
-<br>exec-timeout 0 0
-<br>password cisco
-<br>login
+logging synchronous
+exec-timeout 0 0
+password cisco
+login
 
 line vty 0 4
-<br>logging synchronous
-<br>exec-timeout 15 0
-<br>password cisco
-<br>login
-<br>transport input ssh
+logging synchronous
+exec-timeout 15 0
+password cisco
+login
+transport input ssh
 
 copy running-config startup-config 
-
+```
 <br>
 
 Apline Linux Desktop in VLAN 10,20,30 to test end-to-end connectivity and configured with:
-<br>sudo hostname USERS
-<br>sudo ifconfig eth0 10.1.10.99 netmask 255.255.255.0
+```
+sudo hostname USERS
+sudo ifconfig eth0 10.1.10.99 netmask 255.255.255.0
+```
 
 *we needed to also add default gateway - see ping fail below*
 
@@ -332,12 +359,16 @@ sudo route add default gateway 10.1.10.1 eth0
 Desktop Servers & Desktop Voice will be configured the same:
 
 Servers:
-<br>sudo ifconfig eth0 10.1.20.100 netmask 255.255.255.0 up
-<br>sudo route add default gw 10.1.20.1 eth0
+```
+sudo ifconfig eth0 10.1.20.100 netmask 255.255.255.0 up
+sudo route add default gw 10.1.20.1 eth0
+```
 
 Voice:
-<br>sudo ifconfig eth0 10.1.30.101 netmask 255.255.255.0 up
-<br>sudo route add default gw 10.1.30.1 eth0
+```
+sudo ifconfig eth0 10.1.30.101 netmask 255.255.255.0 up
+sudo route add default gw 10.1.30.1 eth0
+```
 
 In Cisco Modeling Labs, Linux desktop nodes don't persist config changes unless you manually edit config in UI using the provided shell script. 
 But you can make eth0 interface changes here, so you don't have to do it every time you boot up your CML lab:
@@ -383,9 +414,12 @@ Routers don’t “prefer” one path unless you tell them to.
 # This is one way to resolve this topology design issue with R1 acting as a dual-homed ISP:
 
 <br>
+
 For lab purposes, we simply tell R1 not to use 192.168.2.2 for any destination network 
 
-<br>no ip route 10.1.0.0 255.255.0.0 192.168.2.2
+```
+no ip route 10.1.0.0 255.255.0.0 192.168.2.2
+```
 
 ## What does this command do?
 
@@ -449,14 +483,15 @@ Solution: I'll manually configure RSTP priority values on SW1 & SW2 to make the 
 This is not an SVI vlan interface command, this is a global config command for spanning-tree to set priority of switch/bridge:
 
 SW1 & SW2 respectively:
-<br>spanning-tree vlan 10,20,30 priority 4096
-<br>spanning-tree vlan 10,20,30 priority 8192
-
+```
+spanning-tree vlan 10,20,30 priority 4096
+spanning-tree vlan 10,20,30 priority 8192
+```
 OR
-
+```
 spanning-tree vlan 10,20,30 priority primary
-<br>spanning-tree vlan 10,20,30 priority secondary
-
+spanning-tree vlan 10,20,30 priority secondary
+```
 ## Resolved:
 
 You can see the bridge System-ID extension as 4106 (4096 + 10 for vlan number = 4106)
@@ -595,10 +630,10 @@ Blackhole = "A networking black hole is a location in a network where incoming o
 *we don't accomplsh a blackhole...*
 
 ## Action on SW2: 
-
-<br>interface port-channel1
-<br>shutdown
-
+```
+interface port-channel1
+shutdown
+```
 <br>
 
 **************************************************************************************************
@@ -755,10 +790,12 @@ RSTP root per VLAN:
 Now we are going to break the alignment by changing SW2 to HRSP Active role, while keeping it on RSTP Standby.
 
 SW2: We increase HSRP priority # to take over as Active role on each 3 VLANs.
-<br>interface vlan {x}
-	<br>standby 10 priority 120
-	<br>standby 20 priority 120
-	<br>standby 30 priority 120
+```
+interface vlan {x}
+standby 10 priority 120
+standby 20 priority 120
+standby 30 priority 120
+```
 <br>
 
 ![Trace to Root](images/hsrp-active-sw2.jpg)
