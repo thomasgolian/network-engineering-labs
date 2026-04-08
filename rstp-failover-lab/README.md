@@ -84,6 +84,7 @@ Full configurations are available in the configs/ directory
 
 Initial IOS XE configurations I entered for all network nodes:
 
+```bash
 <br>enable secret cisco
 <br>hostname {}
 <br>no ip domain lookup
@@ -102,6 +103,7 @@ Initial IOS XE configurations I entered for all network nodes:
 <br>transport input ssh
 
 copy running-config startup-config 
+```
 
 <br>
 
@@ -110,7 +112,9 @@ Alpine Linux Desktop to test end-to-end connectivity and configured with:
 
 <br>
 
+
 SW1 & SW2 SVI
+```bash
 <br>interface vlan 10
 <br> ip address 10.1.10.2 255.255.255.0
 <br> no shutdown
@@ -118,7 +122,7 @@ SW1 & SW2 SVI
 <br>interface vlan 10
 <br> ip address 10.1.10.3 255.255.255.0
 <br> no shutdown
-
+```
 <br>
 
 SW1 default route out of the network towards R1 (ISP) is:
