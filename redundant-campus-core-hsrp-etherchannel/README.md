@@ -346,7 +346,9 @@ sudo ifconfig eth0 10.1.10.99 netmask 255.255.255.0
 
 *we needed to also add default gateway - see ping fail below*
 
+```
 sudo route add default gateway 10.1.10.1 eth0
+```
 
 <br>
 
