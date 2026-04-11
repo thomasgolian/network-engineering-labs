@@ -220,7 +220,7 @@ We're using 0.0.255.255 wildcard to apply OSPF process 1 to all interfaces that 
 
 <br>
 
-![OSPF Network Wildcard](images/ospf1-net-wildcard.jpg)
+<img src="images/ospf1-net-wildcard.jpg" width="650">
 
 <br>
 
@@ -228,7 +228,7 @@ ABR R4:
 <br>E0/0 area 0
 <br>E0/1 area 1
 
-![ABR R4](images/abr-r4-ospf-int.jpg)
+<img src="images/abr-r4-ospf-int.jpg" width="650">
 
 <br>
 
@@ -238,7 +238,7 @@ ABR R5:
 
 <br>
 
-![ABR R5](images/abr-r5-ospf-int.jpg)
+<img src="images/abr-r5-ospf-int.jpg" width="650">
 
 <br>
 
@@ -407,7 +407,7 @@ Resolved. All neighbors and routes verified.
 
 <br>
 
-![R5 Routes](images/r5-routes-verify.jpg)
+<img src="images/r5-routes-verify.jpg" width="650">
 
 <br>
 
@@ -432,7 +432,7 @@ Verifying Link State Database on R3:
 
 <br>
 
-![R3 OSPF LSDB](images/r3-database.jpg)
+<img src="images/r3-database.jpg" width="650">
 
 <br>
 
@@ -492,7 +492,7 @@ Resulting in R7 losing all OSPF learned routes and no connectivity outside its L
 
 <br>
 
-![R7 Failure](images/r7-route-fail.jpg)
+<img src="images/r7-route-fail.jpg" width="650">
 
 <br>
 
@@ -551,16 +551,6 @@ decision to use E0/0.
 
 Before: R6 > R4 > R2 > R3 > R5 > R7
 
-R6#traceroute 10.0.57.2
-<br>Type escape sequence to abort.
-<br>Tracing the route to 10.0.57.2
-<br>VRF info: (vrf in name/id, vrf out name/id)
-<br>1 10.0.46.1 1 msec 14 msec 1 msec
-<br>2 10.0.24.1 53 msec 15 msec 3 msec
-<br>3 10.0.23.2 25 msec 8 msec 11 msec
-<br>4 10.0.35.2 8 msec 16 msec 6 msec
-<br>5 10.0.57.2 4 msec *  4 msec
-
 <br>
 
 ![Path 1](images/r6-r7-path1.jpg)
@@ -583,7 +573,7 @@ a different path from R6 to R7 as expected. Verified with traceroute:
 
 <br>
 
-![Cost Manipulation](images/cost-manipulation.jpg)
+<img src="images/cost-manipulation.jpg" width="650">
 
 <br>
 
