@@ -425,7 +425,7 @@ Understanding STP more from building it from the ground up with real Cisco IOS X
 
 *********************************************************************************************
 
-![CML](images/CMLfinal.jpg)
+![Topology](images/topologyfinal.jpg)
 
 <br>
 
