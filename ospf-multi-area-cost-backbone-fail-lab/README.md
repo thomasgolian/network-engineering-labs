@@ -372,11 +372,11 @@ To verify:
 
 <br>
 
-![R1 Neighbors](images/r1-neighbors.jpg)
+<img src="images/r1-neighbors.jpg" width="650">
 
 <br>
 
-![R4 Neighbors](images/r4-neighbors.jpg)
+<img src="images/r4-neighbors.jpg" width="650">
 
 <br>
 
@@ -417,7 +417,7 @@ Using show ip ospf interface brief on R4 to verify OSPF areas as an example.
 
 <br>
 
-![R4 Areas](images/r4-area-verify.jpg)
+<img src="images/r4-area-verify.jpg" width="650">
 
 <br>
 
@@ -442,11 +442,11 @@ Confirming Layer 3 Connectivity:
 
 <br>
 
-![L3 Connectivity](images/r1-to-area1.jpg)
+<img src="images/r1-to-area1.jpg" width="650">
 
 <br>
 
-![L3 Connectivity](images/r1-to-area2.jpg)
+<img src="images/r1-to-area2.jpg" width="650">
 
 <br>
 
@@ -532,7 +532,7 @@ All links being equal, the packet will take natural path of R6 > R4 > R2 > R1
 
 <br>
 
-![R6 Traceroute](images/r6-traceroute1.jpg)
+<img src="images/r6-traceroute1.jpg" width="650">
 
 <br>
 
@@ -631,7 +631,7 @@ Once the link between R1 and R3 failed, we can see R3 stopped receiving hello me
 
 <br>
 
-![Last Hello](images/last-hello-r1.jpg)
+<img src="images/last-hello-r1.jpg" width="650">
 
 <br>
 
