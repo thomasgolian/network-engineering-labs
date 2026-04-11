@@ -154,7 +154,7 @@ Below:
 *Scalability: While you can have multiple groups per VLAN, it is best practice to map one group to one VLAN to prevent management complexity.*
 <br>
 
-![SVI Core](images/svi-core.jpg)
+<img src="images/svi-core.jpg" width="700">
 
 <br>
 
@@ -277,9 +277,10 @@ show lacp neighbor
 
 <br>
 
-![LACP Neighbor](images/show-lacp-neighbor.jpg)
+<img src="images/show-lacp-neighbor.jpg" width="700">
 
-![LACP Neighbor](images/port-channel1.jpg)
+<img src="images/port-channel1.jpg" width="700">
+
 <br>
 
 Trunk Configuration for all layer 2 ethernet links between Access layer switches and Core layer switches:
@@ -292,10 +293,11 @@ switchport trunk allowed vlan add 10,20,30
 
 <br>
 
-![Verify Trunks](images/verify-trunks.jpg)
+<img src="images/verify-trunks.jpg" width="700">
+
 <br>
 
-![Verify Trunks](images/trunk-vlans-verify.jpg)
+<img src="images/trunk-vlans-verify.jpg" width="700">
 
 <br>
 
@@ -307,7 +309,7 @@ We'll verify EtherChannel on SW1 & SW2:
 
 <br>
 
-![Po1 Verify](images/switch2-po1-verify.jpg)
+<img src="images/switch2-po1-verify.jpg" width="700">
 
 <br>
 
@@ -352,7 +354,7 @@ sudo route add default gateway 10.1.10.1 eth0
 
 <br>
 
-![USERS Verify Routing L3](images/users-verify-linux.jpg)
+<img src="images/users-verify-linux.jpg" width="700">
 
 <br>
 
@@ -377,7 +379,7 @@ But you can make eth0 interface changes here, so you don't have to do it every t
 
 <br>
 
-![Linux Desktop](images/cml-desktop-config.jpg)
+<img src="images/cml-desktop-config.jpg" width="700">
 
 
 ## Verifying end-to-end network connectivity through layer 2 to the core, and out layer 3 to the ISP:
@@ -397,7 +399,7 @@ So R1 is doing load balancing, in a sense. Messing with my HSRP plans when pingi
 
 Some traffic goes to SW2 (STANDBY) ❌
 
-![ECMP Mistake](images/ecmp-mistake.jpg)
+<img src="images/ecmp-mistake.jpg" width="700">
 
 ## Here’s the problem:
 
@@ -502,7 +504,7 @@ SW1 is now RSTP root for VLANs 10,20,30. Now we shut it down and see if SW2 corr
 
 <br>
 
-![SW1 Root](images/sw1-rstp-root-verify.jpg)
+<img src="images/sw1-rstp-root-verify.jpg" width="700">
 
 <br>
 
@@ -510,7 +512,7 @@ We did a shutdown on SW1 interfaces - now SW2 has become layer 2 RSTP root and l
 
 <br>
 
-![SW2 Root](images/sw2-rstp-root-verify.jpg)
+<img src="images/sw2-rstp-root-verify.jpg" width="700">
 
 <br>
 
@@ -555,7 +557,7 @@ We will take down SW1's E0/2 to see what happens:
 
 <br>
 
-![Link Down](images/link-down-po1.jpg)
+<img src="images/link-down-po1.jpg" width="700">
 
 <br>
 
@@ -567,7 +569,7 @@ The Ports column shows the physical interfaces in Po1:
 
 <br>
 
-![SW2 State](images/link-down-verify.jpg)
+<img src="images/link-down-verify.jpg" width="700">
 
 <br>
 
@@ -650,7 +652,7 @@ I was confused why I saw 10.1.10.2 from User Desktop traceroute to R1 because th
 
 <br>
 
-![HSRP IPs](images/hsrp-confusion.jpg)
+<img src="images/hsrp-confusion.jpg" width="700">
 
 <br>
 
@@ -680,7 +682,7 @@ Users, Servers, and Voice Desktops all have connectivity throughout LAN as well 
 
 <br>
 
-![Full Connectivity](images/full-connectivity.jpg)
+<img src="images/full-connectivity.jpg" width="700">
 
 <br>
 
@@ -711,7 +713,7 @@ So to continue, I'll force the 'split-brain' scenario by shutting down both ends
 
 <br>
 
-![Split Brain](images/split-brain.jpg)
+<img src="images/split-brain.jpg" width="700">
 
 <br>
 
@@ -808,7 +810,7 @@ We can see the misalignment on this single screenshot of SW1:
 
 <br>
 
-![Trace to Root](images/core-misalign.jpg)
+<img src="images/core-misalign.jpg" width="700">
 
 <br>
 
