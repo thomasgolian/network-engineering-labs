@@ -347,7 +347,7 @@ Goal: The network is fully converged, correctly designed, and routing properly. 
 
 We will use:
 
-<br>show ip ospf neighbor
+show ip ospf neighbor
 <br>show ip route
 <br>show ip ospf interface brief
 <br>show ip ospf database
@@ -355,15 +355,13 @@ We will use:
 <br>traceroute
 <br>show ip route | include 0.0.0.0
 
-<br>
-
 To verify:
-<br>Neighbor adjacency
+
+Neighbor adjacency
 <br>Routing table
 <br>Interface/area validation
 <br>Verify LSDB
 <br>Connectivity tests
-
 <br>
 
 # OSPF Baseline
