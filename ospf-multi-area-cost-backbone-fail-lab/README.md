@@ -124,9 +124,7 @@ description Link to R2 (10.0.12.0/30)
 
 <br>
 
-<p align="center">
-  <img src="images/descriptions0.jpg" width="600">
-</p>
+<img src="images/descriptions0.jpg" width="650">
 
 <br>
 
