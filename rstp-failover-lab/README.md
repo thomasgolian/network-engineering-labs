@@ -6,7 +6,7 @@ All switches routers in this lab are running IOS XE images virtualized or contai
 
 <br>
 
-![CML](images/CML.jpg)
+![CML](images/CMLfinal.jpg)
 
 <br>
 
@@ -424,6 +424,8 @@ Understanding STP more from building it from the ground up with real Cisco IOS X
 <br>
 
 *********************************************************************************************
+
+![CML](images/CMLfinal.jpg)
 
 <br>
 
