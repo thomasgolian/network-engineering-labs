@@ -66,7 +66,7 @@ Access switches SW6,7,8 have extra interfaces installed and configured as access
 
 <br>
 
-![VLAN 10 Config](images/VLAN10-interfaces-verify.png)
+<img src="images/VLAN10-interfaces-verify.png" width="600">
 
 <br>
 
@@ -150,11 +150,11 @@ spanning-tree vlan 10 root secondary
 ```
 <br>
 
-![SW1-rootprimary](images/SW1-root-verify.png)
+<img src="images/SW1-root-verify.png" width="600">
 
 <br>
 
-![SW2-rootsecondary](images/SW2-secondary-verify.png)
+<img src="images/SW2-secondary-verify.png" width="600">
 
 <br>
 
@@ -205,7 +205,7 @@ R1 pinged SW1 and SW3 cores successfully, - ISP/WAN links working
 
 <br>
 
-![Normal Traffic Flow](images/SW1-root.jpg)
+<img src="images/SW1-root.jpg" width="600">
 
 <br>
 
@@ -218,7 +218,7 @@ RSTP root primary core SW1 fails, all interfaces shutdown. Simulating a failure.
  
 <br>
 
-![Failover to secondary](images/failover-to-root-secondary2.jpg)
+<img src="images/failover-to-root-secondary2.jpg" width="600">
 
 <br>
 
@@ -245,7 +245,7 @@ debug spanning-tree bpdu
 We can see the conversation and reconvergence of the switches on the CLI when we enable debugging: 
 <br>debug spanning-tree events
 
-![Root Check](images/debug-rstp-events.jpg)
+<img src="images/debug-rstp-events.jpg" width="600">
 
 <br>
 
@@ -291,7 +291,7 @@ Failover testing was performed by manually shutting down a primary link between 
 
 <br>
 
-![SW3 Link Failure](images/SW3-link-failure.jpg)
+<img src="images/SW3-link-failure.jpg" width="600">
 
 <br>
 
@@ -312,7 +312,7 @@ Originally topology path will return once SW3 regains connectivity on it's downs
 
 <br>
 
-![New Path to SW1 root](images/RSTP-reconvergence2.jpg)
+<img src="images/RSTP-reconvergence2.jpg" width="600">
 
 <br>
 
@@ -346,7 +346,7 @@ BPDU Guard testing was performed by plugging a rogue switch into SW6 at the acce
 
 <br>
 
-![New Path to SW1 root](images/SW6-rogueswitch.jpg)
+<img src="images/SW6-rogueswitch.jpg" width="600">
 
 <br>
 
