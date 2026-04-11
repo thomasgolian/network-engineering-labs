@@ -6,8 +6,6 @@ All switches routers in this lab are running IOS XE images virtualized or contai
 
 <br>
 
-![CML](images/CMLfinal.jpg)
-
 <br>
 
 # Overview
@@ -42,7 +40,7 @@ Ensure loop-free topology under failure conditions and layer 3 connectivity insi
 
 <br>
 
-![Topology](images/topology.jpg)
+![CML](images/CMLfinal.jpg)
 
 <br>
 
