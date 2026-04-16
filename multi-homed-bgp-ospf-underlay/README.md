@@ -24,17 +24,17 @@ This project highlights the interaction between BGP and IGP, the importance of n
 
 Goals:
 
-Learn how eBGP and iBGP work together
+- Learn how eBGP and iBGP work together
 
-Dive into iBGP pathing, loopbacks, next-hop-self, neighbors and reflectors
+- Dive into iBGP pathing, loopbacks, next-hop-self, neighbors and reflectors
 
-Control outbound traffic using local preference
+- Control outbound traffic using local preference
 
-Ensure resilient failover when an edge router fails
+- Ensure resilient failover when an edge router fails
 
-Understand control-plane vs data-plane behavior
+- Understand control-plane vs data-plane behavior
 
-Learn how an overlay protocol and an underlay protocl cooperate together for a multi-layer network (vs a typical flat network that I'm used to)
+- Learn how an overlay protocol and an underlay protocl cooperate together for a multi-layer network (vs a typical flat network that I'm used to)
 
 <br>
 
@@ -153,7 +153,7 @@ router ospf 1
 network 10.0.1.0 0.0.0.255 area 0
 network 1.1.1.0 0.0.0.255 area 0
 ```
-Because we will run iBGP on top in this lab, we can consider this OSPF domain to be our 'underlay' and the iBGP 'overlay'. However, in a small enterprise with only a single default gateway to the WAN, OSPF is just considered the routing protocol - NOT an underlay, because nothing is sitting on top of it making the policy and next-hop decisions. 
+- Because we will run iBGP on top in this lab, we can consider this OSPF domain to be our 'underlay' and the iBGP 'overlay'. However, in a small enterprise with only a single default gateway to the WAN, OSPF is just considered the routing protocol - NOT an underlay, because nothing is sitting on top of it making the policy and next-hop decisions. 
 
 We can see both loopback addresses and 10.0.0.0/8 subnetted for OSPF routes. 
 
@@ -162,9 +162,9 @@ We can see both loopback addresses and 10.0.0.0/8 subnetted for OSPF routes.
 
 *While learning more about BGP, I realized iBGP requires full-mesh because iBGP-learned routes are NOT advertised to other iBGP peers. This requires the mesh, and while we could add more links for this lab easily, a full mesh in a large iBGP environment doesn't scale well. Which is why Route Reflectors are used as a method to bypass this traditional iBGP rule, where RRs are configured to advertise iBGP routes to other client peers* 
 
-I thought R1 and R2 at the edge would be obvious choices to serve as RRs - so that R5 and R6 learn all routes. But in practice, I read it's actually better to split the responsibilities of your network devices. 
+- I thought R1 and R2 at the edge would be obvious choices to serve as RRs - so that R5 and R6 learn all routes. But in practice, I read it's actually better to split the responsibilities of your network devices. 
 
-We don't have to have EVERYTHING riding on the stability of R1 and R2 as they are already handling the eBGP. We'll configure R5 and R6 in the enterprise core as the RRs, so that all 4 iBGP routers can communicate and learn all internal routes.
+- We don't have to have EVERYTHING riding on the stability of R1 and R2 as they are already handling the eBGP. We'll configure R5 and R6 in the enterprise core as the RRs, so that all 4 iBGP routers can communicate and learn all internal routes.
 
 Adding first iBGP neighbor R2. The 'remote-as' command defines what AS the neighbor belongs to. 
 
@@ -245,9 +245,9 @@ Below you can see the neighbor session go down and back up with R1 to apply the 
 
 ![BGP](images/r5-rr-updown.jpg)
 
-Because RR advertisements are not limited to a single hop, the advertisements can traverse multiple hops (however the router at each hop must be allowed/configured to advertise the route - which is where the route reflector command is required.  
+- Because RR advertisements are not limited to a single hop, the advertisements can traverse multiple hops (however the router at each hop must be allowed/configured to advertise the route - which is where the route reflector command is required.  
 
-Learning more about BGP - it's an important distinction that even though we have OSPF, Local, Connected routes in R1's RIB, these are separate from iBGP that has it's own table. Right now there are zero routes. BGP doesn't automatically inject routes, they have to be defined. 
+- Learning more about BGP - it's an important distinction that even though we have OSPF, Local, Connected routes in R1's RIB, these are separate from iBGP that has it's own table. Right now there are zero routes. BGP doesn't automatically inject routes, they have to be defined. 
 
 Injecting R1 & R2's loopback0 as a route -- apply on R1 and R2:
 ```
@@ -260,13 +260,13 @@ router bgp 65001
 
 ![BGP](images/bgp-route-r1.jpg)
 
-The 'route reflectors' aren't advertising BGP neighbor information - they are advertising any injected routes into the BGP routing table. Network Layer Reachability Information (NLRI). We inject the loopback0 route for each of the 4 routers, and we should have 4 loopback0 networks in the BGP table.  
+- The 'route reflectors' aren't advertising BGP neighbor information - they are advertising any injected routes into the BGP routing table. Network Layer Reachability Information (NLRI). We inject the loopback0 route for each of the 4 routers, and we should have 4 loopback0 networks in the BGP table.  
 
 R1's BGP table now shows all 4 networks. We achieved this WITHOUT using a iBGP full-mesh -- using route reflectors instead. 
 
 ![iBGP Complete](images/ibgp-complete.jpg)
 
-To create a solid mental model, we take a peek at R1's routing table below. We see that loopback network addresses are injected into R1's RIB. Why? Because earlier we added TWO network OSPF commands on the four routers. Example, R1 has network 1.1.1.0 added to the OSPF configuration. 
+- To create a solid mental model, we take a peek at R1's routing table below. We see that loopback network addresses are injected into R1's RIB. Why? Because earlier we added TWO network OSPF commands on the four routers. Example, R1 has network 1.1.1.0 added to the OSPF configuration. 
 
 ![RIB](images/r1-routingtable.jpg)
 
@@ -312,11 +312,11 @@ We performed the same BGP command on R3 and R4 autonomous systems (with differen
 
 ![eBGP](images/ebgp-session1.jpg)
 
-Our eBGP is configured - similar to before we need a route injected into our eBGP table in hopes to see it propagate into the iBGP AS. Let's now take a look at R1's BGP table. 
+- Our eBGP is configured - similar to before we need a route injected into our eBGP table in hopes to see it propagate into the iBGP AS. Let's now take a look at R1's BGP table. 
 
-First thing we notice is that our eBGP next hops are using the underlay IP addresses, instead of loopbacks. Why? eBGP uses the directly connected interface IP as the next-hop by default. For eBGP sessions, it is assumed neighbors are directly connected. 
+- First thing we notice is that our eBGP next hops are using the underlay IP addresses, instead of loopbacks. Why? eBGP uses the directly connected interface IP as the next-hop by default. For eBGP sessions, it is assumed neighbors are directly connected. 
 
-We also added a link between R3 and R4 to help simulate break scenarios and path changes. We'll also add more network statements in our AS 65001 so R3 and R4 learn routes back to the enterprise iBGP area. 
+- We also added a link between R3 and R4 to help simulate break scenarios and path changes. We'll also add more network statements in our AS 65001 so R3 and R4 learn routes back to the enterprise iBGP area. 
 
 R1
 ```
@@ -355,6 +355,8 @@ neighbor 1.1.1.6 next-hop-self
 ![Verify](images/next-hop-self-verify.jpg)
 
 <br>
+<br>
+<br>
 
 # Troubleshooting: Multi-Condition Connectivity Failure
 
@@ -373,6 +375,9 @@ This scenario demonstrated a classic multi-condition failure, where independent 
 ![BGP](images/r2-bgp-table.jpg)
 
 Let's move on to break/change scenarios. Controlled chaos. Observe behavior. 
+
+<br>
+<br>
 
 ***************************************************************************************
 
@@ -413,6 +418,9 @@ BGP doesn’t control the full path -- IGP decides how to reach the next-hop.
 So when next-hop isn’t clean (like R1 loopback):
 
 The network starts doing weird but valid things
+
+<br>
+<br>
 
 ***************************************************************************************
 
@@ -473,6 +481,8 @@ exit
 router bgp 65001
 neighbor 1.1.1.2 route-map PREFER-R2 in
 ```
+<br>
+<br>
 
 ## *unforeseen complication and learning experience* -- Yes I want traffic from R6 to exit out R2 > R4 AS 65003. And we configured R6 with a higher local preference on inbound routes learned from R2 (1.1.1.2).
 
@@ -510,6 +520,8 @@ Let's look at the output now on R2 -- You can see outgoing path to 1.1.1.3 now t
 
 That traceroute above is cool because we can see overlay and underlay working hand-in-hand. Traceroute command using overlay IPs and output showing underlay physical interface IPs. 
 
+<br>
+<br>
 
 ***************************************************************************************
 
@@ -601,16 +613,19 @@ With R2 down, traceroute still gets out to R3 and back:
 
 ![Working Path](images/working-path.jpg)
 
+<br>
+<br>
+
 ***************************************************************************************
 
 ## Final Results
 
 - R5 and R6 successfully operated as Route Reflectors, removing the need for a full-mesh iBGP design while maintaining full route propagation across the AS.
 
-- Advertising all 10.0.1.x internal networks into iBGP enabled external eBGP neighbors to learn return paths, restoring end-to-end connectivity.
+- Advertising all 10.0.1.x internal networks into iBGP enabled external eBGP neighbors to learn return paths, enabling end-to-end connectivity.
 
 - Removing `next-hop-self` resulted in:
-  - Inconsistent next-hop resolution  
+  - Inconsistent next-hops  
   - ECMP behavior in the underlay  
   - Non-deterministic forwarding paths  
 
@@ -630,13 +645,13 @@ With R2 down, traceroute still gets out to R3 and back:
 
 - Understood the behavioral differences between iBGP and eBGP, particularly in route advertisement and next-hop handling.
 
-- Observed how Route Reflectors (R5 and R6) eliminate the need for full-mesh iBGP, improving scalability while maintaining route distribution.
+- Observed how Route Reflectors (R5 and R6) eliminate the need for full-mesh iBGP, improving scalability (in larger environments) while maintaining route distribution.
 
 - Explored next-hop resolution between the underlay (OSPF) and overlay (iBGP), and how misalignment between the two can break forwarding.
 
 - Reinforced that BGP selects the best path, but the IGP determines how to reach the next-hop.
 
-- Learned that Local Preference can be used to influence outbound traffic patterns, allowing engineers to enforce routing policy across the AS.
+- Learned that Local Preference can be used to influence outbound traffic patterns
 
 - Discovered that route propagation issues are often tied to next-hop reachability and iBGP design, not just missing advertisements.
 
