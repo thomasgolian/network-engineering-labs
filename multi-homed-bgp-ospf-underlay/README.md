@@ -603,52 +603,46 @@ With R2 down, traceroute still gets out to R3 and back:
 
 ***************************************************************************************
 
-# Final Results:
+## Final Results
 
-R5 and R6 act as route reflectors to avoid full mesh iBGP while maintaining route propagation across the AS
+- R5 and R6 successfully operated as Route Reflectors, removing the need for a full-mesh iBGP design while maintaining full route propagation across the AS.
 
-Once we advertised all 10.0.1.x networks into iBGP, the external eBGP neighbors were able to receive the routes correctly for return traffic
+- Advertising all 10.0.1.x internal networks into iBGP enabled external eBGP neighbors to learn return paths, restoring end-to-end connectivity.
 
-Removing next-hop-self caused:
-<br>inconsistent next-hop resolution
-<br>ECMP in the underlay
-<br>non-deterministic forwarding paths
+- Removing `next-hop-self` resulted in:
+  - Inconsistent next-hop resolution  
+  - ECMP behavior in the underlay  
+  - Non-deterministic forwarding paths  
 
-After changing configurations on R6 and R2 for BGP paths exiting AS 65001 -- We can view show outputs and traceroute to confirm our policy is telling BGP to take specific paths out of the enterprise network. 
+- After applying Local Preference changes on R6 and R2, outbound traffic from AS 65001 followed the intended paths. This was verified using `show ip bgp`, `show ip route`, and `traceroute`.
 
-When shutting down R2 completely in scenario 3, we exposed a hidden iBGP dependency that only shows up during R2's failure.
+- Shutting down R2 (Scenario 3) exposed a hidden iBGP dependency that only appeared during failure, impacting path usability until design corrections were applied.
 
-Demonstrated multi-homing, path selection, and internal route propagation
-
-<br>
-
-# Key Takeaways:
-
-This lab made me think deeply about why iBGP is needed and the value it brings to larger networks (besides traditional default gateway exit only)
-
-Learned that OSPF can actually be considered an 'underlay' when used with iBGP running on top. 
-
-iBGP vs eBGP behavior
-
-Ping command and usage is more nuanced when troubleshooting because multiple layers (OSPF + iBGP) create more dynamic logic which requires 'source IP address' to be considered when using the ping command to test connectivity. 
-
-By using iBGP overlay and OSPF underlay - the 'ping' command cab be nuanced and misleading depending on what 'source' address is being used behind the scenes. We can use 'source' keyword to troubleshoot and control what source-address ping is using, to further troubleshoot connectivity. 
-
-why full mesh is a problem & how route reflectors fix it
-
-next-hop logic between underlay and overlay (huge)
-
-overlay vs underlay separation
-
-Local Preference values can change the pathing -- engineers can use this tool with policies to direct desired traffic patterns and flow
-
-BGP doesn’t control the full path -- IGP decides how to reach the next-hop.
-
-why routes don’t propagate sometimes
-
-Learned more about how underlay and overlay interact and how connectivity and 'ping' command can be more complex in this type of network versus a flat simple network. 
+- The final topology successfully demonstrated multi-homing, controlled path selection, and stable internal route propagation.
 
 <br>
+
+## Key Takeaways
+
+- Gained a deeper understanding of why iBGP is required in larger networks, beyond simple default gateway routing, and the value it provides for internal route propagation.
+
+- Learned how OSPF can function as an underlay while iBGP operates as an overlay, and how these layers interact to provide end-to-end connectivity.
+
+- Understood the behavioral differences between iBGP and eBGP, particularly in route advertisement and next-hop handling.
+
+- Observed how Route Reflectors (R5 and R6) eliminate the need for full-mesh iBGP, improving scalability while maintaining route distribution.
+
+- Explored next-hop resolution between the underlay (OSPF) and overlay (iBGP), and how misalignment between the two can break forwarding.
+
+- Reinforced that BGP selects the best path, but the IGP determines how to reach the next-hop.
+
+- Learned that Local Preference can be used to influence outbound traffic patterns, allowing engineers to enforce routing policy across the AS.
+
+- Discovered that route propagation issues are often tied to next-hop reachability and iBGP design, not just missing advertisements.
+
+- Observed that troubleshooting with `ping` becomes more nuanced in layered designs, as source IP selection impacts results. Using the `source` option is critical for accurate testing.
+
+- Gained a clearer understanding of how underlay and overlay separation introduces additional complexity compared to flat network designs.
 
 ![Topology](images/topology.jpg)
 
