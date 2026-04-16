@@ -237,7 +237,11 @@ router bgp 65001
  neighbor 1.1.1.1 route-reflector-client
 ``` 
 
-What this command does on R5 for example: If I learn routes from R1, I am allowed to reflect them to other peers (like R6) - Below you can see the neighbor session go down and back up with R1 to apply the new RR logic to the iBGP session. 
+What this command does on R5 for example: 
+
+"If I learn routes from R1, I am allowed to reflect them to other peers (like R6)" 
+
+Below you can see the neighbor session go down and back up with R1 to apply the new RR logic to the iBGP session. 
 
 ![BGP](images/r5-rr-updown.jpg)
 
