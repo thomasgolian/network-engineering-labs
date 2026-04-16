@@ -12,22 +12,10 @@ All switches and/or routers in this lab are running IOS XE images virtualized or
 
 # Overview:
 
-Design and validate a multi-homed BGP network using:
+This lab demonstrates the design, implementation, and validation of a multi-homed BGP network using iBGP with route reflectors and OSPF as the underlay. Traffic manipulation is performed using Local Preference to influence outbound path selection, and Equal-Cost Multi-Path (ECMP) behavior is observed. The lab includes failure simulation by removing an edge router, exposing a next-hop reachability issue that resulted in traffic loss despite valid BGP routes. The issue was resolved through consistent next-hop-self configuration, resulting in failover success. 
 
-iBGP with Route Reflectors (R5, R6)
+This project highlights the interaction between BGP and IGP, the importance of next-hop resolution, and how policy and design choices impact real-world network resilience.
 
-OSPF as the underlay
-
-Dual eBGP exits (R1 → R3, R2 → R4)
-
-*From the perspective as someone new to learning BGP*
-
-We want to understand:
-<br>eBGP vs iBGP
-<br>Path selection
-<br>iBGP configuration and Route Reflectors vs. full-mesh
-<br>Understand and configure underlay and overlay functions
-<br>Route propagation inside an AS
 
 # Topology:
 
@@ -42,8 +30,14 @@ We want to understand:
 
 Goals:
 
+Learn how eBGP and iBGP work together
+
+Dive into iBGP pathing, loopbacks, next-hop-self, neighbors and reflectors
+
 Control outbound traffic using local preference
+
 Ensure resilient failover when an edge router fails
+
 Understand control-plane vs data-plane behavior
 
 <br>
