@@ -18,9 +18,7 @@ This project highlights the interaction between BGP and IGP, the importance of n
 
 # Topology:
 
-
 ![Topology](images/topology.jpg)
-
 
 
 ## Objectives:
@@ -37,6 +35,8 @@ Ensure resilient failover when an edge router fails
 
 Understand control-plane vs data-plane behavior
 
+Learn how an overlay protocol and an underlay protocl cooperate together for a multi-layer network (vs a typical flat network that I'm used to)
+
 <br>
 
 # Scenarios 
@@ -47,9 +47,7 @@ Understand control-plane vs data-plane behavior
 
 3) Simulate R2 with a complete hardware failure - completely offline. 
 
-
 <br>
-
 
 ## Configurations:
 
