@@ -1,0 +1,151 @@
+R3#show startup-config 
+Using 1748 out of 131072 bytes
+!
+version 17.15
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname R3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+no ip domain lookup
+ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-131184669
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-131184669
+ revocation-check none
+ rsakeypair TP-self-signed-131184669
+ hash sha512
+!         
+!
+crypto pki certificate chain TP-self-signed-131184669
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+!
+!
+memory free low-watermark processor 80093
+!
+!
+spanning-tree mode rapid-pvst
+!
+enable secret 9 $9$GpUukmkbQngpmE$EpIYZ/FX43qvKCBePo22wiJqJSwyG0e36L79wySx3FM
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 1.1.1.3 255.255.255.255
+!
+interface Ethernet0/0
+ ip address 192.168.1.1 255.255.255.252
+!
+interface Ethernet0/1
+ ip address 172.16.34.1 255.255.255.252
+!
+interface Ethernet0/2
+ no ip address
+ shutdown
+!         
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+interface Ethernet1/0
+ no ip address
+ shutdown
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+router bgp 65002
+ bgp log-neighbor-changes
+ network 1.1.1.3 mask 255.255.255.255
+ neighbor 172.16.34.2 remote-as 65003
+ neighbor 192.168.1.2 remote-as 65001
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+no logging btrace
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ password cisco
+ logging synchronous
+ login
+line aux 0
+line vty 0 4
+ exec-timeout 15 0
+ password cisco
+ logging synchronous
+ login
+ transport input ssh
+!
+!
+!
+!
+end
