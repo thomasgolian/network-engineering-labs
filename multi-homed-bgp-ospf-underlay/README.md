@@ -247,7 +247,7 @@ Below you can see the neighbor session go down and back up with R1 to apply the 
 
 Because RR advertisements are not limited to a single hop, the advertisements can traverse multiple hops (however the router at each hop must be allowed/configured to advertise the route - which is where the route reflector command is required.  
 
-Learning more about BGP - it's an important distinction that even though we have OSPF, Local, Connected routes in R1's RIB, these are separate from iBGP that has it's own routing table. Right now there are zero routes. BGP doesn't automatically inject routes, they have to be defined. 
+Learning more about BGP - it's an important distinction that even though we have OSPF, Local, Connected routes in R1's RIB, these are separate from iBGP that has it's own table. Right now there are zero routes. BGP doesn't automatically inject routes, they have to be defined. 
 
 Injecting R1 & R2's loopback0 as a route -- apply on R1 and R2:
 ```
@@ -308,6 +308,8 @@ We're telling R1 & R2 : “That directly connected neighbor is in a DIFFERENT AS
 
 We performed the same BGP command on R3 and R4 autonomous systems (with different values for IP and AS #)
 
+*ignore the 10.0.0.0 address in image below - it was used before changing to 192*
+
 ![eBGP](images/ebgp-session1.jpg)
 
 Our eBGP is configured - similar to before we need a route injected into our eBGP table in hopes to see it propagate into the iBGP AS. Let's now take a look at R1's BGP table. 
@@ -336,14 +338,9 @@ In this 'show ip bgp' output on R3/4, we can see the underlay 10.0.1.x networks 
 
 ![eBGP](images/bgp-add-networks-underlay.jpg)
 
+We use 'next-hop-self' BGP command on R1 and R2 -- so that they're advertised routes/NLRIs (Network Layer Reachability Information) will now include (and force) the next hop as their loopback0 addresses. 
 
-Important distinction now - R1 and R2 will have BGP table entry for next hop 10.0.0.{1,2}. However, we're not finished -- because our R5 and R6 enterprise core routers don't know how to reach the outside autonomous systems -- and this could blackhole traffic. 
-
-![Wrong](images/wrong-blackhole.jpg)
-
-Solution: We use 'next-hop-self' BGP command on R1 and R2 -- so that they're advertised routes/NLRIs (Network Layer Reachability Information) will now include (and force) the next hop as their loopback0 addresses. 
-
-Result: Core internal iBGP routers R5 and R6 will now receive routes/NRLI with accurate next hop addresses to R1 and R2.
+Result: Core internal iBGP routers R5 and R6 will now receive routes/NRLI with accurate next hop addresses back towards to R1 and R2, respectively.
 
 R1
 ```
