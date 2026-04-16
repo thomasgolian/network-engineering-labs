@@ -16,6 +16,7 @@ This lab demonstrates the design, implementation, and validation of a multi-home
 
 This project highlights the interaction between BGP and IGP, the importance of next-hop resolution, and how policy and design choices impact real-world network resilience.
 
+*A perspective from someone new to learning BGP*
 
 # Topology:
 
