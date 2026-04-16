@@ -160,7 +160,7 @@ We can see both loopback addresses and 10.0.0.0/8 subnetted for OSPF routes.
 ![OSPF](images/ospf-underlay-loopbacks.jpg)
 
 
-### While learning more about BGP, I realized iBGP requires full-mesh because iBGP-learned routes are NOT advertised to other iBGP peers. This requires the mesh, and while we could add more links for this lab easily, a full mesh in a large iBGP environment doesn't scale well. Which is why Route Reflectors are used as a method to bypass this traditional iBGP rule, where RRs are configured to advertise iBGP routes to other client peers. 
+*While learning more about BGP, I realized iBGP requires full-mesh because iBGP-learned routes are NOT advertised to other iBGP peers. This requires the mesh, and while we could add more links for this lab easily, a full mesh in a large iBGP environment doesn't scale well. Which is why Route Reflectors are used as a method to bypass this traditional iBGP rule, where RRs are configured to advertise iBGP routes to other client peers* 
 
 I thought R1 and R2 at the edge would be obvious choices to serve as RRs - so that R5 and R6 learn all routes. But in practice, I read it's actually better to split the responsibilities of your network devices. 
 
