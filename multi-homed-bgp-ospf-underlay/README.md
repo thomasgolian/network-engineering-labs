@@ -6,7 +6,6 @@ All switches and/or routers in this lab are running IOS XE images virtualized or
 
 ![CML](images/CML.jpg)
 
-<br>
 
 # Overview:
 
