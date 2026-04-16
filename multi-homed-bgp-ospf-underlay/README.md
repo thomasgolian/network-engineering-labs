@@ -154,7 +154,7 @@ router ospf 1
 network 10.0.1.0 0.0.0.255 area 0
 network 1.1.1.0 0.0.0.255 area 0
 ```
-Because we will run iBGP on top in this lab, we can consider this OSPF domain to be our 'underlay' and the iBGP 'overlay'. However, in a small enterprise with only a single default gateway to the WAN, OSPF is just considered the routing protocol - NOT an underlay, because nothing is sitting on top of it making the decisions. 
+Because we will run iBGP on top in this lab, we can consider this OSPF domain to be our 'underlay' and the iBGP 'overlay'. However, in a small enterprise with only a single default gateway to the WAN, OSPF is just considered the routing protocol - NOT an underlay, because nothing is sitting on top of it making the policy and next-hop decisions. 
 
 We can see both loopback addresses and 10.0.0.0/8 subnetted for OSPF routes. 
 
