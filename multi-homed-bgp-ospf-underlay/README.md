@@ -42,7 +42,7 @@ Learn how an overlay protocol and an underlay protocl cooperate together for a m
 
 1) Incomplete iBGP configuration on R1 
 
-2) Local-Preference change in iBGP 
+2) Local Preference in iBGP
 
 3) Simulate R2 with a complete hardware failure - completely offline. 
 
@@ -355,7 +355,7 @@ neighbor 1.1.1.6 next-hop-self
 ![Verify](images/next-hop-self-verify.jpg)
 
 <br>
-111111111111111111111111111111111111111111111111111111111111111111111111111111111
+
 # Troubleshooting: Multi-Condition Connectivity Failure
 
 During testing, end-to-end connectivity between ASes failed despite BGP sessions appearing healthy. Initial troubleshooting was misleading because two separate issues existed simultaneously, and each was tested and ruled-out separately.
@@ -372,7 +372,7 @@ This scenario demonstrated a classic multi-condition failure, where independent 
 
 ![BGP](images/r2-bgp-table.jpg)
 
-## Let's move on to break/change scenarios. Controlled chaos. Observe behavior. 
+Let's move on to break/change scenarios. Controlled chaos. Observe behavior. 
 
 ***************************************************************************************
 
@@ -416,20 +416,24 @@ The network starts doing weird but valid things
 
 ***************************************************************************************
 
-# Scenario 2) Local-Preference change in iBGP - We're using R6 (AS 65001) as the source of traffic flow to R3 (AS 65002) as the destination. R6 is also one of two Route Reflectors (R5 also)
+# Scenario 2) Local Preference in iBGP
 
-Observe how changing iBGP local preference might affect pathing when a network has multiple BGP outbound exits. Commands with output from R6. 
+In this scenario, R6 (AS 65001) is used as the source of traffic, with R3 (AS 65002) as the destination. R6 also functions as one of the Route Reflectors in the topology (along with R5).
 
-We don't 'guess' what the preference should be. We decide policy and preferred exit - which will then determine our localpref config. 
+The goal is to observe how modifying Local Preference within iBGP changes path selection when multiple outbound BGP exits are available.
 
-Local Preference is:
-<br>Higher = more preferred
-<br>Applied inside your AS
-<br>Typically set inbound on iBGP (on the receiving router)
+All commands and verification outputs are taken from the perspective of R6.
 
-Right now R6 has ECMP to reach R3 via:
-<br>R1 > R3
-<br>R2 > R4 > (transit) > R3
+Rather than guessing values, we define a clear routing policy by selecting a preferred exit point. Local Preference is used.
+
+**Local Preference characteristics:**
+>Higher value = more preferred path
+>Propagated within the local AS (iBGP only)
+>Typically set inbound on the receiving router
+
+At baseline, R6 has equal-cost paths (ECMP) to reach R3 via:
+<br>R1 > R3  
+<br>R2 > R4 > Transit > R3
 
 R6 BGP view
 ```
