@@ -29,6 +29,6 @@ My current lab environment: Cisco Modeling Labs v2.8.1 - 20 max nodes
 VMware Workstation running on physical machine:
 <br>MSI z690 Edge Wifi DDR4
 <br>i71400k cpu
-<br>64 GB RAM
+<br>64 GB RAM - corsair vengeance DDR4
 <br>2 TB SSD M.2
 <br>liquid cooling
