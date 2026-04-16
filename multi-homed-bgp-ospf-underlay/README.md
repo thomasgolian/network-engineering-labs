@@ -356,25 +356,20 @@ neighbor 1.1.1.6 next-hop-self
 
 <br>
 111111111111111111111111111111111111111111111111111111111111111111111111111111111
-Okay after hours of troubleshooting... *phew *.... I finally solved it. Very tricky because two things were wrong, and the mixture of 2 issues and troubleshooting separately cause a really long tshoot process. But we learn a lot this way... Troubleshooting connectivity inside and out of the iBGP domain was difficult because it was a 2 sided complex issue. Two things wrong simultaneously -- while troubleshooting them separately at different time. Both needed to be resolved simultaneously. 
+# Troubleshooting: Multi-Condition Connectivity Failure
 
-*That's a multi-condition failure* 
+During testing, end-to-end connectivity between ASes failed despite BGP sessions appearing healthy. Initial troubleshooting was misleading because two separate issues existed simultaneously, and each was tested and ruled-out separately.
 
-Solutions:
+The first issue involved overlapping internal addressing (10.0.0.0/8 - design mistake), while the second was a missing return path from the external AS back into the iBGP domain. Each problem alone did not fully explain the failure, leading to incorrect assumptions during early troubleshooting.
 
-1) Yes, we did have conflicting 10.0.0.0/8 networks. But that alone didn't fix the issue - so I ruled it out.
+The breakthrough came after watching ICMP logs using `debug ip icmp` on edge routers. Echo requests and replies were partially visible, indicating that traffic was reaching the destination but failing on the return path. This revealed that both issues might be related.
 
-192.168.1.0/30
-<br>192.168.1.4/30 
+After correcting the addressing conflict and restoring proper underlay reachability (OSPF) for return traffic, we had full end-to-end connectivity. 
 
-2) Yes, for this lab we did need an underlay route back to the iBGP AS. I fixed that in isolation - didn't fix it, so I ruled it out. 
+This scenario demonstrated a classic multi-condition failure, where independent issues combined to create a more complex and misleading problem.
 
-It wasn't until I realized that BOTH might need to be resolved together, and test it after BOTH were resolved together. Then and only then was I able to send pings end-to-end. Wow what a journey that was. 
+**Key takeaway:** Troubleshooting multiple issues can coexist — and validating fixes in isolation may not fix the problem unless all all issues are resolved simultaneously.
 
-How did I discover it? I ran 'debug ip icmp' to see ICMP behavior on R1 and R2 during pings. I saw successful echo replies, but the ping failed on the other end. Let me to the solution. 
-
-Now our topology, OSPF underlay, iBGP overlay, eBGP to ASes, all is working as intended with connectivity. 
-1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
 ![BGP](images/r2-bgp-table.jpg)
 
 ## Let's move on to break/change scenarios. Controlled chaos. Observe behavior. 
