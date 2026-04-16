@@ -4,8 +4,6 @@ Lab was built using VMware Workstation with Cisco Modeling Labs v2.8.1
 
 All switches and/or routers in this lab are running IOS XE images virtualized or containered
 
-<br>
-
 ![CML](images/CML.jpg)
 
 <br>
@@ -23,8 +21,6 @@ This project highlights the interaction between BGP and IGP, the importance of n
 
 ![Topology](images/topology.jpg)
 
-
-<br>
 
 
 ## Objectives:
@@ -78,11 +74,11 @@ transport input ssh
 copy running-config startup-config 
 ```
 
-Grouping router names based on function to help keep a mental model (Adjacent numbers = same role)
+Grouping router names based on function to help keep a mental model (adjacent numbers = same role)
 
 R1, R2 = edge 
-R5, R6 = internal
-R3, R4 = ISPs
+<br>R5, R6 = internal
+<br>R3, R4 = ISPs
 
 ![Roles](images/roles-1.jpg)
 
@@ -234,8 +230,6 @@ Each router now has 2 neighbors - but we don't add a third or full-mesh which is
 
 All four routers are configured for iBGP in AS 65001 and neighbors are Up:
 
-image here image here, all 4 iBGP summaries. 
-
 However, we don't have 3 neighbors and iBGP hasn't fully propagated. iBGP will NOT pass routes from one iBGP neighbor to another. Route reflectors will do this for us.
 
 Commands to config R5 and R6 as route reflectors in the iBGP domain. 
@@ -373,7 +367,7 @@ Solutions:
 1) Yes, we did have conflicting 10.0.0.0/8 networks. But that alone didn't fix the issue - so I ruled it out.
 
 192.168.1.0/30
-192.168.1.4/30 
+<br>192.168.1.4/30 
 
 2) Yes, for this lab we did need an underlay route back to the iBGP AS. I fixed that in isolation - didn't fix it, so I ruled it out. 
 
@@ -388,7 +382,6 @@ Now our topology, OSPF underlay, iBGP overlay, eBGP to ASes, all is working as i
 ## Let's move on to break/change scenarios. Controlled chaos. Observe behavior. 
 
 ***************************************************************************************
-
 
 # Scenario 1) Incomplete iBGP configuration on R1 - missing the 'next-hop-self' command for neighbor R5. 
 
@@ -427,7 +420,6 @@ BGP doesn’t control the full path -- IGP decides how to reach the next-hop.
 So when next-hop isn’t clean (like R1 loopback):
 
 The network starts doing weird but valid things
-
 
 ***************************************************************************************
 
