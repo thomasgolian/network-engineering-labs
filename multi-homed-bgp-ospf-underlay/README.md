@@ -355,7 +355,7 @@ neighbor 1.1.1.6 next-hop-self
 ![Verify](images/next-hop-self-verify.jpg)
 
 <br>
-
+111111111111111111111111111111111111111111111111111111111111111111111111111111111
 Okay after hours of troubleshooting... *phew *.... I finally solved it. Very tricky because two things were wrong, and the mixture of 2 issues and troubleshooting separately cause a really long tshoot process. But we learn a lot this way... Troubleshooting connectivity inside and out of the iBGP domain was difficult because it was a 2 sided complex issue. Two things wrong simultaneously -- while troubleshooting them separately at different time. Both needed to be resolved simultaneously. 
 
 *That's a multi-condition failure* 
@@ -374,7 +374,7 @@ It wasn't until I realized that BOTH might need to be resolved together, and tes
 How did I discover it? I ran 'debug ip icmp' to see ICMP behavior on R1 and R2 during pings. I saw successful echo replies, but the ping failed on the other end. Let me to the solution. 
 
 Now our topology, OSPF underlay, iBGP overlay, eBGP to ASes, all is working as intended with connectivity. 
-
+1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
 ![BGP](images/r2-bgp-table.jpg)
 
 ## Let's move on to break/change scenarios. Controlled chaos. Observe behavior. 
