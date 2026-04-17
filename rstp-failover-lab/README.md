@@ -12,29 +12,29 @@ All switches routers in this lab are running IOS XE images virtualized or contai
 
 # Overview
 
-This lab demonstrates the implementation and behavior of Rapid Spanning Tree Protocol (RSTP) in a switched Layer 2 network.
+- This lab demonstrates the implementation and behavior of Rapid Spanning Tree Protocol (RSTP) in a switched Layer 2 network.
 
-The objective is to analyze STP toplogy, validate loop prevention, and observe rapid failover during core switch and distribution switch link failures. RSTP provides significantly faster convergence compared to traditional STP by utilizing alternate ports and rapid state transitions.
+- The objective is to analyze STP toplogy, validate loop prevention, and observe rapid failover during core switch and distribution switch link failures. RSTP provides significantly faster convergence compared to traditional STP by utilizing alternate ports and rapid state transitions.
 
 <br>
 
 # Objectives
 
-Configure RSTP across multiple switches
+- Configure RSTP across multiple switches
 
-Analyze root bridge election process
+- Analyze root bridge election process
 
-Simulate core switch failure and measure RSTP response
+- Simulate core switch failure and measure RSTP response
 
-Observe port roles (Root, Designated, Alternate)
+- Observe port roles (Root, Designated, Alternate)
 
-Simulate distribution layer link failure and measure failover response
+- Simulate distribution layer link failure and measure failover response
 
-Validate rapid convergence behavior
+- Validate rapid convergence behavior
 
-Plug a rogue switch into an access layer interface running port-fast & BPDU Guard and measure outcome.
+- Plug a rogue switch into an access layer interface running port-fast & BPDU Guard and measure outcome.
 
-Ensure loop-free topology under failure conditions and layer 3 connectivity inside and out of the LAN by R1 playing role of ISP WAN.
+- Ensure loop-free topology under failure conditions and layer 3 connectivity inside and out of the LAN by R1 playing role of ISP WAN.
 
 <br>
 
@@ -48,21 +48,21 @@ Ensure loop-free topology under failure conditions and layer 3 connectivity insi
 
 # Topology Description:
 
-Multiple Layer 2 switches interconnected with redundant links
+- Multiple Layer 2 switches interconnected with redundant links
 
-One switch elected as the Root Bridge with another core switch acting as secondary
+- One switch elected as the Root Bridge with another core switch acting as secondary
 
-Redundant paths available for failover scenarios
+- Redundant paths available for failover scenarios
 
 <br>
 
 # VLAN & Interface Configuration
 
-Access nodes (Users) are using VLAN 10. All trunks are configured to allow VLAN 10 over trunk links.
+- Access nodes (Users) are using VLAN 10. All trunks are configured to allow VLAN 10 over trunk links.
 
 <br>
 
-Access switches SW6,7,8 have extra interfaces installed and configured as access ports running port-fast and BPDU guard.
+- Access switches SW6,7,8 have extra interfaces installed and configured as access ports running port-fast and BPDU guard.
 
 <br>
 
@@ -160,14 +160,14 @@ spanning-tree vlan 10 root secondary
 
 ## Verify: show spanning-tree vlan 10
 
-SW1 - root primary
+- SW1 - root primary
 <br>Et0/2               Desg FWD 100       128.3    P2p 
 <br>Et0/3               Desg FWD 100       128.4    P2p 
 <br>Et1/0               Desg FWD 100       128.5    P2p 
 
 <br>
 
-SW2 - root secondary
+- SW2 - root secondary
 <br>Et0/2               Altn BLK 100       128.3    P2p 
 <br>Et0/3               Root FWD 100       128.4    P2p 
 <br>Et1/0               Altn BLK 100       128.5    P2p
@@ -249,12 +249,12 @@ We can see the conversation and reconvergence of the switches on the CLI when we
 
 <br>
 
-Verify Root Bridge: 
+- Verify Root Bridge: 
 <br>show spanning-tree root
 
-We can now see root bridge has a higher priority value that belongs to SW2. SW2 with the priorty value of 28682 is now root for VLAN 10 - because SW1 is down / not responding / not sending BPDUs. 
+- We can now see root bridge has a higher priority value that belongs to SW2. SW2 with the priorty value of 28682 is now root for VLAN 10 - because SW1 is down / not responding / not sending BPDUs. 
 
-SW1 will regain root status in VLAN 10 topology when it regains connectivity and is up,up. Remember, SW1 still has 'root primary' configuration so it
+- SW1 will regain root status in VLAN 10 topology when it regains connectivity and is up,up. Remember, SW1 still has `root primary` configuration so it
 will take it back once it's up again. 
 
 <br>
@@ -265,15 +265,15 @@ will take it back once it's up again.
 
 Failover testing was performed by shutting down all interfaces on SW1 root to simulate switch catastrophic failure. 
 
-Observed Behavior:
+## Observed Behavior:
 
-SW2 secondary root now takes over as the VLAN 10 RSTP root core switch, changing all interfaces to designated / forwarding. 
+- SW2 secondary root now takes over as the VLAN 10 RSTP root core switch, changing all interfaces to designated / forwarding. 
 
-No switching loops were introduced
+- No switching loops were introduced
 
-Network connectivity was maintained
+- Network connectivity was maintained
 
-We could see SW3 detect something was wrong after not receiving BPDUs from root SW1 - and logs enable us to see the process.
+- We could see SW3 detect something was wrong after not receiving BPDUs from root SW1 - and logs enable us to see the process.
 
 <br>
 
@@ -283,11 +283,9 @@ We could see SW3 detect something was wrong after not receiving BPDUs from root 
 
 # Scenario 2) 
 
-Distribution switch SW3 has a failure downstream towards access switch SW7, trunk is in down - no connectivity.
+- Distribution switch SW3 has a failure downstream towards access switch SW7, trunk is in down - no connectivity.
 
-<br>
-
-Failover testing was performed by manually shutting down a primary link between switches SW3 and SW7.
+- Failover testing was performed by manually shutting down a primary link between switches SW3 and SW7.
 
 <br>
 
@@ -299,9 +297,9 @@ Failover testing was performed by manually shutting down a primary link between 
 
 <br>
 
-We can verify by checking the outgoing interface before and after the topology change:
+- We can verify by checking the outgoing interface before and after the topology change:
 
-Before = SW7 took E0/0 outgoing interface as path to root
+- Before = SW7 took E0/0 outgoing interface as path to root
 <br>After = SW7 takes E0/1 outgoing interface as path to root
 
 Originally topology path will return once SW3 regains connectivity on it's downstream trunk to SW7. 
@@ -318,17 +316,17 @@ Originally topology path will return once SW3 regains connectivity on it's downs
 
 ## Observed Behavior:
 
-Alternate port transitioned to forwarding state
+- Alternate port transitioned to forwarding state
 
-Convergence occurred rapidly (sub-second to a few seconds)
+- Convergence occurred rapidly (sub-second to a few seconds)
 
-No switching loops were introduced
+- No switching loops were introduced
 
-Network connectivity was maintained
+- Network connectivity was maintained
 
-Traffic took alternative path to SW5 in order to reach the root / core layer. 
+- Traffic took alternative path to SW5 in order to reach the root / core layer. 
 
-We can verify by using show spanning-tree commands and using debug logs to see the overhead conversation between switches. 
+- We can verify by using show spanning-tree commands and using debug logs to see the overhead conversation between switches. 
 
 <br>
 
@@ -352,7 +350,7 @@ BPDU Guard testing was performed by plugging a rogue switch into SW6 at the acce
 
 Observed Behavior:
 
-SW6 with port-fast and BPDU Guard enabled on its access ports, SW6 detects network node sending overhead messages
+- SW6 with port-fast and BPDU Guard enabled on its access ports, SW6 detects network node sending overhead messages
 into the access interface. SW6 BPDU Guard immediately moves the interface into an err-disabled state.
 
 <br>
@@ -374,11 +372,11 @@ Here we see a level 2 Critical log from Spanning-Tree - BPDU Guard is blocking i
 
 <br> 
 
-After the incident is over and the interface is ready to come back online -
-We have to issue a 'shutdown' command on the err-disabled interface FIRST, and THEN issue the no shut.
+- After the incident is over and the interface is ready to come back online -
+We have to issue a `shutdown` command on the err-disabled interface FIRST, and THEN issue the no shut.
 This is required to bring an err-disabled port back up. 
 
-When a BPDU was received on a PortFast-enabled interface with BPDU Guard configured, 
+- When a BPDU was received on a PortFast-enabled interface with BPDU Guard configured, 
 the switch immediately placed the port into an err-disabled state to prevent a potential loop.
 
 <br> 
@@ -389,37 +387,37 @@ the switch immediately placed the port into an err-disabled state to prevent a p
 
 # Final Results
 
-Successful RSTP deployment
+- Successful RSTP deployment
 
-Rapid convergence observed during topology change
+- Rapid convergence observed during topology change
 
-Loop-free network maintained under failure conditions
+- Loop-free network maintained under failure conditions
 
-Efficient utilization of redundant paths
+- Efficient utilization of redundant paths
 
-Distribution layer link failure - RSTP recovers.
+- Distribution layer link failure - RSTP recovers.
 
-Rogue switch plugged into access layer switch - BPDU Guard successfully detects - places into err-disabled state.
+- Rogue switch plugged into access layer switch - BPDU Guard successfully detects - places into err-disabled state.
 
 <br>
 
 # Key Takeaways
 
-A link failure at the distribution layer doesn't break the network. RSTP recovers
+- A link failure at the distribution layer doesn't break the network. RSTP recovers
 
-Demonstrated the ability to design, test, and validate Layer 2 failover scenarios using RSTP
+- Demonstrated the ability to design, test, and validate Layer 2 failover scenarios using RSTP
 
-Alternate ports enable near-instant failover
+- Alternate ports enable near-instant failover
 
-Redundancy at the core and distribution level is crucial to maintain network availability 
+- Redundancy at the core and distribution level is crucial to maintain network availability 
 
-Proper Layer 2 design is critical for network stability and performance
+- Proper Layer 2 design is critical for network stability and performance
 
-Watched BPDU Guard block a rogue switch in real time (virtual machine)
+- Watched BPDU Guard block a rogue switch in real time (virtual machine)
 
-Using debugging logs help us verify and understand each step of RSTP convergence
+- Using debugging logs help us verify and understand each step of RSTP convergence
 
-Understanding STP more from building it from the ground up with real Cisco IOS XE nodes. 
+- Understanding STP more from building it from the ground up with real Cisco IOS XE nodes. 
 
 <br>
 
