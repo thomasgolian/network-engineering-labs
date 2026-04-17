@@ -433,9 +433,10 @@ All commands and verification outputs are taken from the perspective of R6.
 Rather than guessing values, we define a clear routing policy by selecting a preferred exit point. Local Preference is used.
 
 **Local Preference characteristics:**
->Higher value = more preferred path
->Propagated within the local AS (iBGP only)
->Typically set inbound on the receiving router
+
+<br>Higher value = more preferred path
+<br>Propagated within the local AS (iBGP only)
+<br>Typically set inbound on the receiving router
 
 At baseline, R6 has equal-cost paths (ECMP) to reach R3 via:
 <br>R1 > R3  
