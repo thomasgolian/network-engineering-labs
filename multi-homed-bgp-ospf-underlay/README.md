@@ -93,7 +93,7 @@ interface loopback0
 ip address 1.1.1.X 255.255.255.255
 ```
 
-We'll configure IPv4 addresses on all the router interfaces, as well as a 'no shut' to get the physical ports up.
+We'll configure IPv4 addresses on all the router interfaces, as well as a no `shut` to get the physical ports up.
 
 Networks
 
@@ -166,11 +166,11 @@ We can see both loopback addresses and 10.0.0.0/8 subnetted for OSPF routes.
 
 - We don't have to have EVERYTHING riding on the stability of R1 and R2 as they are already handling the eBGP. We'll configure R5 and R6 in the enterprise core as the RRs, so that all 4 iBGP routers can communicate and learn all internal routes.
 
-Adding first iBGP neighbor R2. The 'remote-as' command defines what AS the neighbor belongs to. 
+Adding first iBGP neighbor R2. The `remote-as` command defines what AS the neighbor belongs to. 
 
 The AS number in command will determine whether the routers establish an eBGP or iBGP session. 
 
-We also need the 'update-source' command to tell router to use loopback0 address when talking to BGP neighbors
+We also need the `update-source` command to tell router to use loopback0 address when talking to BGP neighbors
 
 R1
 ```
@@ -190,7 +190,7 @@ show ip bgp summary
 
 ![BGP](images/bgp-summary1.jpg)
 
-You can see the Up/Down time column and 'show tcp brief' output. R1 and R2 have now established a TCP session together (Layer 4)
+You can see the Up/Down time column and `show tcp brief` output. R1 and R2 have now established a TCP session together (Layer 4)
 
 Let's finish iBGP neighbor commands. And we'll add route reflector commands on R5 and R6 below:
 
@@ -334,11 +334,11 @@ network 10.0.1.8 mask 255.255.255.252
 network 10.0.1.12 mask 255.255.255.252
 ```
 
-In this 'show ip bgp' output on R3/4, we can see the underlay 10.0.1.x networks added to our BGP table. We now have redundant hops back to the iBGP area and connectivity can be tested end-to-end.
+In this `show ip bgp` output on R3/4, we can see the underlay 10.0.1.x networks added to our BGP table. We now have redundant hops back to the iBGP area and connectivity can be tested end-to-end.
 
 ![eBGP](images/bgp-add-networks-underlay.jpg)
 
-We use 'next-hop-self' BGP command on R1 and R2 -- so that they're advertised routes/NLRIs (Network Layer Reachability Information) will now include (and force) the next hop as their loopback0 addresses. 
+We use `next-hop-self` BGP command on R1 and R2 -- so that they're advertised routes/NLRIs (Network Layer Reachability Information) will now include (and force) the next hop as their loopback0 addresses. 
 
 Result: Core internal iBGP routers R5 and R6 will now receive routes/NRLI with accurate next hop addresses back towards to R1 and R2, respectively.
 
@@ -401,7 +401,7 @@ no neighbor 1.1.1.5 next-hop-self
 
 With the incomplete iBGP config on R1 - I expected R5 to fail at sending some traffic bound for R3 AS 65002 -- but instead our edge routers provide 2 paths out of the enterprise network -- so R5 is still able to get packets to R3 with iBGP's control plane help. 
 
-With R1's missing 'next-hop-self' command for neighbor R5, this is what we see:
+With R1's missing `next-hop-self` command for neighbor R5, this is what we see:
 
 ![Alternate](images/r5-alternate-hop.jpg)
 
