@@ -523,7 +523,7 @@ That traceroute above is cool because we can see overlay and underlay working ha
 
 ***************************************************************************************
 
-# Scenario 3) After all the changes to edge router R2 - now we'll "flip the script" and simulate instead a hardware failure on R2 - completely offline. 
+# Scenario 3) After all the changes to edge router R2 - now we'll instead simulate a full hardware failure on R2 - completely offline. 
 
 Question:
 
