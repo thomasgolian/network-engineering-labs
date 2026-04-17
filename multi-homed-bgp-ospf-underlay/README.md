@@ -107,7 +107,7 @@ R5 <> R6 - 10.0.1.12/30
 R3 <> R4 - 172.16.34.0/30
 ```
 
-![Networks](images/networks-1.jpg)
+<img src="images/networks-1.jpg" width="650">
 
 IP addresses
 
@@ -133,7 +133,7 @@ R4 - E0/0 - 192.168.1.5
 R4 - E0/1 - 172.16.34.2
 ```
 
-![Interfaces](images/interfaces.jpg)
+<img src="images/interfaces.jpg" width="650">
 
 
 ```
@@ -157,7 +157,7 @@ network 1.1.1.0 0.0.0.255 area 0
 
 We can see both loopback addresses and 10.0.0.0/8 subnetted for OSPF routes. 
 
-![OSPF](images/ospf-underlay-loopbacks.jpg)
+<img src="images/ospf-underlay-loopbacks.jpg" width="650">
 
 
 *While learning more about BGP, I realized iBGP requires full-mesh because iBGP-learned routes are NOT advertised to other iBGP peers. This requires the mesh, and while we could add more links for this lab easily, a full mesh in a large iBGP environment doesn't scale well. Which is why Route Reflectors are used as a method to bypass this traditional iBGP rule, where RRs are configured to advertise iBGP routes to other client peers* 
@@ -268,7 +268,7 @@ R1's BGP table now shows all 4 networks. We achieved this WITHOUT using a iBGP f
 
 - To create a solid mental model, we take a peek at R1's routing table below. We see that loopback network addresses are injected into R1's RIB. Why? Because earlier we added TWO network OSPF commands on the four routers. Example, R1 has network 1.1.1.0 added to the OSPF configuration. 
 
-![RIB](images/r1-routingtable.jpg)
+<img src="images/r1-routingtable.jpg" width="650">
 
 If we somehow lost our OSPF underlay routes (bad), traffic would blackhole because iBGP's control plane would believe the routes still exist.
 
@@ -310,7 +310,7 @@ We performed the same BGP command on R3 and R4 autonomous systems (with differen
 
 *ignore the 10.0.0.0 address in image below - it was used before changing to 192*
 
-![eBGP](images/ebgp-session1.jpg)
+<img src="images/ebgp-session1.jpg" width="650">
 
 - Our eBGP is configured - similar to before we need a route injected into our eBGP table in hopes to see it propagate into the iBGP AS. Let's now take a look at R1's BGP table. 
 
@@ -336,7 +336,7 @@ network 10.0.1.12 mask 255.255.255.252
 
 In this `show ip bgp` output on R3/4, we can see the underlay 10.0.1.x networks added to our BGP table. We now have redundant hops back to the iBGP area and connectivity can be tested end-to-end.
 
-![eBGP](images/bgp-add-networks-underlay.jpg)
+<img src="images/bgp-add-networks-underlay.jpg" width="650">
 
 We use `next-hop-self` BGP command on R1 and R2 -- so that they're advertised routes/NLRIs (Network Layer Reachability Information) will now include (and force) the next hop as their loopback0 addresses. 
 
@@ -372,7 +372,7 @@ neighbor 1.1.1.6 next-hop-self
 
 **Key takeaway:** Troubleshooting multiple issues can coexist — and validating fixes in isolation may not fix the problem unless all all issues are resolved simultaneously.
 
-![BGP](images/r2-bgp-table.jpg)
+<img src="images/r2-bgp-table.jpg" width="650">
 
 Let's move on to break/change scenarios. Controlled chaos. Observe behavior. 
 
@@ -403,7 +403,7 @@ With the incomplete iBGP config on R1 - I expected R5 to fail at sending some tr
 
 With R1's missing `next-hop-self` command for neighbor R5, this is what we see:
 
-![Alternate](images/r5-alternate-hop.jpg)
+<img src="images/r5-alternate-hop.jpg" width="650">
 
 As you can see in traceroute below - something really cool happened. After losing R1 was a next hop - R5 failed over into an ECMP (Equal Cost Load Balancing) situation because there are 2 internal paths to get outside via R2. R5 can still get to R3 AS 65002 by traversing through R4 AS 65003 and over the simulated 'inet transit'. I didn't foresee this. 
 
@@ -506,7 +506,7 @@ neighbor 192.168.1.5 route-map PREFER-R4 in
 
 Let's look at the output now on R2 -- You can see outgoing path to 1.1.1.3 now takes 192.168.1.5 (R4)
 
-![New Path to R3](images/path-change4.jpg)
+<img src="images/path-change4.jpg" width="650">
 
 <br>
 
@@ -514,7 +514,7 @@ Let's look at the output now on R2 -- You can see outgoing path to 1.1.1.3 now t
 
 <br>
 
-![LocalPref](images/localpref-200.jpg)
+<img src="images/localpref-200.jpg" width="650">
 
 That traceroute above is cool because we can see overlay and underlay working hand-in-hand. Traceroute command using overlay IPs and output showing underlay physical interface IPs. 
 
@@ -609,7 +609,7 @@ With R2 down, traceroute still gets out to R3 and back:
 
 ![R6](images/r6-gets-out.jpg)
 
-![Working Path](images/working-path.jpg)
+<img src="images/working-path.jpg" width="650">
 
 <br>
 <br>
