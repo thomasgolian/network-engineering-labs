@@ -93,7 +93,7 @@ interface loopback0
 ip address 1.1.1.X 255.255.255.255
 ```
 
-We'll configure IPv4 addresses on all the router interfaces, as well as a no `shut` to get the physical ports up.
+We'll configure IPv4 addresses on all the router interfaces, as well as a `no shut` to get the physical ports up.
 
 Networks
 
