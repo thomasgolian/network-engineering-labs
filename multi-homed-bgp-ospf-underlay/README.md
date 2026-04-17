@@ -407,8 +407,6 @@ With R1's missing 'next-hop-self' command for neighbor R5, this is what we see:
 
 As you can see in traceroute below - something really cool happened. After losing R1 was a next hop - R5 failed over into an ECMP (Equal Cost Load Balancing) situation because there are 2 internal paths to get outside via R2. R5 can still get to R3 AS 65002 by traversing through R4 AS 65003 and over the simulated 'inet transit'. I didn't foresee this. 
 
-R5 is bouncing between R1 and R2 as first hop:
-
 ![Alternate](images/ecmp-failover.jpg)
 
 ![ECMP](images/ecmp.jpg)
