@@ -433,7 +433,6 @@ All commands and verification outputs are taken from the perspective of R6.
 Rather than guessing values, we define a clear routing policy by selecting a preferred exit point. Local Preference is used.
 
 **Local Preference characteristics:**
-
 <br>Higher value = more preferred path
 <br>Propagated within the local AS (iBGP only)
 <br>Typically set inbound on the receiving router
