@@ -153,14 +153,14 @@ router ospf 1
 network 10.0.1.0 0.0.0.255 area 0
 network 1.1.1.0 0.0.0.255 area 0
 ```
-- Because we will run iBGP on top in this lab, we can consider this OSPF domain to be our 'underlay' and the iBGP 'overlay'. However, in a small enterprise with only a single default gateway to the WAN, OSPF is just considered the routing protocol - NOT an underlay, because nothing is sitting on top of it making the policy and next-hop decisions. 
+- Because iBGP runs on top in this lab, the OSPF domain can be viewed as the underlay, with iBGP acting as the overlay. In a small enterprise with a single WAN gateway, however, OSPF is simply the routing protocol—not an underlay—since no higher-layer protocol is influencing policy or next-hop decisions. 
 
 We can see both loopback addresses and 10.0.0.0/8 subnetted for OSPF routes. 
 
 <img src="images/ospf-underlay-loopbacks.jpg" width="650">
 
 
-*While learning more about BGP, I realized iBGP requires full-mesh because iBGP-learned routes are NOT advertised to other iBGP peers. This requires the mesh, and while we could add more links for this lab easily, a full mesh in a large iBGP environment doesn't scale well. Which is why Route Reflectors are used as a method to bypass this traditional iBGP rule, where RRs are configured to advertise iBGP routes to other client peers* 
+*While learning BGP, I found that iBGP requires a full mesh because routes learned from one iBGP peer are not advertised to other iBGP peers. Although adding links to achieve this is simple in a lab, a full-mesh design does not scale in larger environments. To address this, Route Reflectors are used to relax this requirement by allowing reflected iBGP routes to be advertised to client peers.* 
 
 - I thought R1 and R2 at the edge would be obvious choices to serve as RRs - so that R5 and R6 learn all routes. But in practice, I read it's actually better to split the responsibilities of your network devices. 
 
@@ -245,9 +245,9 @@ Below you can see the neighbor session go down and back up with R1 to apply the 
 
 ![BGP](images/r5-rr-updown.jpg)
 
-- Because RR advertisements are not limited to a single hop, the advertisements can traverse multiple hops (however the router at each hop must be allowed/configured to advertise the route - which is where the route reflector command is required.  
+- Because route reflector advertisements are not limited to a single hop, they can traverse multiple hops. However, each router along the path must be configured to participate in route reflection for the routes to be propagated.  
 
-- Learning more about BGP - it's an important distinction that even though we have OSPF, Local, Connected routes in R1's RIB, these are separate from iBGP that has it's own table. Right now there are zero routes. BGP doesn't automatically inject routes, they have to be defined. 
+- While learning BGP, it’s important to distinguish that although OSPF, local, and connected routes exist in R1’s RIB, they are separate from the BGP table. At this stage, the BGP table contains no routes, as BGP does not automatically inject routes—they must be explicitly defined.
 
 Injecting R1 & R2's loopback0 as a route -- apply on R1 and R2:
 ```
@@ -260,7 +260,7 @@ router bgp 65001
 
 ![BGP](images/bgp-route-r1.jpg)
 
-- The 'route reflectors' aren't advertising BGP neighbor information - they are advertising any injected routes into the BGP routing table. Network Layer Reachability Information (NLRI). We inject the loopback0 route for each of the 4 routers, and we should have 4 loopback0 networks in the BGP table.  
+- Route reflectors do not advertise BGP neighbor information; they advertise routes contained in the BGP table (NLRI). In this lab, each router injects its Loopback0 network, so the BGP table should contain four Loopback0 routes.  
 
 R1's BGP table now shows all 4 networks. We achieved this WITHOUT using a iBGP full-mesh -- using route reflectors instead. 
 
@@ -338,9 +338,7 @@ In this `show ip bgp` output on R3/4, we can see the underlay 10.0.1.x networks 
 
 <img src="images/bgp-add-networks-underlay.jpg" width="650">
 
-We use `next-hop-self` BGP command on R1 and R2 -- so that they're advertised routes/NLRIs (Network Layer Reachability Information) will now include (and force) the next hop as their loopback0 addresses. 
-
-Result: Core internal iBGP routers R5 and R6 will now receive routes/NRLI with accurate next hop addresses back towards to R1 and R2, respectively.
+The `next-hop-self` BGP command is configured on R1 and R2 so that advertised routes (NLRI) use their Loopback0 addresses as the next hop. As a result, core iBGP routers R5 and R6 receive routes with reachable next-hop addresses pointing back to R1 and R2, respectively.
 
 R1
 ```
@@ -399,13 +397,13 @@ router bgp 65001
 no neighbor 1.1.1.5 next-hop-self
 ```
 
-With the incomplete iBGP config on R1 - I expected R5 to fail at sending some traffic bound for R3 AS 65002 -- but instead our edge routers provide 2 paths out of the enterprise network -- so R5 is still able to get packets to R3 with iBGP's control plane help. 
+With the incomplete iBGP configuration on R1, I expected R5 to fail when forwarding traffic to R3 (AS 65002). However, the edge routers provide multiple exit paths from the enterprise network, allowing R5 to still reach R3 with assistance from the iBGP control plane.
 
 With R1's missing `next-hop-self` command for neighbor R5, this is what we see:
 
 <img src="images/r5-alternate-hop.jpg" width="650">
 
-As you can see in traceroute below - something really cool happened. After losing R1 was a next hop - R5 failed over into an ECMP (Equal Cost Load Balancing) situation because there are 2 internal paths to get outside via R2. R5 can still get to R3 AS 65002 by traversing through R4 AS 65003 and over the simulated 'inet transit'. I didn't foresee this. 
+As shown in the traceroute below, an interesting behavior occurs. After R1 is no longer a valid next hop, R5 transitions to ECMP, leveraging two equal-cost internal paths via R2. This allows R5 to maintain reachability to R3 (AS 65002) by traversing R4 (AS 65003) and the simulated internet transit—an outcome I did not anticipate. 
 
 ![Alternate](images/ecmp-failover.jpg)
 
