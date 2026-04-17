@@ -360,15 +360,15 @@ neighbor 1.1.1.6 next-hop-self
 
 # Troubleshooting: Multi-Condition Connectivity Failure
 
-During testing, end-to-end connectivity between ASes failed despite BGP sessions appearing healthy. Initial troubleshooting was misleading because two separate issues existed simultaneously, and each was tested and ruled-out separately.
+- During testing, end-to-end connectivity between ASes failed despite BGP sessions appearing healthy. Initial troubleshooting was misleading because two separate issues existed simultaneously, and each was tested and ruled-out separately.
 
-The first issue involved overlapping internal addressing (10.0.0.0/8 - design mistake), while the second was a missing return path from the external AS back into the iBGP domain. Each problem alone did not fully explain the failure, leading to incorrect assumptions during early troubleshooting.
+- The first issue involved overlapping internal addressing (10.0.0.0/8 - design mistake), while the second was a missing return path from the external AS back into the iBGP domain. Each problem alone did not fully explain the failure, leading to incorrect assumptions during early troubleshooting.
 
-The breakthrough came after watching ICMP logs using `debug ip icmp` on edge routers. Echo requests and replies were partially visible, indicating that traffic was reaching the destination but failing on the return path. This revealed that both issues might be related.
+- The breakthrough came after watching ICMP logs using `debug ip icmp` on edge routers. Echo requests and replies were partially visible, indicating that traffic was reaching the destination but failing on the return path. This revealed that both issues might be related.
 
-After correcting the addressing conflict and restoring proper underlay reachability (OSPF) for return traffic, we had full end-to-end connectivity. 
+- After correcting the addressing conflict and restoring proper underlay reachability (OSPF) for return traffic, we had full end-to-end connectivity. 
 
-This scenario demonstrated a classic multi-condition failure, where independent issues combined to create a more complex and misleading problem.
+- This scenario demonstrated a classic multi-condition failure, where independent issues combined to create a more complex and misleading problem.
 
 **Key takeaway:** Troubleshooting multiple issues can coexist — and validating fixes in isolation may not fix the problem unless all all issues are resolved simultaneously.
 
@@ -437,7 +437,7 @@ Rather than guessing values, we define a clear routing policy by selecting a pre
 <br>Propagated within the local AS (iBGP only)
 <br>Typically set inbound on the receiving router
 
-At baseline, R6 has equal-cost paths (ECMP) to reach R3 via:
+- At baseline, R6 has equal-cost paths (ECMP) to reach R3 via:
 <br>R1 > R3  
 <br>R2 > R4 > Transit > R3
 
@@ -464,7 +464,7 @@ traceroute 1.1.1.3 source 1.1.1.6
 ![Trace 6](images/trace-6.jpg)
 
 
-Now we want:
+- Now we want:
 <br>Routes learned via R2 to have higher (better) local-pref
 <br>R6 to send exiting traffic out R2 edge
 <br>Compared to the same routes learned via R5 (which ultimately points to R1 → R3) 
@@ -545,7 +545,7 @@ Right away we see the word "inaccessible"
 
 I expected BGP to fall back to R6 > R5 > R1 > R3 but it didn't. 
 
-iBGP did converge
+- iBGP did converge
 <br>R6 has a path from R5 (so RR is working)
 <br>But BGP refuses to install it
 <br>because the next-hop is not usable
@@ -565,16 +565,16 @@ R5 reflected it unchanged
 
 R6 receives it and says: “I’ll use next-hop 1.1.1.1”
 
-After R2 dies:
+- After R2 dies:
 <br>R6 must now reach 1.1.1.1 (R1 loopback) via OSPF
 <br>We do have a route…
 <br>BUT BGP still marks it:
 <br>inaccessible
 
-Meaning:
+- Meaning:
 <br>R6 cannot resolve a valid forwarding path to that next-hop
 
-Right now:
+- Right now:
 <br>BGP convergence is fine
 <br>Forwarding recursion is broken
 
