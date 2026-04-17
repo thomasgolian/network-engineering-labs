@@ -22,31 +22,31 @@ Designed and validated an OSPF (Open Shortest Path First) topology. Introduced s
 
 <br>
 
-Design and implement a multi-router OSPF topology
+- Design and implement a multi-router OSPF topology
 
-Configure OSPF adjacencies across multiple network segments
+- Configure OSPF adjacencies across multiple network segments
 
-Analyze OSPF neighbor relationships
+- Analyze OSPF neighbor relationships
 
-Manipulate OSPF path selection using interface cost
+- Manipulate OSPF path selection using interface cost
 
-Validate routing decisions using show ip route and traceroute
+- Validate routing decisions using show ip route and traceroute
 
-Troubleshoot OSPF issues including missing routes and suboptimal paths
+- Troubleshoot OSPF issues including missing routes and suboptimal paths
 
-Demonstrate understanding of route preference (connected, static, OSPF)
+- Demonstrate understanding of route preference (connected, static, OSPF)
 
-Implement loopback interfaces to simulate reachable network destinations
+- Implement loopback interfaces to simulate reachable network destinations
 
 <br>
 
-# Testing Scenarios: 
+# Scenarios: 
 
-## Scenario 1) Stub Area Conversion 
+1) Stub Area Conversion 
 
-## Scenario 2) OSPF Cost Manipulation 
+2) OSPF Cost Manipulation 
 
-## Scenario 3) Backbone Link Failure
+3) Backbone Link Failure
 
 <br>
 
@@ -79,34 +79,35 @@ We use the third octet for differentiating networks and the numbers correlate to
 
 Example: R1 connects to R2 - so the network is 10.0.12.0/30. See below:
 
+```
+R1  to R2    10.0.12.0/30
+R1   E0/0    10.0.12.1
+R2   E0/0    10.0.12.2
 
-<br>R1 to R2    10.0.12.0/30
-<br> R1   E0/0    10.0.12.1
-<br> R2   E0/0    10.0.12.2
+R1  to R3    10.0.13.0/30
+R1   E0/1    10.0.13.1
+R3   E0/0    10.0.13.2
 
-<br>R1 to R3    10.0.13.0/30
-<br> R1   E0/1    10.0.13.1
-<br> R3   E0/0    10.0.13.2
+R2  to R3    10.0.23.0/30
+R2   E0/1    10.0.23.1
+R3   E0/1    10.0.23.2
 
-<br>R2 to R3    10.0.23.0/30
-<br> R2   E0/1    10.0.23.1
-<br> R3   E0/1    10.0.23.2
+R3  to R5    10.0.35.0/30
+R3   E0/2    10.0.35.1
+R5   E0/0    10.0.35.2
 
-<br>R3 to R5    10.0.35.0/30
-<br> R3   E0/2    10.0.35.1
-<br> R5   E0/0    10.0.35.2
+R2  to R4    10.0.24.0/30
+R2   E0/2    10.0.24.1
+R4   E0/0    10.0.24.2
 
-<br>R2 to R4    10.0.24.0/30
-<br> R2   E0/2    10.0.24.1
-<br> R4   E0/0    10.0.24.2
+R4  to R6    10.0.46.0/30
+R4   E0/1    10.0.46.1
+R6   E0/0    10.0.46.2
 
-<br>R4 to R6    10.0.46.0/30
-<br> R4   E0/1    10.0.46.1
-<br> R6   E0/0    10.0.46.2
-
-<br>R5 to R7    10.0.57.0/30
-<br> R5   E0/1    10.0.57.1
-<br> R7   E0/0    10.0.57.2
+R5  to R7    10.0.57.0/30
+R5   E0/1    10.0.57.1
+R7   E0/0    10.0.57.2
+```
 
 <br>
 
@@ -194,17 +195,17 @@ If needed, we can use this command to reset OSPF process on a router:
 
 ## Question: Why use loopback for Router ID?
 
-They are always up
+- They are always up
 
-Provide stability
+- Provide stability
 
-Prevent RID changes during link failures
+- Prevent RID changes during link failures
 
-Manual router-id = control
+- Manual router-id = control
 
-Loopback = stability
+- Loopback = stability
 
-Using both = clean engineering practice
+- Using both = clean engineering practice
 
 <br>
 
@@ -466,7 +467,7 @@ Default routing behavior appears
 
 A stub area is: An OSPF area that blocks certain LSAs to reduce overhead, and instead uses a default route to reach the rest of the network.
 
-Convert Area 2 into a stub area and observe how:
+- Convert Area 2 into a stub area and observe how:
 <br>LSA propagation changes
 <br>Routing tables simplify
 <br>Default routing behavior appears
@@ -507,7 +508,7 @@ R7 routing table full again. Connectivity restored.
 
 Why adjacency broke (the real reason)
 
-OSPF neighbors must agree on area characteristics during hello exchange, including stub. Mismatches:
+- OSPF neighbors must agree on area characteristics during hello exchange, including stub. Mismatches:
 <br>Area ID mismatch 
 <br>Authentication mismatch 
 <br>Stub flag mismatch 
@@ -633,7 +634,6 @@ Once the link between R1 and R3 failed, we can see R3 stopped receiving hello me
 
 <br>
 
-
 R3 Routing Table After:
 
 R3's routing table now only has a single route to reach network 10.0.12.0/30 through R2. One route failed, but the backbone still had another route to reach the ASBR.
@@ -651,24 +651,24 @@ R3's routing table now only has a single route to reach network 10.0.12.0/30 thr
 
 # Key Takeaways:
 
-Verified OSPF convergence and failover behavior during link failure scenarios.
+- Verified OSPF convergence and failover behavior during link failure scenarios.
 
-OSPF stub Areas must be configured on both ends of the link on each router. 
+- OSPF stub Areas must be configured on both ends of the link on each router. 
 
-Connected routes may/will override OSPF interface cost manipulation. 
+- Connected routes may/will override OSPF interface cost manipulation. 
 
-I learned more about multi-area OSPF design and what information edge Areas need in order to exchange 
+- I learned more about multi-area OSPF design and what information edge Areas need in order to exchange 
 OSPF LSAs. 
 
-While configuring OSPF Areas on ABRs, I realized entering the <network 10.0.0.0 0.0.255.255 area {}> command would
+- While configuring OSPF Areas on ABRs, I realized entering the <network 10.0.0.0 0.0.255.255 area {}> command would
 cause a conflict if entered twice with two areas. Yes, I could create more specific wildcard masks for the ABRs,
 but for the focus of this Lab I decided to configure ABR OSPF areas directly on the interface.
 
-Learned more about LSDB and why some OSPF router information is stored, whilst some is not. As by design. 
+- Learned more about LSDB and why some OSPF router information is stored, whilst some is not. As by design. 
 
-Troubleshooting requires validating both the control plane (LSDB) and data plane (routing table).
+- Troubleshooting requires validating both the control plane (LSDB) and data plane (routing table).
 
-We can turn on debug commands to see real-time logs. We can use this key information to help discover root cause or monitor protocol behavior.
+- We can turn on debug commands to see real-time logs. We can use this key information to help discover root cause or monitor protocol behavior.
 
 <br>
 
