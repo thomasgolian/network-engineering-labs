@@ -66,6 +66,31 @@ The topology consists of seven routers (R1–R7) organized hierarchically to dem
 
 <br>
 
+
+# Baseline Configurations:
+
+Initial commands entered into all routers in topology:
+```
+enable secret cisco
+hostname {}
+no ip domain lookup
+
+line console 0
+logging synchronous
+exec-timeout 0 0
+password cisco
+login
+
+line vty 0 4
+logging synchronous
+exec-timeout 15 0
+password cisco
+login
+transport input ssh
+
+copy running-config startup-config 
+```
+
 # VLAN & Interface Configuration:
 
 <br>
@@ -143,33 +168,6 @@ default-information originate  (simulates "Internet exists outside the OSPF doma
 <br>
 
 *Because this multi-area OSPF lab is using only /30 point-to-point OSPF link type, there will be NO DR or BDR election process.
-
-<br>
-
-# Baseline Configurations:
-
-Initial commands entered into all routers in topology:
-```
-enable secret cisco
-hostname {}
-no ip domain lookup
-
-line console 0
-logging synchronous
-exec-timeout 0 0
-password cisco
-login
-
-line vty 0 4
-logging synchronous
-exec-timeout 15 0
-password cisco
-login
-transport input ssh
-
-copy running-config startup-config 
-```
-<br>
 
 ## The manual loopback configuration overrides any automatic choosing of router ID value.
 
