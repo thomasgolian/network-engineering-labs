@@ -77,7 +77,7 @@ R1, R2 = edge
 <br>R5, R6 = internal
 <br>R3, R4 = ISPs
 
-![Roles](images/roles-1.jpg)
+<img src="images/roles-1.jpg" width="650">
 
 We configure loopback addresses on all routers in the topology. These loopbacks will serve BGP in both identity and peering endpoints. Like other routing protocols of various types, loopback interfaces are great for reliability and stability for overhead control plane mechanisms. 
 
