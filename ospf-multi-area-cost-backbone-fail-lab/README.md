@@ -207,15 +207,18 @@ If needed, we can use this command to reset OSPF process on a router:
 
 <br>
 
-We're using 0.0.255.255 wildcard to apply OSPF process 1 to all interfaces that fall under the first two octets of the ipv4 address. 
+A `0.0.255.255` wildcard mask is used to enable OSPF process 1 on all interfaces matching the first two octets of the IPv4 address.
 
-(However, we're manually configuring the equivalent OSPF Area directly on interface config mode as well for practice) 
+For practice, the equivalent OSPF area is also configured directly under interface configuration mode.
 
-*ABRs will be configured in two OSPF areas, so we'll configure ABRs directly on interfaces only (no wildcard command)*
+For ABRs, OSPF is configured per interface only (without wildcard statements), since they participate in multiple areas.
 
 ## Command applied to all non-ABR routers in the topology:
-<br>router ospf 1
-<br>network 10.0.0.0 0.0.255.255 area {}
+
+```
+router ospf 1
+network 10.0.0.0 0.0.255.255 area {x}
+```
 
 <br>
 
@@ -274,25 +277,19 @@ exit
 
 <br>
 
-Area Border Routers (ABRs) will advertise routes between areas. This will allow Area 1 and Area 3 
-to learn neighbors and the default route exiting the network from the default originate R1 (ASBR) provides through OSPF messages. 
+Area Border Routers (ABRs) advertise routes between OSPF areas, allowing Area 1 and Area 3 to exchange reachability information. This includes propagation of the default route originated by R1 (ASBR) through OSPF. 
 
 ## Useful debugging and log commands from EXEC mode:
 
-Logging and OSPF updates:
-<br>terminal monitor
+Logging and OSPF updates: `terminal monitor`
 
-Enables debug output over SSH/console:
-<br>debug ip ospf events
+Enables debug output over SSH/console: `debug ip ospf events`
 
-Hello Packets (great for mismatches):
-<br>debug ip ospf hello
+Hello Packets (great for mismatches): `debug ip ospf hello`
 
-Neighbor Adjacency Issues. Adjacency formation steps & state changes (INIT → FULL):
-<br>debug ip ospf adj 
+Neighbor Adjacency Issues. Adjacency formation steps & state changes (INIT → FULL): `debug ip ospf adj`
 
-This command will turn debugging OFF. Debugs can also eat CPU:
-<br>undebug all
+This command will turn debugging OFF. Debugs can also eat CPU: `undebug all`
 
 <br>
 
@@ -345,14 +342,15 @@ Goal: The network is fully converged, correctly designed, and routing properly. 
 <br>
 
 We will use:
-
+```
 show ip ospf neighbor
-<br>show ip route
-<br>show ip ospf interface brief
-<br>show ip ospf database
-<br>ping
-<br>traceroute
-<br>show ip route | include 0.0.0.0
+show ip route
+show ip ospf interface brief
+show ip ospf database
+ping
+traceroute
+show ip route | include 0.0.0.0
+```
 
 To verify:
 
@@ -422,8 +420,7 @@ Using show ip ospf interface brief on R4 to verify OSPF areas as an example.
 
 <br>
 
-I can't see router-IDs for 6.6.6.6 and 7.7.7.7. They are missing in R3's LSDB.
-Router's only store full LSAs (Type 1 & Type 2) for intra-area routers. Why? Scalability. LSDB would be too massive in large networks. 
+Router IDs 6.6.6.6 and 7.7.7.7 are not present in R3’s LSDB. This is because OSPF routers maintain detailed LSAs (Type 1 and Type 2) only for routers within the same area. Inter-area routes are summarized instead, which improves scalability and prevents the LSDB from becoming excessively large. 
 
 Verifying Link State Database on R3:
 
@@ -539,10 +536,9 @@ All links being equal, the packet will take natural path of R6 > R4 > R2 > R1
 
 ## Cost Manipulation: 
 
-Well, another unexpected troubleshooting issue but that's what the process is about. I tried everything to adjust OSPF costs on R2 and R1 but could not get the path to change. 
+- This was an unexpected troubleshooting issue, but part of the learning process. I attempted to adjust OSPF costs on R1 and R2 to influence path selection, but the route did not change.
 
-I finally realized R2 E0/0 > R1 is a direct connected (C) route. No OSPF cost adjustment was going to change OSPF's
-decision to use E0/0.
+- The reason: R2’s path to R1 via E0/0 is a directly connected route, which takes precedence over OSPF-learned routes. As a result, OSPF cost adjustments had no impact on the forwarding decision.
 
 ## Solution: Change the target IP address to continue planned scenario. R6 traceroute to R7.
 
@@ -624,7 +620,7 @@ interface e0/1
 shutdown
 ```
 
-Once the link between R1 and R3 failed, we can see R3 stopped receiving hello messages from 1.1.1.1 on it's E0/0 interface.
+Once the link between R1 and R3 failed, we can see R3 stopped receiving hello messages from `1.1.1.1` on it's E0/0 interface.
 
 <br>
 
@@ -634,7 +630,7 @@ Once the link between R1 and R3 failed, we can see R3 stopped receiving hello me
 
 R3 Routing Table After:
 
-R3's routing table now only has a single route to reach network 10.0.12.0/30 through R2. One route failed, but the backbone still had another route to reach the ASBR.
+R3's routing table now only has a single route to reach network `10.0.12.0/30` through R2. One route failed, but the backbone still had another route to reach the ASBR.
 
 <br>
 
@@ -658,9 +654,7 @@ R3's routing table now only has a single route to reach network 10.0.12.0/30 thr
 - I learned more about multi-area OSPF design and what information edge Areas need in order to exchange 
 OSPF LSAs. 
 
-- While configuring OSPF Areas on ABRs, I realized entering the <network 10.0.0.0 0.0.255.255 area {}> command would
-cause a conflict if entered twice with two areas. Yes, I could create more specific wildcard masks for the ABRs,
-but for the focus of this Lab I decided to configure ABR OSPF areas directly on the interface.
+- While configuring OSPF on ABRs, I found that using the network `10.0.0.0 0.0.255.255 area X` command for multiple areas creates a conflict due to overlapping matches. Although more specific wildcard masks could be used, I chose to configure OSPF areas directly at the interface level for this lab.
 
 - Learned more about LSDB and why some OSPF router information is stored, whilst some is not. As by design. 
 
