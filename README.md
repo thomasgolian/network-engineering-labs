@@ -32,4 +32,3 @@ VMware Workstation running on physical machine:
 <br>i71400k cpu
 <br>64 GB RAM - corsair vengeance DDR4
 <br>2 TB SSD M.2
-<br>liquid cooling
