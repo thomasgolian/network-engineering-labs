@@ -332,7 +332,7 @@ Observed Behavior:
 
 ***************************************************************************************
 
-Scenario 3
+# Scenario 3
 
 RSTP topology is operating normally. PortFast and BPDU Guard were configured on SW6’s access ports to validate protection against unintended switch connections.
 
