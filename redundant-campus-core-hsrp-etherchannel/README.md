@@ -81,6 +81,33 @@ to R1 (simulating an ISP / WAN link)
 
 <br>
 
+# Universal configurations:
+
+Full baseline configurations are available in the configs/ directory
+
+Initial IOS XE configurations I entered for all network nodes:
+```
+enable secret cisco
+hostname {}
+no ip domain lookup
+
+line console 0
+logging synchronous
+exec-timeout 0 0
+password cisco
+login
+
+line vty 0 4
+logging synchronous
+exec-timeout 15 0
+password cisco
+login
+transport input ssh
+
+copy running-config startup-config 
+```
+<br>
+
 ## VLAN & Interface Configuration:
 
 R1 acting as WAN /ISP so we will give SW1 & SW2 a default route out of the LAN:
@@ -313,32 +340,6 @@ show interfaces po1 etherchannel
 
 <br>
 
-# Universal configurations:
-
-Full baseline configurations are available in the configs/ directory
-
-Initial IOS XE configurations I entered for all network nodes:
-```
-enable secret cisco
-hostname {}
-no ip domain lookup
-
-line console 0
-logging synchronous
-exec-timeout 0 0
-password cisco
-login
-
-line vty 0 4
-logging synchronous
-exec-timeout 15 0
-password cisco
-login
-transport input ssh
-
-copy running-config startup-config 
-```
-<br>
 
 Apline Linux Desktop in VLAN 10,20,30 to test end-to-end connectivity and configured with:
 ```
