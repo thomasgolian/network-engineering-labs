@@ -793,7 +793,7 @@ RSTP root per VLAN:
 <br>VLAN 20 = SW1
 <br>VLAN 30 = SW1
 
-Now we are going to break the alignment by changing SW2 to HRSP Active role, while keeping it on RSTP Standby.
+Now we are going to break the alignment by changing SW2 to HRSP Active role, while keeping it on RSTP root secondary.
 
 SW2: We increase HSRP priority # to take over as Active role on each 3 VLANs.
 ```
