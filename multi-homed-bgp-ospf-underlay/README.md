@@ -164,7 +164,7 @@ We can see both loopback addresses and 10.0.0.0/8 subnetted for OSPF routes.
 
 - I thought R1 and R2 at the edge would be obvious choices to serve as RRs - so that R5 and R6 learn all routes. But in practice, I read it's actually better to split the responsibilities of your network devices. 
 
-- We don't have to have EVERYTHING riding on the stability of R1 and R2 as they are already handling the eBGP. We'll configure R5 and R6 in the enterprise core as the RRs, so that all 4 iBGP routers can communicate and learn all internal routes.
+- We don't have to have EVERYTHING riding on the stability of R1 and R2 as they are already handling the eBGP. We'll configure R5 and R6 in the enterprise core as the RRs, so that all 4 iBGP routers can communicate and learn all BGP routes.
 
 Adding first iBGP neighbor R2. The `remote-as` command defines what AS the neighbor belongs to. 
 
@@ -223,11 +223,9 @@ router bgp 65001
   neighbor 1.1.1.2 route-reflector-client
 ```
 
-Each router now has 2 neighbors - but we don't add a third or full-mesh which is what would be required. Instead, we use route reflector commands on R5 and R6 which will make the iBGP complete. 
+Each router now has 2 neighbors - but we don't add a third for full-mesh. Instead, we use route reflector commands on R5 and R6 which will make the iBGP AS complete. 
 
 All four routers are configured for iBGP in AS 65001 and neighbors are Up:
-
-However, we don't have 3 neighbors and iBGP hasn't fully propagated. iBGP will NOT pass routes from one iBGP neighbor to another. Route reflectors will do this for us.
 
 Commands to config R5 and R6 as route reflectors in the iBGP domain. 
 
@@ -315,8 +313,6 @@ We performed the same BGP command on R3 and R4 autonomous systems (with differen
 - Our eBGP is configured - similar to before we need a route injected into our eBGP table in hopes to see it propagate into the iBGP AS. Let's now take a look at R1's BGP table. 
 
 - First thing we notice is that our eBGP next hops are using the underlay IP addresses, instead of loopbacks. Why? eBGP uses the directly connected interface IP as the next-hop by default. For eBGP sessions, it is assumed neighbors are directly connected. 
-
-- We also added a link between R3 and R4 to help simulate break scenarios and path changes. We'll also add more network statements in our AS 65001 so R3 and R4 learn routes back to the enterprise iBGP area. 
 
 R1
 ```
