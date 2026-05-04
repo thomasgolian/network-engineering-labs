@@ -2,8 +2,6 @@
 
 Lab was built using VMware Workstation with Cisco Modeling Labs v2.8.1 
 
-All switches routers in this lab are running IOS XE images virtualized or containered
-
 <br>
 
 ![CML](images/CML.jpg)
@@ -17,16 +15,13 @@ All switches routers in this lab are running IOS XE images virtualized or contai
 
 # Overview:
 
-- This lab explores high availability and resiliency mechanisms within a switched and routed enterprise network. We introduce multiple failure and change scenarios to observe protocol behavior, topology changes and traffic flow.
+- This lab explores high availability and resiliency mechanisms within a switched and routed enterprise network. Introduce multiple failure and change scenarios to observe protocol behavior, topology changes and traffic flow.
 
-- The project focuses on validating gateway redundancy through HSRP by observing behavior when a failure occurs. We also test link aggregation resilience by introducing both individual EtherChannel member link failures - and a complete port-channel outage.
+- Validating gateway redundancy through HSRP by observing behavior when a failure occurs. Testing link aggregation resilience by introducing both individual EtherChannel member link failures - and a complete port-channel outage.
 
-- Additionally, the lab examines the impact of HSRP and STP misalignment, highlighting potential suboptimal traffic paths and the importance of proper Layer 2 and Layer 3 design coordination. 
-
-<br>
+- Additionally, the lab examines the impact of HSRP and STP misalignment
 
 HSRP = Hot Standby Routing Protocol
-<br>VRRP & GLBP are other related options but we are not using those protocols here. Today we're using HSRP.
 
 ## In the design:
 
@@ -39,15 +34,8 @@ HSRP = Hot Standby Routing Protocol
 
 - EtherChannel - gives us bandwidth + stability
 <br>RSTP - decides the forwarding topology
-<br>We - influence RSTP (root bridge per VLAN)
+<br>Configure - influence RSTP (root bridge per VLAN)
 <br>HSRP - follows our design to avoid suboptimal routing
-
-*We are not pruning any VLANs on the trunks in this lab. All trunk links in topology
-will be configured to allow VLAN 10, 20, 30.  
-
-## Objectives:
-
-<br>
 
 ## Scenarios:
 
@@ -83,9 +71,9 @@ to R1 (simulating an ISP / WAN link)
 
 # Universal configurations:
 
-Full baseline configurations are available in the configs/ directory
+Full configurations are available in the configs/ directory
 
-Initial IOS XE configurations I entered for all network nodes:
+Initial config after boot:
 ```
 enable secret cisco
 hostname {}
@@ -271,11 +259,10 @@ And we verify to make sure SVIs are working at layer 3:
 
 ![SVI Up Verify](images/ping-SVI-verify.jpg)
 
-<br>
 
-- The same core multilayer switch is maintained as the active device in this HSRP lab. Mapping different STP topologies to active/standby roles for VLAN load balancing will be explored in a future lab.
+- An EtherChannel is configured between SW1 and SW2 using LACP, bundling two physical links into a single logical link.
 
-- An EtherChannel is configured between SW1 and SW2 using LACP, bundling two physical links into a single logical link. The port channel is configured in active mode on both ends, and trunking is enabled with 802.1Q encapsulation. 
+- The port channel is configured in active mode on both ends, and trunking is enabled with 802.1Q encapsulation. 
 
 SW1
 ```
@@ -327,7 +314,7 @@ switchport trunk allowed vlan add 10,20,30
 
 <br>
 
-We'll verify EtherChannel on SW1 & SW2:
+Verify EtherChannel on SW1 & SW2:
 ```
 show interfaces po1 etherchannel 
 ```
@@ -341,7 +328,7 @@ show interfaces po1 etherchannel
 <br>
 
 
-Apline Linux Desktop in VLAN 10,20,30 to test end-to-end connectivity and configured with:
+Desktop in VLAN 10,20,30 to test end-to-end connectivity and configured with:
 ```
 sudo hostname USERS
 sudo ifconfig eth0 10.1.10.99 netmask 255.255.255.0
@@ -395,13 +382,13 @@ HSRP on SW1/SW2
 <br>Dual links from R1 to SW1 and SW2
 <br>Equal-cost routes on R1
 
-So R1 is doing load balancing, in a sense. Messing with my HSRP plans when pinging 192.168.1.1 from the desktop nodes. 
+R1 is doing load balancing, in a sense. Messing with my HSRP plans when pinging 192.168.1.1 from the desktop nodes. 
 
 Some traffic goes to SW2 (STANDBY) ❌
 
 <img src="images/ecmp-mistake.jpg" width="700">
 
-## Here’s the problem:
+## Problem:
 
 - SW2 is STANDBY so it does NOT own the virtual IP
 <br>So it may drop or mishandle the traffic
@@ -410,8 +397,6 @@ Some traffic goes to SW2 (STANDBY) ❌
 <br>nexthop 192.168.1.2  (E0/0)
 <br>nexthop 192.168.2.2  (E0/1)
 
-Routers don’t “prefer” one path unless you tell them to.
-
 ## Rule
 <br>HSRP + multiple upstream paths = must control routing symmetry
 
@@ -419,7 +404,7 @@ Routers don’t “prefer” one path unless you tell them to.
 
 <br>
 
-For lab purposes, we simply tell R1 not to use 192.168.2.2 for any destination network 
+Tell R1 not to use 192.168.2.2 for any destination network 
 
 ```
 no ip route 10.1.0.0 255.255.0.0 192.168.2.2
@@ -452,23 +437,15 @@ Removed that line from running-config
 
 <br>
 
-Here we can see successful pings from R1 to all three SVIs inside the LAN's core switches:
+Successful pings from R1 to all three SVIs inside the LAN's core switches:
 
 ![R1 Confirm](images/r1-confirm-verify.jpg)
 
 <br>
 
-## Resolved. 
-
-<br>
-
-*Okay now the t-shooting of the tangential issue is complete, we can continue with break scenarios*
-
-<br>
+Resolved. 
 
 ***************************************************************************************
-
-<br>
 
 # Scenario 1) HSRP Failover (SW1 down)
 
@@ -482,12 +459,10 @@ Unexpected Behavior:
 After shutting down the SVIs on SW1, SW2 did not become the STP root as expected -- SW5 assumed the root role instead. This highlights that Layer 2 (RSTP) and Layer 3 (HSRP) are not directly correlated, though they still influence overall traffic flow.
 
 Design Adjustment:
-For this lab, SW1 and SW2 are intended to act as both STP roots and HSRP gateways to maintain alignment between Layer 2 and Layer 3 paths.
+SW1 and SW2 are intended to act as both STP roots and HSRP gateways to maintain alignment between Layer 2 and Layer 3 paths.
 
 Solution:
 Manually configure RSTP bridge priorities on SW1 and SW2 to control root bridge election and align the topology with the intended design.
-
-Note: This is a global spanning-tree configuration, not an SVI-level command.
 
 SW1 & SW2 respectively:
 ```
@@ -501,7 +476,7 @@ spanning-tree vlan 10,20,30 priority secondary
 ```
 ## Resolved:
 
-You can see the bridge System-ID extension as 4106 (4096 + 10 for vlan number = 4106)
+The bridge System-ID extension as 4106 (4096 + 10 for vlan number = 4106)
 
 SW1 is now RSTP root for VLANs 10,20,30. Now we shut it down and see if SW2 correctly becomes root. 
 
@@ -511,7 +486,7 @@ SW1 is now RSTP root for VLANs 10,20,30. Now we shut it down and see if SW2 corr
 
 <br>
 
-We did a shutdown on SW1 interfaces - now SW2 has become layer 2 RSTP root and layer 3 HSRP primary:
+A `shutdown` on SW1 interfaces - now SW2 has become layer 2 RSTP root and layer 3 HSRP primary:
 
 <br>
 
@@ -529,7 +504,7 @@ SW2 immediately takes over as default gateway - becoming 'Active' state:
 
 ![SW2 Root](images/hsrp-sw2-up.jpg)
 
-After we did a 'no shut' on both SW1's physical interfaces and a 'no shut' on the SVIs for HSRP, SW1 regained Active role. SW2 moved back to Standby role. 
+After 'no shut' on both SW1's physical interfaces and a 'no shut' on the SVIs for HSRP, SW1 regained Active role. SW2 moved back to Standby role. 
 
 ![SW1 Root](images/sw1-preempt-active.jpg)
 
@@ -558,7 +533,7 @@ Conclusion
 <br>2. Bandwidth is reduced on the EtherChannel but should be no outage
 <br>3. HSRP should NOT fail over
 
-We will take down SW1's E0/2 to see what happens:
+Take down SW1's E0/2 to see what happens:
 
 <br>
 
@@ -566,7 +541,7 @@ We will take down SW1's E0/2 to see what happens:
 
 <br>
 
-## SW1 stays up as Active HSRP gateway - we can see Po1 is up, but the second link is Et0/2(D) = down. 
+## SW1 stays up as Active HSRP gateway - Po1 is up, but the second link is Et0/2(D) = down. 
 
 The Ports column shows the physical interfaces in Po1:
 <br>(P) = bundled and working
@@ -586,11 +561,11 @@ SW1 remains the root for RSTP topology, even though one link in the ether-channe
 
 SW1 remains HSRP Active gateway as it should. 
 
-Now we use following command on SW1 or SW2 to verify the bandwidth loss when losing a link in the ether-channel:
+Command on SW1 or SW2 to verify the bandwidth loss when losing a link in the ether-channel:
 ```
 show interface port-channel 1
 ```
-BEFORE the link breaks, we can see Po1 (2x 1000 kbps links) totaling 2000 kbps bandwidth from the two links bundled together logically.
+BEFORE the link breaks, output shows Po1 (2x 1000 kbps links) totaling 2000 kbps bandwidth from the two links bundled together logically.
 
 <br>
 
@@ -598,7 +573,7 @@ BEFORE the link breaks, we can see Po1 (2x 1000 kbps links) totaling 2000 kbps b
 
 <br>
 
-- After the E0/2 link on SW1 fails, the EtherChannel remains operational but is reduced to a single active link. While overall bandwidth is decreased, redundancy is preserved and the logical interface stays up, maintaining connectivity as designed.
+- After the E0/2 link on SW1 fails, the EtherChannel remains operational but is reduced to a single active link. While overall bandwidth is decreased, redundancy is preserved and the logical interface stays up.
 
 <br>
 
@@ -620,23 +595,15 @@ BEFORE the link breaks, we can see Po1 (2x 1000 kbps links) totaling 2000 kbps b
  
 <br>
 
-We are going to fully shutdown Po1 bundle on SW2. We are essentially splitting the core into two isolated brains.
+Fully shutdown Po1 bundle on SW2. We are essentially splitting the core into two isolated brains.
 
 - Expected Behavior:
 <br>SW1 stays HSRP Active
 <br>SW2 loses communication with SW1, so it decides to become HSRP Active as well, because it assumes SW1 is down.
 
-*this scenario does not go according to plan...*
-
-## From hosts connected to SW2:
-
-- Default gateway = SW1 (HSRP Active)
-<br>BUT no path to SW1 anymore ❌
+Default gateway = SW1 (HSRP Active)
+<br>BUT no path to SW1 anymore 
 <br>= BLACKHOLE
-
-Blackhole = "A networking black hole is a location in a network where incoming or outgoing data packets are silently discarded (dropped) without notifying the source, making the data vanish. It acts as a "cyber void," causing connectivity failures, often caused by misconfigured routes, faulty hardware, or intentional "null routing" to mitigate DDoS attacks."
-
-*we don't accomplsh a blackhole...*
 
 ## Action on SW2: 
 ```
@@ -645,11 +612,7 @@ shutdown
 ```
 <br>
 
-**************************************************************************************************
-
-<br>
-
-## Testing connectivity led me down a rabbit hole of SVIs and HSRP behavior, so let's dive in... 
+*Testing connectivity led me to think about SVIs and HSRP behavior*
 
 Testing traffic pathing from end devices from Users VLAN 20, Servers VLAN 20, and Voice VLAN 30:
 
@@ -713,20 +676,17 @@ SW2 did not transition to Active as expected. This behavior highlights that HSRP
 
 As a result, all VLANs and access-layer devices maintained full connectivity.
 
-To further test failover behavior, a split-brain scenario is intentionally introduced by shutting down both ends of the EtherChannel.
-
-<br>
-
 <img src="images/split-brain.jpg" width="700">
 
 <br>
 
-- Although the RSTP topology changed, Layer 2 redundancy remains through the LAN trunks. As a result, HSRP hello messages continue to reach between SW1 and SW2, keeping the Active/Standby state stable.
+- Although the RSTP topology changed, Layer 2 redundancy remains through the LAN trunks.
+
+As a result, HSRP hello messages continue to reach between SW1 and SW2, keeping the Active/Standby state stable.
 
 These hello packets are effectively taking alternate Layer 2 paths through the network.
 
 To better understand the behavior, I plan to trace the path—likely traversing switches such as SW5, SW4, or SW3.
-
 
 Thinking about which port the switch may have sent the frame:
 
@@ -736,14 +696,14 @@ Root Port
 Designated Ports
 <br>Connections to other segments devices (downstream)
 
-*Just learned this - "A Cisco base MAC address is the primary, unique hardware address (often burned into the EEPROM) used to identify the switch itself, rather than a specific port. It acts as the anchor for the device, commonly utilized as the bridge ID in Spanning Tree Protocol (STP) and for generating MAC addresses for VLANs (SVIs)"*
+*"A Cisco base MAC address is the primary, unique hardware address (often burned into the EEPROM) used to identify the switch itself, rather than a specific port. It acts as the anchor for the device, commonly utilized as the bridge ID in Spanning Tree Protocol (STP) and for generating MAC addresses for VLANs (SVIs)"*
 
 <br>
 
 - SW2 burned in address: aabb.cc80.2b00 - however we can't trace layer 2 that way because we are using Cisco Modeling Labs 
 and virtualized nodes of the same type use the same base MAC address...
 
-- We move on to use 'show cdp neighbors' and 'show spanning-tree vlan 10' to trace the layer 2 frames. Only Forwarding interfaces
+- Use 'show cdp neighbors' and 'show spanning-tree vlan 10' to trace the layer 2 frames. Only Forwarding interfaces
 can carry HSRP Hello messages. 
 
 <br>
@@ -752,7 +712,7 @@ can carry HSRP Hello messages.
 
 <br>
 
-Next we see SW5 has two interfaces that can possibly forward the frame containing the hello messages from SW2:
+SW5 has two interfaces that can possibly forward the frame containing the hello messages from SW2:
 
 <br>
 
@@ -762,7 +722,10 @@ Next we see SW5 has two interfaces that can possibly forward the frame containin
 
 All traffic toward the rest of the network (including HSRP hellos) goes out the ROOT PORT.
 
-Conclusion: Redundancy in the LAN trunks maintained HSRP relationship between SW1 and SW2 core layer.
+Conclusion: 
+
+Redundancy in the LAN trunks maintained HSRP relationship between SW1 and SW2 core layer.
+
 We can assume all three VLANs behave this way.  
 
 While Scenario 3 didn't turn out as expected to achieve the full HSRP 'split' that I was aiming for, we learned new lessons about HSRP hello messages and how they can traverse the topology. 
@@ -782,7 +745,7 @@ Redundant L2 paths via access layer
 
 # Scenario 4) HSRP + STP Misalignment
  
-First we confirm and verify starting baseline:
+Confirm and verify starting baseline:
 
 HSRP
 <br>SW1 is active
@@ -793,9 +756,9 @@ RSTP root per VLAN:
 <br>VLAN 20 = SW1
 <br>VLAN 30 = SW1
 
-Now we are going to break the alignment by changing SW2 to HRSP Active role, while keeping it on RSTP root secondary.
+Break the alignment by changing SW2 to HRSP Active role, while keeping it on RSTP root secondary.
 
-SW2: We increase HSRP priority # to take over as Active role on each 3 VLANs.
+SW2: Increase HSRP priority # to take over as Active role on each 3 VLANs.
 ```
 interface vlan {x}
 standby 10 priority 120
@@ -808,7 +771,7 @@ standby 30 priority 120
 
 <br>
 
-We can see the misalignment on this single screenshot of SW1:
+The misalignment on this single screenshot of SW1:
 
 <br>
 
@@ -881,27 +844,18 @@ Misalignment between STP and HSRP leads to inefficient traffic paths and should 
 
 - This resulted in increased inter-switch traffic, additional hops, and higher latency.
 
-- No outage occurred, but the traffic flow was inefficient and suboptimal.
-
 ## Key Takeaways
 
 HSRP determines who the gateway is, not how traffic reaches it.
 
 - Traffic follows Layer 2 first (STP), then Layer 3 (HSRP).
 
-- Traffic always follows the spanning-tree topology.
-
 - Even if the gateway resides on SW2, traffic may still traverse SW1 first if STP is misaligned.
 
 - Alignment between STP and HSRP is critical for optimal traffic flow.
 
-## Best Practice
 
-- Align STP root with HSRP active gateway.
-
-- For more advanced designs, align per VLAN to enable load balancing across core switches.
-
-## Most Important Lesson (Scenario 4)
+## Important Lesson (Scenario 4)
 <br>No alerts
 <br>No outages
 <br>No obvious symptoms
