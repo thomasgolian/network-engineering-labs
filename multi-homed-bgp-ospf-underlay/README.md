@@ -2,8 +2,6 @@
 
 Lab was built using VMware Workstation with Cisco Modeling Labs v2.8.1 
 
-All switches and/or routers in this lab are running IOS XE images virtualized or containered
-
 ![CML](images/CML.jpg)
 
 
@@ -79,7 +77,7 @@ R1, R2 = edge
 
 <img src="images/roles-1.jpg" width="650">
 
-We configure loopback addresses on all routers in the topology. These loopbacks will serve BGP in both identity and peering endpoints. Like other routing protocols of various types, loopback interfaces are great for reliability and stability for overhead control plane mechanisms. 
+Loopback addresses on all routers in the topology. These loopbacks will serve BGP in both identity and peering endpoints. Like other routing protocols of various types, loopback interfaces are great for reliability and stability for overhead control plane mechanisms. 
 
 R1 = 1.1.1.1/32
 <br>R2 = 1.1.1.2/32
@@ -93,7 +91,7 @@ interface loopback0
 ip address 1.1.1.X 255.255.255.255
 ```
 
-We'll configure IPv4 addresses on all the router interfaces, as well as a `no shut` to get the physical ports up.
+IPv4 addresses on all the router interfaces, as well as a `no shut` to get the physical ports up.
 
 Networks
 
@@ -143,7 +141,7 @@ ip address x.x.x.x 255.255.255.252
 no shutdown
 ```
 
-We'll run OSPF for underlay inside the enterprise.
+OSPF will be our underlay protocol which will provide the layer 3 routing of packets, getting the packet from one hop to the next. 
 
 Input on all iBGP internal routers (R1, R2, R5, R6) - These OSPF network commands will apply OSPF on all interfaces inside the enterprise, EXCEPT the two eBGP edge interfaces on R1 & R2 -- connecting to AS 65002 and AS 65003 respectively.
 
@@ -162,7 +160,6 @@ We can see both loopback addresses and 10.0.0.0/8 subnetted for OSPF routes.
 
 *While learning BGP, I found that iBGP requires a full mesh because routes learned from one iBGP peer are not advertised to other iBGP peers. Although adding links to achieve this is simple in a lab, a full-mesh design does not scale in larger environments. To address this, Route Reflectors are used to relax this requirement by allowing reflected iBGP routes to be advertised to client peers.* 
 
-- I thought R1 and R2 at the edge would be obvious choices to serve as RRs - so that R5 and R6 learn all routes. But in practice, I read it's actually better to split the responsibilities of your network devices. 
 
 - We don't have to have EVERYTHING riding on the stability of R1 and R2 as they are already handling the eBGP. We'll configure R5 and R6 in the enterprise core as the RRs, so that all 4 iBGP routers can communicate and learn all BGP routes.
 
@@ -170,7 +167,7 @@ Adding first iBGP neighbor R2. The `remote-as` command defines what AS the neigh
 
 The AS number in command will determine whether the routers establish an eBGP or iBGP session. 
 
-We also need the `update-source` command to tell router to use loopback0 address when talking to BGP neighbors
+The `update-source` command to tell router to use loopback0 address when talking to BGP neighbors
 
 R1
 ```
@@ -181,7 +178,7 @@ router bgp 65001
   neighbor 1.1.1.5 update-source Loopback0
 ```
 
-If we need to verify BGP neighbors we can use commands such as:
+verify BGP:
 
 ```
 show ip bgp neighbors
@@ -190,9 +187,9 @@ show ip bgp summary
 
 ![BGP](images/bgp-summary1.jpg)
 
-You can see the Up/Down time column and `show tcp brief` output. R1 and R2 have now established a TCP session together (Layer 4)
+The Up/Down time column and `show tcp brief` output. R1 and R2 have now established a TCP session together (Layer 4)
 
-Let's finish iBGP neighbor commands. And we'll add route reflector commands on R5 and R6 below:
+iBGP neighbor and route reflector commands on R5 and R6 below:
 
 R2
 ```
@@ -223,11 +220,9 @@ router bgp 65001
   neighbor 1.1.1.2 route-reflector-client
 ```
 
-Each router now has 2 neighbors - but we don't add a third for full-mesh. Instead, we use route reflector commands on R5 and R6 which will make the iBGP AS complete. 
+Each router now has 2 neighbors - but we don't add a third for full-mesh. Instead, the route reflector commands on R5 and R6 which will make the iBGP AS complete for our design. 
 
 All four routers are configured for iBGP in AS 65001 and neighbors are Up:
-
-Commands to config R5 and R6 as route reflectors in the iBGP domain. 
 
 R5 example:
 ```
@@ -239,7 +234,7 @@ What this command does on R5 for example:
 
 "If I learn routes from R1, I am allowed to reflect them to other peers (like R6)" 
 
-Below you can see the neighbor session go down and back up with R1 to apply the new RR logic to the iBGP session. 
+Below, the neighbor session goes down and back up with R1 to apply the new RR logic to the iBGP session. 
 
 ![BGP](images/r5-rr-updown.jpg)
 
