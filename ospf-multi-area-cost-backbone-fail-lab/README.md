@@ -2,8 +2,6 @@
 
 Lab was built using VMware Workstation with Cisco Modeling Labs v2.8.1 
 
-All switches routers in this lab are running IOS XE images virtualized or containered
-
 <br>
 
 ![CML](images/CML.jpg)
@@ -56,16 +54,6 @@ Designed and validated an OSPF (Open Shortest Path First) topology. Introduced s
 
 ![Topology](images/final.jpg)
 
-<br>
-
-# Topology Description:
-
-This lab implements a multi-area OSPF design with a redundant backbone (Area 0), two edge areas (Area 1 and Area 2), and an ASBR providing external connectivity via a default route.
-
-The topology consists of seven routers (R1–R7) organized hierarchically to demonstrate inter-area routing, neighbor adjacencies, and ABR behavior. Routers are running IOS XE. 
-
-<br>
-
 
 # Baseline Configurations:
 
@@ -93,14 +81,10 @@ copy running-config startup-config
 
 # VLAN & Interface Configuration:
 
-<br>
-
-We're using a clever IP scheme that I read about (for labbing). Leave the fourth IPv4 octet simple by continuing to use the 
+IP scheme -- leave the fourth IPv4 octet simple by continuing to use the 
 .1 and .2 addresses in the 'zero subnet' of each network. 
 
-We use the third octet for differentiating networks and the numbers correlate to router pairs.
-
-<br>
+We use the third octet for differentiating networks
 
 Example: R1 connects to R2 - so the network is 10.0.12.0/30. See below:
 
@@ -138,9 +122,8 @@ R7   E0/0    10.0.57.2
 
 ![OSPF Networks](images/ospf-networks.jpg)
 
-<br>
 
-I've added descriptions on all configured router interfaces in the topology.
+Descriptions on router interfaces:
 
 Example: 
 ```
@@ -594,7 +577,7 @@ We will shutdown link from R1 (ASBR) to R3 (backbone router) to simulate a failu
 
 <br>
 
-We will observe changes in routing tables after OSPF reconverges. 
+Observe changes in routing tables after OSPF reconverges. 
 
 Determine if R3 is currently receiving OSPF Hello messages from 1.1.1.1 (R1) on E0/0.
 
@@ -606,7 +589,7 @@ Determine if R3 is currently receiving OSPF Hello messages from 1.1.1.1 (R1) on 
 
 R3 Routing Table Before:
 
-We can see R3 has two routes available to reach 10.0.12.0/30 network. 
+R3 has two routes available to reach 10.0.12.0/30 network. 
 
 <br>
 
@@ -620,7 +603,7 @@ interface e0/1
 shutdown
 ```
 
-Once the link between R1 and R3 failed, we can see R3 stopped receiving hello messages from `1.1.1.1` on it's E0/0 interface.
+Once the link between R1 and R3 failed, R3 stopped receiving hello messages from `1.1.1.1` on it's E0/0 interface.
 
 <br>
 
@@ -651,10 +634,8 @@ R3's routing table now only has a single route to reach network `10.0.12.0/30` t
 
 - Connected routes may/will override OSPF interface cost manipulation. 
 
-- I learned more about multi-area OSPF design and what information edge Areas need in order to exchange 
+- Learned more about multi-area OSPF design and what information edge Areas need in order to exchange 
 OSPF LSAs. 
-
-- While configuring OSPF on ABRs, I found that using the network `10.0.0.0 0.0.255.255 area X` command for multiple areas creates a conflict due to overlapping matches. Although more specific wildcard masks could be used, I chose to configure OSPF areas directly at the interface level for this lab.
 
 - Learned more about LSDB and why some OSPF router information is stored, whilst some is not. As by design. 
 
