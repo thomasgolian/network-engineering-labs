@@ -2,9 +2,7 @@
 
 Lab was built using VMware Workstation with Cisco Modeling Labs v2.8.1 
 
-All switches routers in this lab are running IOS XE images virtualized or containered
 
-<br>
 
 ![CML](images/CML.jpg)
 
@@ -12,9 +10,9 @@ All switches routers in this lab are running IOS XE images virtualized or contai
 
 # Overview
 
-- This lab demonstrates the implementation and behavior of Rapid Spanning Tree Protocol (RSTP) in a Layer 2 switched network.
+- This lab demonstrates the implementation and behavior of Rapid Spanning Tree Protocol (RSTP)
 
-- The objective is to analyze STP topology, validate loop prevention, and observe rapid failover during core and distribution layer failures.
+- Analyze STP topology, validate loop prevention, and observe rapid failover during core and distribution layer failures.
 
 - RSTP provides significantly faster convergence than traditional STP by leveraging alternate ports and rapid state transitions.
 
@@ -23,15 +21,9 @@ All switches routers in this lab are running IOS XE images virtualized or contai
 
 - Configure RSTP across multiple switches
 
-- Analyze the root bridge election process
-
 - Simulate core switch failure and measure RSTP convergence
 
-- Observe port roles (Root, Designated, Alternate)
-
 - Simulate distribution-layer link failure and measure failover response
-
-- Validate rapid convergence behavior
 
 - Introduce a rogue switch on an access port configured with PortFast and BPDU Guard, and observe the outcome
 
@@ -83,7 +75,7 @@ Full configurations are available in the configs/ directory
 
 <br>
 
-Initial IOS XE configurations I entered for all network nodes:
+Initial configurations after boot:
 
 ```
 enable secret cisco
@@ -108,8 +100,9 @@ copy running-config startup-config
 
 <br>
 
-Alpine Linux Desktop to test end-to-end connectivity and configured with:
-<br>sudo ifconfig eth0 10.1.10.19 netmask 255.255.255.0
+Desktop to test end-to-end connectivity -- configured with:
+
+`sudo ifconfig eth0 10.1.10.19 netmask 255.255.255.0`
 
 <br>
 
@@ -233,7 +226,7 @@ SW1 initially served as the root bridge. After its failure, SW3 (distribution) d
 
 <br>
 
-For fun we can use this command to see all the BPDUs in real time on SW3 before the failure:
+Command to see all the BPDUs in real time on SW3 before the failure:
 ```
 debug spanning-tree bpdu
 ```
@@ -243,7 +236,7 @@ debug spanning-tree bpdu
 
 <br>
 
-We can see the conversation and reconvergence of the switches on the CLI when we enable debugging: 
+Reconvergence of the switches on the CLI when we enable debugging: 
 <br>debug spanning-tree events
 
 <img src="images/debug-rstp-events.jpg" width="600">
@@ -273,7 +266,7 @@ Failover testing was performed by shutting down all interfaces on SW1 root to si
 
 - Network connectivity was maintained
 
-- We could see SW3 detect something was wrong after not receiving BPDUs from root SW1 - and logs enable us to see the process.
+- SW3 detects something was wrong after not receiving BPDUs from root SW1 - and logs enable us to see the process.
 
 <br>
 
@@ -297,7 +290,7 @@ Failover testing was performed by shutting down all interfaces on SW1 root to si
 
 <br>
 
-- We can verify by checking the outgoing interface before and after the topology change:
+- Verify by checking the outgoing interface before and after the topology change:
 
 - Before = SW7 took E0/0 outgoing interface as path to root
 <br>After = SW7 takes E0/1 outgoing interface as path to root
@@ -321,8 +314,6 @@ Observed Behavior:
 - Convergence occurred rapidly (sub-second to a few seconds)
 
 - No switching loops were introduced
-
-- Network connectivity was maintained
 
 - Traffic took alternative path to SW5 in order to reach the root / core layer. 
 
@@ -356,7 +347,7 @@ Observed Behavior:
 
 <br> 
 
-Let's watch it again but we will first enable debugging on SW6 so we can view the logs as the rogue switch gets plugged in:
+Enable debugging on SW6 so we can view the logs as the rogue switch gets plugged in:
 ```
 show spanning-tree events
 show spanning-tree bpdu
