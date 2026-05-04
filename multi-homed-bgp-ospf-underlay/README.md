@@ -240,7 +240,7 @@ Below, the neighbor session goes down and back up with R1 to apply the new RR lo
 
 - Because route reflector advertisements are not limited to a single hop, they can traverse multiple hops. However, each router along the path must be configured to participate in route reflection for the routes to be propagated.  
 
-- While learning BGP, it’s important to distinguish that although OSPF, local, and connected routes exist in R1’s RIB, they are separate from the BGP table. At this stage, the BGP table contains no routes, as BGP does not automatically inject routes—they must be explicitly defined.
+- While learning BGP, although OSPF, local, and connected routes exist in R1’s RIB, they are separate from the BGP table. At this stage, the BGP table contains no routes, as BGP does not automatically inject routes—they must be defined.
 
 Injecting R1 & R2's loopback0 as a route -- apply on R1 and R2:
 ```
@@ -255,19 +255,19 @@ router bgp 65001
 
 - Route reflectors do not advertise BGP neighbor information; they advertise routes contained in the BGP table (NLRI). In this lab, each router injects its Loopback0 network, so the BGP table should contain four Loopback0 routes.  
 
-R1's BGP table now shows all 4 networks. We achieved this WITHOUT using a iBGP full-mesh -- using route reflectors instead. 
+R1's BGP table now shows all 4 networks. Achieving this WITHOUT using a iBGP full-mesh -- using route reflectors instead. 
 
 ![iBGP Complete](images/ibgp-complete.jpg)
 
-- To create a solid mental model, we take a peek at R1's routing table below. We see that loopback network addresses are injected into R1's RIB. Why? Because earlier we added TWO network OSPF commands on the four routers. Example, R1 has network 1.1.1.0 added to the OSPF configuration. 
+- In the output, we see that loopback network addresses are injected into R1's RIB. Why? Because the TWO network OSPF commands on the four routers.
+
+Example, R1 has network 1.1.1.0 added to the OSPF configuration. 
 
 <img src="images/r1-routingtable.jpg" width="650">
 
-If we somehow lost our OSPF underlay routes (bad), traffic would blackhole because iBGP's control plane would believe the routes still exist.
-
 ## Configuring eBGP 
 
-### We also have an eBGP link between R3 and R4 to simulate internet transit - which will allow us to fully test change behavior and failover scenarios later on.
+The eBGP link between R3 and R4 simulates internet transit - allows us to test change behavior and failover scenarios later on.
 
 ![RIB](images/transit.jpg)
 
@@ -303,11 +303,9 @@ We performed the same BGP command on R3 and R4 autonomous systems (with differen
 
 *ignore the 10.0.0.0 address in image below - it was used before changing to 192*
 
-<img src="images/ebgp-session1.jpg" width="650">
+<img src="images/ebgp-session1.jpg" width="650"> 
 
-- Our eBGP is configured - similar to before we need a route injected into our eBGP table in hopes to see it propagate into the iBGP AS. Let's now take a look at R1's BGP table. 
-
-- First thing we notice is that our eBGP next hops are using the underlay IP addresses, instead of loopbacks. Why? eBGP uses the directly connected interface IP as the next-hop by default. For eBGP sessions, it is assumed neighbors are directly connected. 
+The eBGP next hops are using the underlay IP addresses, instead of loopbacks. Why? eBGP uses the directly connected interface IP as the next-hop by default. For eBGP sessions, it is assumed neighbors are directly connected. 
 
 R1
 ```
@@ -325,7 +323,7 @@ network 10.0.1.8 mask 255.255.255.252
 network 10.0.1.12 mask 255.255.255.252
 ```
 
-In this `show ip bgp` output on R3/4, we can see the underlay 10.0.1.x networks added to our BGP table. We now have redundant hops back to the iBGP area and connectivity can be tested end-to-end.
+`show ip bgp` output on R3/4, the underlay 10.0.1.x networks were added to the BGP table. We now have redundant hops back to the iBGP area and connectivity can be tested end-to-end.
 
 <img src="images/bgp-add-networks-underlay.jpg" width="650">
 
@@ -351,13 +349,12 @@ neighbor 1.1.1.6 next-hop-self
 
 - During testing, end-to-end connectivity between ASes failed despite BGP sessions appearing healthy. Initial troubleshooting was misleading because two separate issues existed simultaneously, and each was tested and ruled-out separately.
 
-- The first issue involved overlapping internal addressing (10.0.0.0/8 - design mistake), while the second was a missing return path from the external AS back into the iBGP domain. Each problem alone did not fully explain the failure, leading to incorrect assumptions during early troubleshooting.
+- The first issue involved overlapping internal addressing (10.0.0.0/8 - design mistake), while the second was a missing return path from the external AS back into the iBGP domain. Each problem alone did not fully explain the failure, leading to incorrect assumptions during troubleshooting.
 
-- The breakthrough came after watching ICMP logs using `debug ip icmp` on edge routers. Echo requests and replies were partially visible, indicating that traffic was reaching the destination but failing on the return path. This revealed that both issues might be related.
+- After watching ICMP logs using `debug ip icmp` on edge routers. Echo requests and replies were partially visible, indicating that traffic was reaching the destination but failing on the return path. This revealed that both issues might be related.
 
 - After correcting the addressing conflict and restoring proper underlay reachability (OSPF) for return traffic, we had full end-to-end connectivity. 
 
-- This scenario demonstrated a classic multi-condition failure, where independent issues combined to create a more complex and misleading problem.
 
 **Key takeaway:** Troubleshooting multiple issues can coexist — and validating fixes in isolation may not fix the problem unless all all issues are resolved simultaneously.
 
@@ -388,25 +385,22 @@ router bgp 65001
 no neighbor 1.1.1.5 next-hop-self
 ```
 
-With the incomplete iBGP configuration on R1, I expected R5 to fail when forwarding traffic to R3 (AS 65002). However, the edge routers provide multiple exit paths from the enterprise network, allowing R5 to still reach R3 with assistance from the iBGP control plane.
-
 With R1's missing `next-hop-self` command for neighbor R5, this is what we see:
 
 <img src="images/r5-alternate-hop.jpg" width="650">
 
-As shown in the traceroute below, an interesting behavior occurs. After R1 is no longer a valid next hop, R5 transitions to ECMP, leveraging two equal-cost internal paths via R2. This allows R5 to maintain reachability to R3 (AS 65002) by traversing R4 (AS 65003) and the simulated internet transit—an outcome I did not anticipate. 
+In the traceroute below, an interesting behavior occurs. After R1 is no longer a valid next hop, R5 transitions to ECMP, leveraging two equal-cost internal paths via R2. This allows R5 to maintain reachability to R3 (AS 65002) by traversing R4 (AS 65003).
 
 ![Alternate](images/ecmp-failover.jpg)
 
 ![ECMP](images/ecmp.jpg)
 
-BGP doesn’t control the full path -- IGP decides how to reach the next-hop.
+BGP doesn’t control the full path -- IGP (ospf in this case) decides how to reach the next-hop.
 
 So when next-hop isn’t clean (like R1 loopback):
 
 The network starts doing weird but valid things
 
-<br>
 <br>
 
 ***************************************************************************************
@@ -415,11 +409,11 @@ The network starts doing weird but valid things
 
 In this scenario, R6 (AS 65001) is used as the source of traffic, with R3 (AS 65002) as the destination. R6 also functions as one of the Route Reflectors in the topology (along with R5).
 
-The goal is to observe how modifying Local Preference within iBGP changes path selection when multiple outbound BGP exits are available.
+Observe how modifying Local Preference within iBGP changes path selection when multiple outbound BGP exits are available.
 
 All commands and verification outputs are taken from the perspective of R6.
 
-Rather than guessing values, we define a clear routing policy by selecting a preferred exit point. Local Preference is used.
+Define a clear routing policy by selecting a preferred exit point. Local Preference is used.
 
 **Local Preference characteristics:**
 <br>Higher value = more preferred path
@@ -471,17 +465,15 @@ neighbor 1.1.1.2 route-map PREFER-R2 in
 <br>
 <br>
 
-## *unforeseen complication and learning experience* -- Yes I want traffic from R6 to exit out R2 > R4 AS 65003. And we configured R6 with a higher local preference on inbound routes learned from R2 (1.1.1.2).
+## *unforeseen complication and learning experience* -- Yes we want traffic from R6 to exit out R2 > R4 AS 65003. And we configured R6 with a higher local preference on inbound routes learned from R2 (1.1.1.2).
 
-However, we can see in R2's BGP ouput, R2 is actually learning route to R3 from R1 > R5 reflector > R6 reflector > R2. Which means... R6 is currently receiving routes to R3 (1.1.1.3) from R1 and R5 reflector. So the above change we made did nothing to affect the path from R6 to R3. 
+But in R2's BGP ouput, R2 is learning route to R3 from R1 > R5 reflector > R6 reflector > R2. Which means... 
 
-Let's try to simulate forcing our enterprise traffic sourcing from R6 to leave the AS through R2 > R4 eBGP link. That will require us to change something on R2 as well. 
+R6 is currently receiving routes to R3 (1.1.1.3) from R1 and R5 reflector. So the above change we made did nothing to affect the path from R6 to R3. 
 
-R6 can’t prefer R2 unless R2 prefers its own exit first
+Let's force our enterprise traffic sourcing from R6 to leave the AS through R2 > R4 eBGP link. That will require us to change something on R2 as well. 
 
-So we start at the source of truth: R2
-
-On R2, we’ll boost local-pref for routes learned from R4. Any route R2 learns from R4 (eBGP link) will prefer that link for outgoing traffic. 
+Boost local-pref for routes learned from R4. Any route R2 learns from R4 (eBGP link) will prefer that link for outgoing traffic. 
 
 R2:
 ```
@@ -493,7 +485,7 @@ router bgp 65001
 neighbor 192.168.1.5 route-map PREFER-R4 in
 ```
 
-Let's look at the output now on R2 -- You can see outgoing path to 1.1.1.3 now takes 192.168.1.5 (R4)
+Outgoing path to 1.1.1.3 now takes 192.168.1.5 (R4)
 
 <img src="images/path-change4.jpg" width="650">
 
@@ -505,7 +497,7 @@ Let's look at the output now on R2 -- You can see outgoing path to 1.1.1.3 now t
 
 <img src="images/localpref-200.jpg" width="650">
 
-That traceroute above is cool because we can see overlay and underlay working hand-in-hand. Traceroute command using overlay IPs and output showing underlay physical interface IPs. 
+The overlay and underlay working hand-in-hand. Traceroute command using overlay IPs and output showing underlay physical interface IPs. 
 
 <br>
 <br>
@@ -513,10 +505,6 @@ That traceroute above is cool because we can see overlay and underlay working ha
 ***************************************************************************************
 
 # Scenario 3) After all the changes to edge router R2 - now we'll instead simulate a full hardware failure on R2 - completely offline. 
-
-Question:
-
-Does my policy on R2 and R6 break traffic or gracefully fall back?
 
 We'll also run these commands on R6 to watch changes and reconvergence:
 ```
@@ -567,15 +555,15 @@ R6 receives it and says: “I’ll use next-hop 1.1.1.1”
 <br>BGP convergence is fine
 <br>Forwarding recursion is broken
 
-Put another way, R2 wasn’t just “another path” -- it was helping our IGP topology. Why can't OSPF underlay reconverge as well and move the packet from R6 > R5 > R1? 
-
 OSPF did reconverge -- What broke is BGP’s recursive next-hop resolution to a forwardable adjacent neighbor.
 
 Conclusion: Our iBGP baseline configuration was missing 2 crucial commands in order for BGP to have resiliency during an edge failure.
 
 Reflectors do NOT modify the next-hop
 
-We configured edges correctly, except when R2 died, the R6 next-hop dependency to (R1) 1.1.1.1 became fragile and BGP marked it 'inaccessible' because we didn't have these next-hop-self commands between R1 and R2.
+Edges correctly configured, except when R2 died, the R6 next-hop dependency to (R1) 1.1.1.1 became fragile and BGP marked it 'inaccessible' because we didn't have these next-hop-self commands between R1 and R2.
+
+**********Or was route redistribution commands better to use? TDB******** working on it*******
 
 R2 at the edge failed completely and BGP was not able to failover successfully. This was a design mistake on my part. Let's break it down and fix it. 
 
@@ -591,8 +579,6 @@ R2
 router bg 65001
 neighbor 1.1.1.1 next-hop-self
 ```
-
-We add command to both R1 and R2, because we want BGP to work if the mirrored-version of the event happens with R1 failing. Whether R1 or R2 fails, we want resiliency.
 
 With R2 down, traceroute still gets out to R3 and back:
 
@@ -626,11 +612,7 @@ With R2 down, traceroute still gets out to R3 and back:
 
 ## Key Takeaways
 
-- Gained a deeper understanding of why iBGP is required in larger networks, beyond simple default gateway routing, and the value it provides for internal route propagation.
-
 - Learned how OSPF can function as an underlay while iBGP operates as an overlay, and how these layers interact to provide end-to-end connectivity.
-
-- Understood the behavioral differences between iBGP and eBGP, particularly in route advertisement and next-hop handling.
 
 - Observed how Route Reflectors (R5 and R6) eliminate the need for full-mesh iBGP, improving scalability (in larger environments) while maintaining route distribution.
 
@@ -639,8 +621,6 @@ With R2 down, traceroute still gets out to R3 and back:
 - Reinforced that BGP selects the best path, but the IGP determines how to reach the next-hop.
 
 - Learned that Local Preference can be used to influence outbound traffic patterns
-
-- Discovered that route propagation issues are often tied to next-hop reachability and iBGP design, not just missing advertisements.
 
 - Observed that troubleshooting with `ping` becomes more nuanced in layered designs, as source IP selection impacts results. Using the `source` option is critical for accurate testing.
 
